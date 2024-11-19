@@ -27,7 +27,7 @@ class Body {
         }
     }
 
-    calc_collision_vel_change(other) {
+    calc_post_collision_vel(other) {
         const pos_diff = sub(this.pos, other.pos)
         const pos_diff_norm = norm(pos_diff)
         const vel_diff = sub(this.vel, other.vel)
@@ -40,10 +40,12 @@ class Body {
         if(dist(this.pos, other.pos) > this.r + other.r) {
             return;
         }
-        const vel_change1 = this.calc_collision_vel_change(other)
-        const vel_change2 = other.calc_collision_vel_change(this)
-        this.vel = vel_change1
-        other.vel = vel_change2
+        const vel1 = this.calc_post_collision_vel(other)
+        const vel2 = other.calc_post_collision_vel(this)
+        this.vel = vel1
+        other.vel = vel2
+        // this.step()
+        // other.step()
     }
 
     draw(ctx) {
@@ -102,16 +104,31 @@ function draw_all(ctx, bodies) {
     window.requestAnimationFrame(() => draw_all(ctx, bodies))
 }
 
+function check_collides_existing(bodies, x, y) {
+    for(const body of bodies) {
+        if(dist(new Vector(x, y), body.pos) < 30) {
+            return true
+        }
+    }
+    return false
+}
+
 function main() {
     const canvas = document.getElementById("canvas")
     const ctx = canvas.getContext("2d")
 
     let bodies = []
-    bodies.push(new Body(10, new Vector(300, 200), new Vector(40, 5)))
-    bodies.push(new Body(10, new Vector(300, 400), new Vector(-30, 45)))
-    bodies.push(new Body(10, new Vector(100, 200), new Vector(-90, 15)))
-    bodies.push(new Body(10, new Vector(200, 210), new Vector(30, 0)))
-    bodies.push(new Body(10, new Vector(400, 20), new Vector(85, -70)))
+    for(let i = 0; i < 10; i++) {
+        while(true) {
+            const x = 470 * Math.random() + 15;
+            const y = 470 * Math.random() + 15;
+            if(!check_collides_existing(bodies, x, y)) {
+                bodies.push(new Body(10, new Vector(x, y), new Vector(25, 25)))
+                break
+            }
+        }
+    }
+
     
     draw_all(ctx, bodies)
 
