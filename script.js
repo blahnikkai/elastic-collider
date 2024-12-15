@@ -1,4 +1,5 @@
 const CIRC_R = 15
+let playing = false
 
 class Body {
 
@@ -103,7 +104,9 @@ function draw_all(ctx, bodies) {
         body.step()
         body.draw(ctx)
     }
-    window.requestAnimationFrame(() => draw_all(ctx, bodies))
+    if(playing) {
+        window.requestAnimationFrame(() => draw_all(ctx, bodies))
+    }
 }
 
 function check_collides_existing(bodies, x, y) {
@@ -134,18 +137,35 @@ function main() {
     const canvas = document.getElementById("canvas")
     const ctx = canvas.getContext("2d")
 
+    // let bodies = [
+    //     new Body(10, new Vector(70, 250), new Vector(25, 0)),
+    //     new Body(10, new Vector(250, 250), new Vector(0, 0)),
+    //     new Body(10, new Vector(300, 250), new Vector(0, 0)),
+    //     new Body(10, new Vector(400, 250), new Vector(-25, 0))
+    // ]
+
     let bodies = [
-        new Body(10, new Vector(70, 250), new Vector(25, 0)),
+        new Body(10, new Vector(200, 250), new Vector(25, 0)),
         new Body(10, new Vector(250, 250), new Vector(0, 0)),
-        new Body(10, new Vector(300, 250), new Vector(0, 0)),
-        new Body(10, new Vector(400, 250), new Vector(-25, 0))
+        new Body(10, new Vector(301, 250), new Vector(-25, 0)),
+        new Body(10, new Vector(420, 250), new Vector(25, 0)),
     ]
     
 
     
     draw_all(ctx, bodies)
 
-    const step_btn = document.getElementById("")
+    const step_btn = document.getElementById("step")
+    step_btn.addEventListener("click", () => draw_all(ctx, bodies))
+    const play_btn = document.getElementById("play")
+    play_btn.addEventListener("click", () => {
+        playing = true
+        draw_all(ctx, bodies)
+    })
+    const pause_btn = document.getElementById("pause")
+    pause_btn.addEventListener("click", () => {
+        playing = false
+    })
     
 }
 
