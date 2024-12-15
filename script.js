@@ -40,7 +40,12 @@ class Body {
     }
 
     check_other_collide(other) {
-        if(dist(this.pos, other.pos) > this.r + other.r) {
+        if(dist(this.pos, other.pos) >= this.r + other.r) {
+            return;
+        }
+        const pos_diff = sub(this.pos, other.pos)
+        const vel_diff = sub(this.vel, other.vel)
+        if(dot(vel_diff, pos_diff) >= 0) {
             return;
         }
         const vel1 = this.calc_post_collision_vel(other)
@@ -145,13 +150,11 @@ function main() {
     // ]
 
     let bodies = [
-        new Body(10, new Vector(200, 250), new Vector(25, 0)),
+        new Body(10, new Vector(70, 250), new Vector(25, 0)),
         new Body(10, new Vector(250, 250), new Vector(0, 0)),
-        new Body(10, new Vector(301, 250), new Vector(-25, 0)),
-        new Body(10, new Vector(420, 250), new Vector(25, 0)),
+        new Body(10, new Vector(300, 250), new Vector(0, 0)),
+        new Body(10, new Vector(400, 250), new Vector(-25, 0))
     ]
-    
-
     
     draw_all(ctx, bodies)
 
