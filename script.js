@@ -115,21 +115,32 @@ function check_collides_existing(bodies, x, y) {
     return false
 }
 
-function main() {
-    const canvas = document.getElementById("canvas")
-    const ctx = canvas.getContext("2d")
-
+function randomBodies(n) {
     let bodies = []
-    for(let i = 0; i < 5; i++) {
+    for(let i = 0; i < n; i++) {
         while(true) {
-            const x = 470 * Math.random() + CIRC_R;
-            const y = 470 * Math.random() + CIRC_R;
+            const x = (500 - 2 * CIRC_R) * Math.random() + CIRC_R;
+            const y = (500 - 2 * CIRC_R) * Math.random() + CIRC_R;
             if(!check_collides_existing(bodies, x, y)) {
                 bodies.push(new Body(10, new Vector(x, y), new Vector(25, 25)))
                 break
             }
         }
     }
+    return bodies
+}
+
+function main() {
+    const canvas = document.getElementById("canvas")
+    const ctx = canvas.getContext("2d")
+
+    let bodies = [
+        new Body(10, new Vector(70, 250), new Vector(25, 0)),
+        new Body(10, new Vector(250, 250), new Vector(0, 0)),
+        new Body(10, new Vector(300, 250), new Vector(0, 0)),
+        new Body(10, new Vector(400, 250), new Vector(-25, 0))
+    ]
+    
 
     
     draw_all(ctx, bodies)
