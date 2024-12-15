@@ -1,10 +1,12 @@
+const CIRC_R = 15
+
 class Body {
 
     constructor(mass, pos, vel) {
         this.mass = mass;
         this.pos = pos
         this.vel = vel
-        this.r = 15
+        this.r = CIRC_R
     }
 
     step() {
@@ -106,7 +108,7 @@ function draw_all(ctx, bodies) {
 
 function check_collides_existing(bodies, x, y) {
     for(const body of bodies) {
-        if(dist(new Vector(x, y), body.pos) < 30) {
+        if(dist(new Vector(x, y), body.pos) < 2 * CIRC_R) {
             return true
         }
     }
@@ -118,10 +120,10 @@ function main() {
     const ctx = canvas.getContext("2d")
 
     let bodies = []
-    for(let i = 0; i < 10; i++) {
+    for(let i = 0; i < 5; i++) {
         while(true) {
-            const x = 470 * Math.random() + 15;
-            const y = 470 * Math.random() + 15;
+            const x = 470 * Math.random() + CIRC_R;
+            const y = 470 * Math.random() + CIRC_R;
             if(!check_collides_existing(bodies, x, y)) {
                 bodies.push(new Body(10, new Vector(x, y), new Vector(25, 25)))
                 break
