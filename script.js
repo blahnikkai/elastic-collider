@@ -1,4 +1,4 @@
-const CIRC_R = 15
+const CIRC_R = 3
 let playing = false
 
 class Body {
@@ -16,16 +16,18 @@ class Body {
     }
 
     check_wall_collide() {
-        if(this.pos.x - this.r < 0) {
+        if(this.pos.x - this.r < 0 && this.vel.x < 0) {
+            this.pos.x = this.r
             this.vel.x *= -1;
         }
-        if(this.pos.x + this.r > 500) {
+        if(this.pos.x + this.r > 500 && this.vel.x > 0) {
+            this.pos.x = 500 - this.r
             this.vel.x *= -1;
         }
-        if(this.pos.y - this.r < 0) {
+        if(this.pos.y - this.r < 0 && this.vel.y < 0) {
             this.vel.y *= -1;
         }
-        if(this.pos.y + this.r > 500) {
+        if(this.pos.y + this.r > 500 && this.vel.y > 0) {
             this.vel.y *= -1;
         }
     }
@@ -52,8 +54,6 @@ class Body {
         const vel2 = other.calc_post_collision_vel(this)
         this.vel = vel1
         other.vel = vel2
-        // this.step()
-        // other.step()
     }
 
     draw(ctx) {
@@ -141,7 +141,10 @@ function randomBodies(n) {
 function main() {
     const canvas = document.getElementById("canvas")
     const ctx = canvas.getContext("2d")
+    
+    let bodies = randomBodies(500)
 
+    // periodic
     // let bodies = [
     //     new Body(10, new Vector(70, 250), new Vector(25, 0)),
     //     new Body(10, new Vector(250, 250), new Vector(0, 0)),
@@ -149,12 +152,13 @@ function main() {
     //     new Body(10, new Vector(400, 250), new Vector(-25, 0))
     // ]
 
-    let bodies = [
-        new Body(10, new Vector(70, 250), new Vector(25, 0)),
-        new Body(10, new Vector(250, 250), new Vector(0, 0)),
-        new Body(10, new Vector(300, 250), new Vector(0, 0)),
-        new Body(10, new Vector(400, 250), new Vector(-25, 0))
-    ]
+    // problematic
+    // let bodies = [
+    //     new Body(10, new Vector(70, 250), new Vector(25, 0)),
+    //     new Body(10, new Vector(250, 250), new Vector(0, 0)),
+    //     new Body(10, new Vector(300, 250), new Vector(0, 0)),
+    //     new Body(10, new Vector(400, 250), new Vector(-25, 0))
+    // ]
     
     draw_all(ctx, bodies)
 
