@@ -134,13 +134,17 @@ function check_collides_existing(bodies, x, y, r) {
 
 function randomBodies(n, v, r) {
     let bodies = []
-    bodies.push(new Body(100, new Vector(250, 250), new Vector(0, 0), 30))
+    bodies.push(new Body(100, new Vector(250, 250), new Vector(0, 0), 30, 'red'))
     for(let i = 0; i < n; i++) {
         while(true) {
-            const x = (200 - 2 * r) * Math.random() + r;
-            const y = (200 - 2 * r) * Math.random() + r;
+            const x = (500 - 2 * r) * Math.random() + r;
+            const y = (500 - 2 * r) * Math.random() + r;
             if(!check_collides_existing(bodies, x, y, r)) {
-                bodies.push(new Body(1, new Vector(x, y), new Vector(v, v), r))
+                let color = 'black'
+                if(i < 20) {
+                    color = 'red'
+                }
+                bodies.push(new Body(1, new Vector(x, y), new Vector(v, v), r, color))
                 break
             }
         }
@@ -160,7 +164,7 @@ function main() {
     const canvas = document.getElementById("canvas")
     const ctx = canvas.getContext("2d")
     
-    let bodies = randomBodies(300, 10, 3)
+    let bodies = randomBodies(300, 20, 3)
 
     // periodic
     // let bodies = [
