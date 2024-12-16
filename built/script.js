@@ -32,9 +32,9 @@ function check_collides_existing(bodies, x, y, r) {
     }
     return false;
 }
-function randomBodies(n, v, r) {
+function brownian(n, v, r) {
     let bodies = [];
-    bodies.push(new Body(100, new Vector(250, 250), new Vector(0, 0), 30, 'red'));
+    bodies.push(new Body(100, new Vector(250, 250), new Vector(0, 0), 30, 'red', true));
     for (let i = 0; i < n; i++) {
         while (true) {
             const x = (500 - 2 * r) * Math.random() + r;
@@ -61,7 +61,7 @@ function calc_energy(bodies) {
 function main() {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
-    let bodies = randomBodies(300, 20, 3);
+    let bodies = brownian(300, 20, 3);
     // periodic
     // let bodies = [
     //     new Body(10, new Vector(70, 250), new Vector(25, 0)),

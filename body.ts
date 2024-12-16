@@ -7,34 +7,43 @@ export class Body {
     vel: Vector
     r: number
     color: string
+    is_traced: boolean
+    trace: Vector[]
 
-    constructor(mass: number, pos: Vector, vel: Vector, r: number, color: string = 'black') {
-        this.mass = mass;
+    constructor(mass: number, pos: Vector, vel: Vector, r: number, color: string = 'black', is_traced: boolean = false) {
+        this.mass = mass
         this.pos = pos
         this.vel = vel
         this.r = r
         this.color = color
+        this.is_traced = is_traced
+        this.trace = []
     }
 
     step(): void {
         this.pos = add(this.pos, scale(.1, this.vel))
+        if(this.is_traced) {
+            this.trace.push(this.pos)
+        }
         this.check_wall_collide()
     }
 
     check_wall_collide(): void {
         if(this.pos.x - this.r < 0 && this.vel.x < 0) {
             this.pos.x = this.r
-            this.vel.x *= -1;
+            this.vel.x *= -1
         }
         if(this.pos.x + this.r > 500 && this.vel.x > 0) {
             this.pos.x = 500 - this.r
-            this.vel.x *= -1;
+            this.vel.x *= -1
         }
         if(this.pos.y - this.r < 0 && this.vel.y < 0) {
-            this.vel.y *= -1;
+            this.pos.y = this.r
+            this.vel.y *= -1
         }
         if(this.pos.y + this.r > 500 && this.vel.y > 0) {
-            this.vel.y *= -1;
+            this.pos.y = 500 - this.r
+            this.vel.y *= -1
         }
     }
 
@@ -62,12 +71,25 @@ export class Body {
         other.vel = vel2
     }
 
-    draw(ctx: CanvasRenderingContext2D) {
+    draw(ctx: CanvasRenderingContext2D): void {
         ctx.fillStyle = this.color
         ctx.strokeStyle = this.color
         ctx.beginPath()
         ctx.arc(this.pos.x, this.pos.y, this.r, 0, 2 * Math.PI)
         ctx.stroke()
         ctx.fill()
+        ctx.closePath()
+        
+        ctx.strokeStyle = 'blue'
+        ctx.beginPath()
+        if(!this.is_traced || this.trace.length == 0) {
+            return;
+        }
+        ctx.moveTo(this.trace[0].x, this.trace[0].y)
+        for(const pos of this.trace) {
+            ctx.lineTo(pos.x, pos.y)
+        }
+        ctx.stroke()
+        ctx.closePath()
     }
 }

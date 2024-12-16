@@ -37,9 +37,9 @@ function check_collides_existing(bodies: Body[], x: number, y: number, r: number
     return false
 }
 
-function randomBodies(n: number, v: number, r: number): Body[] {
+function brownian(n: number, v: number, r: number): Body[] {
     let bodies = []
-    bodies.push(new Body(100, new Vector(250, 250), new Vector(0, 0), 30, 'red'))
+    bodies.push(new Body(100, new Vector(250, 250), new Vector(0, 0), 30, 'red', true))
     for(let i = 0; i < n; i++) {
         while(true) {
             const x = (500 - 2 * r) * Math.random() + r;
@@ -68,7 +68,7 @@ function calc_energy(bodies: Body[]): number {
 function main() {
     const canvas = <HTMLCanvasElement>document.getElementById("canvas")
     const ctx = canvas.getContext("2d")
-    let bodies = randomBodies(300, 20, 3)
+    let bodies = brownian(300, 20, 3)
 
     // periodic
     // let bodies = [

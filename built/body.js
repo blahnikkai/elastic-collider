@@ -1,14 +1,19 @@
 import { dist, add, scale, sub, dot, norm } from './vector.js';
 export class Body {
-    constructor(mass, pos, vel, r, color = 'black') {
+    constructor(mass, pos, vel, r, color = 'black', is_traced = false) {
         this.mass = mass;
         this.pos = pos;
         this.vel = vel;
         this.r = r;
         this.color = color;
+        this.is_traced = is_traced;
+        this.trace = [];
     }
     step() {
         this.pos = add(this.pos, scale(.1, this.vel));
+        if (this.is_traced) {
+            this.trace.push(this.pos);
+        }
         this.check_wall_collide();
     }
     check_wall_collide() {
@@ -21,9 +26,11 @@ export class Body {
             this.vel.x *= -1;
         }
         if (this.pos.y - this.r < 0 && this.vel.y < 0) {
+            this.pos.y = this.r;
             this.vel.y *= -1;
         }
         if (this.pos.y + this.r > 500 && this.vel.y > 0) {
+            this.pos.y = 500 - this.r;
             this.vel.y *= -1;
         }
     }
@@ -56,5 +63,17 @@ export class Body {
         ctx.arc(this.pos.x, this.pos.y, this.r, 0, 2 * Math.PI);
         ctx.stroke();
         ctx.fill();
+        ctx.closePath();
+        ctx.strokeStyle = 'blue';
+        ctx.beginPath();
+        if (!this.is_traced || this.trace.length == 0) {
+            return;
+        }
+        ctx.moveTo(this.trace[0].x, this.trace[0].y);
+        for (const pos of this.trace) {
+            ctx.lineTo(pos.x, pos.y);
+        }
+        ctx.stroke();
+        ctx.closePath();
     }
 }
