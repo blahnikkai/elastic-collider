@@ -98,7 +98,7 @@ function dot(vec1, vec2) {
     return vec1.x * vec2.x + vec1.y * vec2.y
 }
 
-function draw_all(ctx, bodies) {
+function step_all(ctx, bodies) {
     ctx.clearRect(0, 0, 500, 500)
     for(let i = 0; i < bodies.length; i++) {
         for(let j = i + 1; j < bodies.length; j++) {
@@ -107,10 +107,16 @@ function draw_all(ctx, bodies) {
     }
     for(const body of bodies) {
         body.step()
-        body.draw(ctx)
     }
+    draw_all(ctx, bodies)
     if(playing) {
-        window.requestAnimationFrame(() => draw_all(ctx, bodies))
+        window.requestAnimationFrame(() => step_all(ctx, bodies))
+    }
+}
+
+function draw_all(ctx, bodies) {
+    for(const body of bodies) {
+        body.draw(ctx)
     }
 }
 
@@ -128,8 +134,8 @@ function randomBodies(n, v, r) {
     bodies.push(new Body(100, new Vector(250, 250), new Vector(0, 0), 30))
     for(let i = 0; i < n; i++) {
         while(true) {
-            const x = (500 - 2 * r) * Math.random() + r;
-            const y = (500 - 2 * r) * Math.random() + r;
+            const x = (200 - 2 * r) * Math.random() + r;
+            const y = (200 - 2 * r) * Math.random() + r;
             if(!check_collides_existing(bodies, x, y, r)) {
                 bodies.push(new Body(1, new Vector(x, y), new Vector(v, v), r))
                 break
@@ -164,11 +170,11 @@ function main() {
     draw_all(ctx, bodies)
 
     const step_btn = document.getElementById("step")
-    step_btn.addEventListener("click", () => draw_all(ctx, bodies))
+    step_btn.addEventListener("click", () => step_all(ctx, bodies))
     const play_btn = document.getElementById("play")
     play_btn.addEventListener("click", () => {
         playing = true
-        draw_all(ctx, bodies)
+        step_all(ctx, bodies)
     })
     const pause_btn = document.getElementById("pause")
     pause_btn.addEventListener("click", () => {
