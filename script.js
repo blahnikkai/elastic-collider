@@ -1,9 +1,8 @@
-const CIRC_R = 3
 let playing = false
 
 class Body {
 
-    constructor(mass, pos, vel, r = CIRC_R) {
+    constructor(mass, pos, vel, r) {
         this.mass = mass;
         this.pos = pos
         this.vel = vel
@@ -60,6 +59,7 @@ class Body {
         ctx.beginPath()
         ctx.arc(this.pos.x, this.pos.y, this.r, 0, 2 * Math.PI)
         ctx.stroke()
+        ctx.fill()
     }
 }
 
@@ -131,7 +131,7 @@ function randomBodies(n, v, r) {
             const x = (500 - 2 * r) * Math.random() + r;
             const y = (500 - 2 * r) * Math.random() + r;
             if(!check_collides_existing(bodies, x, y, r)) {
-                bodies.push(new Body(1, new Vector(x, y), new Vector(v, v)))
+                bodies.push(new Body(1, new Vector(x, y), new Vector(v, v), r))
                 break
             }
         }
@@ -143,7 +143,7 @@ function main() {
     const canvas = document.getElementById("canvas")
     const ctx = canvas.getContext("2d")
     
-    let bodies = randomBodies(300, 50, CIRC_R)
+    let bodies = randomBodies(300, 10, 3)
 
     // periodic
     // let bodies = [
