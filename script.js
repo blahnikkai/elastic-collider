@@ -118,6 +118,9 @@ function draw_all(ctx, bodies) {
     for(const body of bodies) {
         body.draw(ctx)
     }
+    const energy = calc_energy(bodies)
+    ctx.fillStyle = 'black'
+    ctx.fillText(energy.toString(), 20, 20)
 }
 
 function check_collides_existing(bodies, x, y, r) {
@@ -143,6 +146,14 @@ function randomBodies(n, v, r) {
         }
     }
     return bodies
+}
+
+function calc_energy(bodies) {
+    let energy = 0
+    for(const body of bodies) {
+        energy += .5 * body.mass * Math.pow(norm(body.vel), 2)
+    }
+    return energy
 }
 
 function main() {
