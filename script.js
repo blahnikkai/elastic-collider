@@ -3,11 +3,11 @@ let playing = false
 
 class Body {
 
-    constructor(mass, pos, vel) {
+    constructor(mass, pos, vel, r = CIRC_R) {
         this.mass = mass;
         this.pos = pos
         this.vel = vel
-        this.r = CIRC_R
+        this.r = r
     }
 
     step() {
@@ -114,23 +114,24 @@ function draw_all(ctx, bodies) {
     }
 }
 
-function check_collides_existing(bodies, x, y) {
+function check_collides_existing(bodies, x, y, r) {
     for(const body of bodies) {
-        if(dist(new Vector(x, y), body.pos) < 2 * CIRC_R) {
+        if(dist(new Vector(x, y), body.pos) < body.r + r) {
             return true
         }
     }
     return false
 }
 
-function randomBodies(n) {
+function randomBodies(n, v, r) {
     let bodies = []
+    bodies.push(new Body(100, new Vector(250, 250), new Vector(0, 0), 30))
     for(let i = 0; i < n; i++) {
         while(true) {
-            const x = (500 - 2 * CIRC_R) * Math.random() + CIRC_R;
-            const y = (500 - 2 * CIRC_R) * Math.random() + CIRC_R;
-            if(!check_collides_existing(bodies, x, y)) {
-                bodies.push(new Body(10, new Vector(x, y), new Vector(25, 25)))
+            const x = (500 - 2 * r) * Math.random() + r;
+            const y = (500 - 2 * r) * Math.random() + r;
+            if(!check_collides_existing(bodies, x, y, r)) {
+                bodies.push(new Body(1, new Vector(x, y), new Vector(v, v)))
                 break
             }
         }
@@ -142,7 +143,7 @@ function main() {
     const canvas = document.getElementById("canvas")
     const ctx = canvas.getContext("2d")
     
-    let bodies = randomBodies(500)
+    let bodies = randomBodies(300, 50, CIRC_R)
 
     // periodic
     // let bodies = [
