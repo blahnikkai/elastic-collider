@@ -1,2 +1,3 @@
 - Collide off multiple rectangles at the same time?
 - brownian() generate random velocities
+- Better color system for generated

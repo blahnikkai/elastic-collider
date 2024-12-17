@@ -21,8 +21,11 @@ function generate_random_body(bodies, rects, r, v, m, x1 = 0, x2 = 500, y1 = 0, 
     while (true) {
         const x = (x2 - x1 - 2 * r) * Math.random() + r + x1;
         const y = (y2 - y1 - 2 * r) * Math.random() + r + y1;
+        const theta = 2 * Math.PI * Math.random();
+        const vx = v * Math.cos(theta);
+        const vy = v * Math.sin(theta);
         if (!check_collides_existing_bodies(bodies, x, y, r) && !check_collides_existing_rects(rects, x, y, r)) {
-            return new Body(m, new Vector(x, y), new Vector(v, v), r);
+            return new Body(m, new Vector(x, y), new Vector(vx, vy), r);
         }
     }
 }
@@ -40,9 +43,11 @@ export function hot_and_cold(n, r, rects) {
     let bodies = [];
     for (let i = 0; i < n; i++) {
         bodies.push(generate_random_body(bodies, rects, r, 10, 1, 0, 200));
+        bodies[bodies.length - 1].color = 'blue';
     }
     for (let i = 0; i < n; i++) {
         bodies.push(generate_random_body(bodies, rects, r, 100, 1, 300, 500));
+        bodies[bodies.length - 1].color = 'red';
     }
     return bodies;
 }

@@ -4,8 +4,8 @@ function main() {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     const rects = [
-        new Rectangle(240, 0, 265, 240),
-        new Rectangle(240, 255, 265, 500),
+        new Rectangle(240, 0, 241, 250 - 8),
+        new Rectangle(240, 250 + 8, 241, 500),
     ];
     // const bodies = brownian(300, 150, 3, rects)
     const bodies = hot_and_cold(300, 3, rects);
