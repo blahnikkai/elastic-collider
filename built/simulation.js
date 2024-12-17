@@ -17,10 +17,10 @@ function check_collides_existing_rects(rects, x, y, r) {
     }
     return false;
 }
-function generate_random_body(bodies, rects, r, v, m) {
+function generate_random_body(bodies, rects, r, v, m, x1 = 0, x2 = 500, y1 = 0, y2 = 500) {
     while (true) {
-        const x = (500 - 2 * r) * Math.random() + r;
-        const y = (500 - 2 * r) * Math.random() + r;
+        const x = (x2 - x1 - 2 * r) * Math.random() + r + x1;
+        const y = (y2 - y1 - 2 * r) * Math.random() + r + y1;
         if (!check_collides_existing_bodies(bodies, x, y, r) && !check_collides_existing_rects(rects, x, y, r)) {
             return new Body(m, new Vector(x, y), new Vector(v, v), r);
         }
@@ -34,6 +34,16 @@ export function brownian(n, v, r, rects) {
     }
     bodies[0].color = 'red';
     bodies[1].color = 'red';
+    return bodies;
+}
+export function hot_and_cold(n, r, rects) {
+    let bodies = [];
+    for (let i = 0; i < n; i++) {
+        bodies.push(generate_random_body(bodies, rects, r, 10, 1, 0, 200));
+    }
+    for (let i = 0; i < n; i++) {
+        bodies.push(generate_random_body(bodies, rects, r, 100, 1, 300, 500));
+    }
     return bodies;
 }
 export class Simulation {

@@ -21,10 +21,10 @@ function check_collides_existing_rects(rects: Rectangle[], x: number, y: number,
     return false
 }
 
-function generate_random_body(bodies: Body[], rects: Rectangle[], r: number, v: number, m: number): Body {
+function generate_random_body(bodies: Body[], rects: Rectangle[], r: number, v: number, m: number, x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): Body {
     while(true) {
-        const x = (500 - 2 * r) * Math.random() + r;
-        const y = (500 - 2 * r) * Math.random() + r;
+        const x = (x2 - x1 - 2 * r) * Math.random() + r + x1;
+        const y = (y2 - y1 - 2 * r) * Math.random() + r + y1;
         if(!check_collides_existing_bodies(bodies, x, y, r) && !check_collides_existing_rects(rects, x, y, r)) {
             return new Body(m, new Vector(x, y), new Vector(v, v), r)
         }
@@ -39,6 +39,17 @@ export function brownian(n: number, v: number, r: number, rects: Rectangle[]): B
     }
     bodies[0].color = 'red'
     bodies[1].color = 'red'
+    return bodies
+}
+
+export function hot_and_cold(n: number, r: number, rects: Rectangle[]): Body[] {
+    let bodies = []
+    for(let i = 0; i < n; i++) {
+        bodies.push(generate_random_body(bodies, rects, r, 10, 1, 0, 200))
+    }
+    for(let i = 0; i < n; i++) {
+        bodies.push(generate_random_body(bodies, rects, r, 100, 1, 300, 500))
+    }
     return bodies
 }
 
