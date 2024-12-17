@@ -2,7 +2,10 @@ import { Simulation, brownian } from './simulation.js';
 function main() {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
-    const bodies = brownian(300, 20, 3);
+    const bodies = brownian(300, 150, 3);
+    // const bodies = [
+    //     new Body(10, new Vector(10, 250), new Vector(50, 0), 10)
+    // ]
     // periodic
     // let bodies = [
     //     new Body(10, new Vector(70, 250), new Vector(25, 0)),
@@ -18,7 +21,6 @@ function main() {
     //     new Body(10, new Vector(400, 250), new Vector(-25, 0))
     // ]
     let simulation = new Simulation(ctx, bodies);
-    simulation.draw_all();
     const step_btn = document.getElementById("step");
     step_btn.addEventListener("click", () => simulation.step_all());
     const play_btn = document.getElementById("play");
@@ -30,5 +32,10 @@ function main() {
     pause_btn.addEventListener("click", () => {
         simulation.playing = false;
     });
+    draw_loop(simulation);
+}
+function draw_loop(simulation) {
+    simulation.draw_all();
+    window.requestAnimationFrame(() => draw_loop(simulation));
 }
 main();

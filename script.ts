@@ -1,10 +1,16 @@
+import { Body } from './body.js'
 import {Simulation, brownian} from './simulation.js'
+import { Vector } from './vector.js'
 
 function main() {
 
     const canvas = <HTMLCanvasElement>document.getElementById("canvas")
     const ctx = canvas.getContext("2d")
-    const bodies = brownian(300, 20, 3)
+    const bodies = brownian(300, 150, 3)
+
+    // const bodies = [
+    //     new Body(10, new Vector(10, 250), new Vector(50, 0), 10)
+    // ]
 
     // periodic
     // let bodies = [
@@ -23,7 +29,6 @@ function main() {
     // ]
 
     let simulation = new Simulation(ctx, bodies)
-    simulation.draw_all()
 
     const step_btn = document.getElementById("step")
     step_btn.addEventListener("click", () => simulation.step_all())
@@ -36,7 +41,13 @@ function main() {
     pause_btn.addEventListener("click", () => {
         simulation.playing = false
     })
-    
+
+    draw_loop(simulation)
+}
+
+function draw_loop(simulation: Simulation) {
+    simulation.draw_all()
+    window.requestAnimationFrame(() => draw_loop(simulation))
 }
 
 main()

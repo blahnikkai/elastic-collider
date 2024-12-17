@@ -1,5 +1,6 @@
 import {Body} from './body.js'
 import {Vector, dist, norm} from './vector.js'
+export const TICKRATE = 50
 
 function check_collides_existing(bodies: Body[], x: number, y: number, r: number): boolean {
     for(const body of bodies) {
@@ -35,15 +36,17 @@ export class Simulation {
     playing: boolean
     ctx: CanvasRenderingContext2D
     bodies: Body[]
+    tick: number
 
     constructor(ctx: CanvasRenderingContext2D, bodies: Body[]) {
         this.ctx = ctx
         this.playing = false
         this.bodies = bodies
+        this.tick = 0
     }
 
     step_all(): void {
-        this.ctx.clearRect(0, 0, 500, 500)
+        this.tick += 1
         for(let i = 0; i < this.bodies.length; i++) {
             for(let j = i + 1; j < this.bodies.length; j++) {
                 this.bodies[i].check_other_collide(this.bodies[j])
@@ -52,19 +55,20 @@ export class Simulation {
         for(const body of this.bodies) {
             body.step()
         }
-        this.draw_all()
         if(this.playing) {
-            window.requestAnimationFrame(() => this.step_all())
+            setTimeout(() => this.step_all(), 1000 / TICKRATE)
         }
     }
 
     draw_all(): void {
+        this.ctx.clearRect(0, 0, 500, 500)
         for(const body of this.bodies) {
             body.draw(this.ctx)
         }
         const energy = this.calc_energy()
         this.ctx.fillStyle = 'black'
         this.ctx.fillText(energy.toString(), 20, 20)
+        this.ctx.fillText(this.tick.toString(), 20, 40)
     }
 
     calc_energy(): number {

@@ -1,4 +1,5 @@
 import { dist, add, scale, sub, dot, norm } from './vector.js';
+import { TICKRATE } from './simulation.js';
 export class Body {
     constructor(mass, pos, vel, r, color = 'black', is_traced = false) {
         this.mass = mass;
@@ -10,7 +11,7 @@ export class Body {
         this.trace = [];
     }
     step() {
-        this.pos = add(this.pos, scale(.1, this.vel));
+        this.pos = add(this.pos, scale(1 / TICKRATE, this.vel));
         if (this.is_traced) {
             this.trace.push(this.pos);
         }
