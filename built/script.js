@@ -4,7 +4,7 @@ function main() {
     const ctx = canvas.getContext("2d");
     const bodies = brownian(300, 150, 3);
     // const bodies = [
-    //     new Body(10, new Vector(10, 250), new Vector(50, 0), 10)
+    //     new Body(10, new Vector(350, 300), new Vector(-500, -500), 10)
     // ]
     // periodic
     // let bodies = [

@@ -37,12 +37,14 @@ export class Simulation {
     ctx: CanvasRenderingContext2D
     bodies: Body[]
     tick: number
+    rectangles: number[][]
 
     constructor(ctx: CanvasRenderingContext2D, bodies: Body[]) {
         this.ctx = ctx
         this.playing = false
         this.bodies = bodies
         this.tick = 0
+        this.rectangles = [[100, 200, 300, 400]]
     }
 
     step_all(): void {
@@ -54,6 +56,12 @@ export class Simulation {
         }
         for(const body of this.bodies) {
             body.step()
+        }
+        for(const body of this.bodies) {
+            body.check_wall_collide()
+            for(const rect of this.rectangles) {
+                body.check_rect_collide(rect)
+            }
         }
         if(this.playing) {
             setTimeout(() => this.step_all(), 1000 / TICKRATE)
@@ -67,8 +75,24 @@ export class Simulation {
         }
         const energy = this.calc_energy()
         this.ctx.fillStyle = 'black'
+        this.ctx.strokeStyle = 'black'
         this.ctx.fillText(energy.toString(), 20, 20)
         this.ctx.fillText(this.tick.toString(), 20, 40)
+        for(const rectangle of this.rectangles) {
+            const x1 = rectangle[0]
+            const y1 = rectangle[1]
+            const x2 = rectangle[2]
+            const y2 = rectangle[3]
+            this.ctx.beginPath()
+            this.ctx.moveTo(x1, y1)
+            this.ctx.lineTo(x2, y1)
+            this.ctx.lineTo(x2, y2)
+            this.ctx.lineTo(x1, y2)
+            this.ctx.lineTo(x1, y1)
+            this.ctx.closePath()
+            this.ctx.stroke()
+            // this.ctx.fill()
+        }
     }
 
     calc_energy(): number {

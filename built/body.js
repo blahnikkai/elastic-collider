@@ -15,7 +15,6 @@ export class Body {
         if (this.is_traced) {
             this.trace.push(this.pos);
         }
-        this.check_wall_collide();
     }
     check_wall_collide() {
         if (this.pos.x - this.r < 0 && this.vel.x < 0) {
@@ -33,6 +32,49 @@ export class Body {
         if (this.pos.y + this.r > 500 && this.vel.y > 0) {
             this.pos.y = 500 - this.r;
             this.vel.y *= -1;
+        }
+    }
+    check_rect_collide(rect) {
+        const [x1, y1, x2, y2] = rect;
+        const h = y2 - y1;
+        const w = x2 - x1;
+        const x0 = this.pos.x - x1;
+        const y0 = this.pos.y - y1;
+        const above_down_right = y0 < (h / w) * x0;
+        const above_down_left = y0 < -(h / w) * x0 + h;
+        // console.log('above down left', above_down_left)
+        // console.log('above down right', above_down_right)
+        if (x1 < this.pos.x + this.r && this.pos.x - this.r < x2) {
+            // top
+            if (this.pos.y + this.r > y1 && this.vel.y > 0 && above_down_left && above_down_right) {
+                // console.log('reflecting top')
+                this.vel.y *= -1;
+                this.pos.y = y1 - this.r;
+                return;
+            }
+            // bottom
+            if (this.pos.y - this.r < y2 && this.vel.y < 0 && !above_down_left && !above_down_right) {
+                // console.log('reflecting bottom')
+                this.vel.y *= -1;
+                this.pos.y = y2 + this.r;
+                return;
+            }
+        }
+        if (y1 < this.pos.y + this.r && this.pos.y - this.r < y2) {
+            // left
+            if (this.pos.x + this.r > x1 && this.vel.x > 0 && above_down_left && !above_down_right) {
+                // console.log('reflecting left')
+                this.vel.x *= -1;
+                this.pos.x = x1 - this.r;
+                return;
+            }
+            // right
+            if (this.pos.x - this.r < x2 && this.vel.x < 0 && !above_down_left && above_down_right) {
+                // console.log('reflecting right')
+                this.vel.x *= -1;
+                this.pos.x = x2 + this.r;
+                return;
+            }
         }
     }
     calc_post_collision_vel(other) {
