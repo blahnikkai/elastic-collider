@@ -1,8 +1,9 @@
 import {Body} from './body.js'
+import {Rectangle} from './rectangle.js'
 import {Vector, dist, norm} from './vector.js'
 export const TICKRATE = 50
 
-function check_collides_existing(bodies: Body[], x: number, y: number, r: number): boolean {
+function check_collides_existing_bodies(bodies: Body[], x: number, y: number, r: number): boolean {
     for(const body of bodies) {
         if(dist(new Vector(x, y), body.pos) < body.r + r) {
             return true
@@ -11,23 +12,33 @@ function check_collides_existing(bodies: Body[], x: number, y: number, r: number
     return false
 }
 
-export function brownian(n: number, v: number, r: number): Body[] {
-    let bodies = []
-    bodies.push(new Body(100, new Vector(250, 250), new Vector(0, 0), 30, 'red', true))
-    for(let i = 0; i < n; i++) {
-        while(true) {
-            const x = (500 - 2 * r) * Math.random() + r;
-            const y = (500 - 2 * r) * Math.random() + r;
-            if(!check_collides_existing(bodies, x, y, r)) {
-                let color = 'black'
-                if(i < 1) {
-                    color = 'red'
-                }
-                bodies.push(new Body(1, new Vector(x, y), new Vector(v, v), r, color))
-                break
-            }
+function check_collides_existing_rects(rects: Rectangle[], x: number, y: number, r: number): boolean {
+    for(const rect of rects) {
+        if(rect.intersect(x, y, r)) {
+            return true
         }
     }
+    return false
+}
+
+function generate_random_body(bodies: Body[], rects: Rectangle[], r: number, v: number, m: number): Body {
+    while(true) {
+        const x = (500 - 2 * r) * Math.random() + r;
+        const y = (500 - 2 * r) * Math.random() + r;
+        if(!check_collides_existing_bodies(bodies, x, y, r) && !check_collides_existing_rects(rects, x, y, r)) {
+            return new Body(m, new Vector(x, y), new Vector(v, v), r)
+        }
+    }
+}
+
+export function brownian(n: number, v: number, r: number, rects: Rectangle[]): Body[] {
+    let bodies = []
+    bodies.push(generate_random_body(bodies, rects, 30, 0, 100))
+    for(let i = 0; i < n; i++) {
+        bodies.push(generate_random_body(bodies, rects, r, v, 1))
+    }
+    bodies[0].color = 'red'
+    bodies[1].color = 'red'
     return bodies
 }
 
@@ -37,14 +48,14 @@ export class Simulation {
     ctx: CanvasRenderingContext2D
     bodies: Body[]
     tick: number
-    rectangles: number[][]
+    rectangles: Rectangle[]
 
-    constructor(ctx: CanvasRenderingContext2D, bodies: Body[]) {
+    constructor(ctx: CanvasRenderingContext2D, bodies: Body[], rectangles: Rectangle[]) {
         this.ctx = ctx
         this.playing = false
         this.bodies = bodies
         this.tick = 0
-        this.rectangles = [[100, 200, 300, 400]]
+        this.rectangles = rectangles
     }
 
     step_all(): void {
@@ -79,19 +90,7 @@ export class Simulation {
         this.ctx.fillText(energy.toString(), 20, 20)
         this.ctx.fillText(this.tick.toString(), 20, 40)
         for(const rectangle of this.rectangles) {
-            const x1 = rectangle[0]
-            const y1 = rectangle[1]
-            const x2 = rectangle[2]
-            const y2 = rectangle[3]
-            this.ctx.beginPath()
-            this.ctx.moveTo(x1, y1)
-            this.ctx.lineTo(x2, y1)
-            this.ctx.lineTo(x2, y2)
-            this.ctx.lineTo(x1, y2)
-            this.ctx.lineTo(x1, y1)
-            this.ctx.closePath()
-            this.ctx.stroke()
-            // this.ctx.fill()
+            rectangle.draw(this.ctx)
         }
     }
 

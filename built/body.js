@@ -35,7 +35,10 @@ export class Body {
         }
     }
     check_rect_collide(rect) {
-        const [x1, y1, x2, y2] = rect;
+        const x1 = rect.x1;
+        const y1 = rect.y1;
+        const x2 = rect.x2;
+        const y2 = rect.y2;
         const h = y2 - y1;
         const w = x2 - x1;
         const x0 = this.pos.x - x1;
