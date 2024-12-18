@@ -35,10 +35,16 @@ function main() {
     play_btn.addEventListener("click", () => {
         simulation.playing = true;
         simulation.step_all();
+        play_btn.disabled = true;
+        pause_btn.disabled = false;
+        step_btn.disabled = true;
     });
     const pause_btn = document.getElementById("pause");
     pause_btn.addEventListener("click", () => {
         simulation.playing = false;
+        pause_btn.disabled = true;
+        play_btn.disabled = false;
+        step_btn.disabled = false;
     });
     draw_loop(simulation);
 }

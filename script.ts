@@ -40,16 +40,22 @@ function main() {
 
     let simulation = new Simulation(ctx, bodies, rects)
 
-    const step_btn = document.getElementById("step")
+    const step_btn = <HTMLButtonElement>document.getElementById("step")
     step_btn.addEventListener("click", () => simulation.step_all())
-    const play_btn = document.getElementById("play")
+    const play_btn = <HTMLButtonElement>document.getElementById("play")
     play_btn.addEventListener("click", () => {
         simulation.playing = true
         simulation.step_all()
+        play_btn.disabled = true
+        pause_btn.disabled = false
+        step_btn.disabled = true
     })
-    const pause_btn = document.getElementById("pause")
+    const pause_btn = <HTMLButtonElement>document.getElementById("pause")
     pause_btn.addEventListener("click", () => {
         simulation.playing = false
+        pause_btn.disabled = true
+        play_btn.disabled = false
+        step_btn.disabled = false
     })
 
     draw_loop(simulation)
