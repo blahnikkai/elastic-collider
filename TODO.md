@@ -3,3 +3,6 @@
 - Better color system for generated
 - Add crazy settings like path trace for all bodies
 - Transform/scale range input to real values
+- Color circles by vel
+- Draw rects
+- Draw data captures

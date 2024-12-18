@@ -97,6 +97,13 @@ function main() {
     second_law_container.addEventListener('mouseout', () => {
         second_law_form.style.display = 'none';
     });
+    const clear_btn = document.getElementById('clear-btn');
+    clear_btn.addEventListener('click', () => {
+        simulation.reset([], []);
+        pause_btn.disabled = true;
+        play_btn.disabled = false;
+        step_btn.disabled = false;
+    });
     draw_loop(simulation);
 }
 function draw_loop(simulation) {
