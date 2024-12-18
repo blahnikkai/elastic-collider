@@ -17,7 +17,7 @@ function check_collides_existing_rects(rects, x, y, r) {
     }
     return false;
 }
-function generate_random_body(bodies, rects, r, v, m, x1 = 0, x2 = 500, y1 = 0, y2 = 500) {
+function generate_random_body(bodies, rects, m, v, r, x1 = 0, x2 = 500, y1 = 0, y2 = 500) {
     while (true) {
         const x = (x2 - x1 - 2 * r) * Math.random() + r + x1;
         const y = (y2 - y1 - 2 * r) * Math.random() + r + y1;
@@ -29,35 +29,43 @@ function generate_random_body(bodies, rects, r, v, m, x1 = 0, x2 = 500, y1 = 0, 
         }
     }
 }
-export function brownian(n, v, r, rects) {
+// number
+// size
+// mass
+// energy
+export function brownian(n, m, v, r, rects) {
     let bodies = [];
-    bodies.push(generate_random_body(bodies, rects, 30, 0, 100));
+    bodies.push(generate_random_body(bodies, rects, m, 0, 30));
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, r, v, 1));
+        bodies.push(generate_random_body(bodies, rects, 1, v, r));
     }
     bodies[0].color = 'red';
+    bodies[0].is_traced = true;
     bodies[1].color = 'red';
     return bodies;
 }
 export function hot_and_cold(n, r, rects) {
     let bodies = [];
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, r, 10, 1, 0, 200));
+        bodies.push(generate_random_body(bodies, rects, 1, 10, r, 0, 200));
         bodies[bodies.length - 1].color = 'blue';
     }
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, r, 100, 1, 300, 500));
+        bodies.push(generate_random_body(bodies, rects, 1, 100, r, 300, 500));
         bodies[bodies.length - 1].color = 'red';
     }
     return bodies;
 }
 export class Simulation {
-    constructor(ctx, bodies, rectangles) {
+    constructor(ctx, bodies, rects) {
         this.ctx = ctx;
+        this.reset(bodies, rects);
+    }
+    reset(bodies, rects) {
         this.playing = false;
         this.bodies = bodies;
         this.tick = 0;
-        this.rectangles = rectangles;
+        this.rectangles = rects;
     }
     step_all() {
         this.tick += 1;

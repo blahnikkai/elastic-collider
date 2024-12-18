@@ -1,7 +1,30 @@
+* {
+    box-sizing: border-box;
+}
+
 html {
     background-color: black;
 }
 
 canvas {
     background-color: white;
+}
+
+.dropdown-container {
+    position: relative;
+}
+
+.dropdown {
+    width: 60%;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: black;
+    padding: .5em .75em;
+}
+
+.dropdown * {
+    width: 100%;
+    margin: .5em 0;
 }

@@ -21,7 +21,7 @@ function check_collides_existing_rects(rects: Rectangle[], x: number, y: number,
     return false
 }
 
-function generate_random_body(bodies: Body[], rects: Rectangle[], r: number, v: number, m: number, x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): Body {
+function generate_random_body(bodies: Body[], rects: Rectangle[], m: number, v: number, r: number, x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): Body {
     while(true) {
         const x = (x2 - x1 - 2 * r) * Math.random() + r + x1;
         const y = (y2 - y1 - 2 * r) * Math.random() + r + y1;
@@ -34,13 +34,18 @@ function generate_random_body(bodies: Body[], rects: Rectangle[], r: number, v: 
     }
 }
 
-export function brownian(n: number, v: number, r: number, rects: Rectangle[]): Body[] {
+// number
+// size
+// mass
+// energy
+export function brownian(n: number, m: number, v: number, r: number, rects: Rectangle[]): Body[] {
     let bodies = []
-    bodies.push(generate_random_body(bodies, rects, 30, 0, 100))
+    bodies.push(generate_random_body(bodies, rects, m, 0, 30))
     for(let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, r, v, 1))
+        bodies.push(generate_random_body(bodies, rects, 1, v, r))
     }
     bodies[0].color = 'red'
+    bodies[0].is_traced = true
     bodies[1].color = 'red'
     return bodies
 }
@@ -48,11 +53,11 @@ export function brownian(n: number, v: number, r: number, rects: Rectangle[]): B
 export function hot_and_cold(n: number, r: number, rects: Rectangle[]): Body[] {
     let bodies = []
     for(let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, r, 10, 1, 0, 200))
+        bodies.push(generate_random_body(bodies, rects, 1, 10, r, 0, 200))
         bodies[bodies.length - 1].color = 'blue'
     }
     for(let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, r, 100, 1, 300, 500))
+        bodies.push(generate_random_body(bodies, rects, 1, 100, r, 300, 500))
         bodies[bodies.length - 1].color = 'red'
     }
     return bodies
@@ -66,12 +71,16 @@ export class Simulation {
     tick: number
     rectangles: Rectangle[]
 
-    constructor(ctx: CanvasRenderingContext2D, bodies: Body[], rectangles: Rectangle[]) {
+    constructor(ctx: CanvasRenderingContext2D, bodies: Body[], rects: Rectangle[]) {
         this.ctx = ctx
+        this.reset(bodies, rects)
+    }
+
+    reset(bodies: Body[], rects: Rectangle[]) {
         this.playing = false
         this.bodies = bodies
         this.tick = 0
-        this.rectangles = rectangles
+        this.rectangles = rects
     }
 
     step_all(): void {

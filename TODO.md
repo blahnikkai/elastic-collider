@@ -1,3 +1,5 @@
 - Collide off multiple rectangles at the same time?
 - brownian() generate random velocities
 - Better color system for generated
+- Add crazy settings like path trace for all bodies
+- Transform/scale range input to real values

@@ -10,6 +10,16 @@
     <button id="step">Step</button>
     <button id="pause" disabled>Pause</button>
     <button id="play">Play</button>
+    <span class="dropdown-container" id="brownian-container">
+        <button id="brownian">Generate Brownian motion</button>
+        <form id="brownian-form" class="dropdown">
+            <input name="number" type="number" value="300"/>
+            <input name="mass" type="number" value="100"/>
+            <input name="velocity" type="number" value="150"/>
+            <input name="radius" type="number" value="3"/>
+        </form>
+    </span>
+    <button id="second_law">Generate 2nd law of thermodynamics</button>
     <div>
         <script src="built/script.js" type="module" defer></script>
         <canvas height=500 width=500 id="canvas"/>
