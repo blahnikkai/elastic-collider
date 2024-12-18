@@ -3,14 +3,16 @@ import { Rectangle } from './rectangle.js';
 function main() {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
+    const w_half = 10;
+    const gap_half = 10;
     const rects = [
-        new Rectangle(240, 0, 241, 250 - 8),
-        new Rectangle(240, 250 + 8, 241, 500),
+        new Rectangle(250 - w_half, 0, 250 + w_half, 250 - gap_half),
+        new Rectangle(250 - w_half, 250 + gap_half, 250 + w_half, 500),
     ];
     // const bodies = brownian(300, 150, 3, rects)
     const bodies = hot_and_cold(300, 3, rects);
     // const bodies = [
-    //     new Body(10, new Vector(350, 300), new Vector(-500, -500), 10)
+    // new Body(10, new Vector(350, 300), new Vector(-500, -500), 10)
     // ]
     // periodic
     // let bodies = [

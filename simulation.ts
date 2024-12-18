@@ -105,15 +105,49 @@ export class Simulation {
         this.ctx.strokeStyle = 'black'
         this.ctx.fillText(energy.toString(), 20, 20)
         this.ctx.fillText(this.tick.toString(), 20, 40)
+        
+        this.ctx.textAlign = 'right'
+        
+        const left_e = this.calc_energy(0, 250)
+        const right_e = this.calc_energy(250, 500)
+        
+        this.ctx.fillText(left_e.toFixed(2), 80, 60)
+        this.ctx.fillText(right_e.toFixed(2), 80, 80)
+
+        const left_cnt = this.count_bodies(0, 250)
+        const right_cnt = this.count_bodies(250, 500)
+
+        this.ctx.fillText(left_cnt.toString(), 110, 60)
+        this.ctx.fillText(right_cnt.toString(), 110, 80)
+
+        const left_t = left_e / left_cnt
+        const right_t = right_e / right_cnt
+
+        this.ctx.fillText(left_t.toFixed(2), 160, 60)
+        this.ctx.fillText(right_t.toFixed(2), 160, 80)
+
+        this.ctx.textAlign = 'left'
         for(const rectangle of this.rectangles) {
             rectangle.draw(this.ctx)
         }
     }
+    
+    count_bodies(x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): number {
+        let cnt = 0
+        for(const body of this.bodies) {
+            if(x1 < body.pos.x && body.pos.x < x2 && y1 < body.pos.y && body.pos.y < y2) {
+                cnt += 1
+            }
+        }
+        return cnt
+    }
 
-    calc_energy(): number {
+    calc_energy(x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): number {
         let energy = 0
         for(const body of this.bodies) {
-            energy += .5 * body.mass * Math.pow(norm(body.vel), 2)
+            if(x1 < body.pos.x && body.pos.x < x2 && y1 < body.pos.y && body.pos.y < y2) {
+                energy += .5 * body.mass * Math.pow(norm(body.vel), 2)
+            }
         }
         return energy
     }
