@@ -1,4 +1,5 @@
 import { Body } from './body.js';
+import { Rectangle } from './rectangle.js';
 import { Vector, dist, norm } from './vector.js';
 export const TICKRATE = 50;
 function check_collides_existing_bodies(bodies, x, y, r) {
@@ -33,25 +34,34 @@ function generate_random_body(bodies, rects, m, v, r, x1 = 0, x2 = 500, y1 = 0, 
 // size
 // mass
 // energy
-export function brownian(n, m, v, r, rects) {
+export function brownian(n, m, v, r) {
     let bodies = [];
-    bodies.push(generate_random_body(bodies, rects, m, 0, 30));
+    bodies.push(generate_random_body(bodies, [], m, 0, 30));
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, 1, v, r));
+        bodies.push(generate_random_body(bodies, [], 1, v, r));
     }
     bodies[0].color = 'red';
     bodies[0].is_traced = true;
     bodies[1].color = 'red';
     return bodies;
 }
-export function hot_and_cold(n, r, rects) {
+export function second_law_rects(gap_size) {
+    const w_half = 10;
+    const gap_half = gap_size / 2;
+    let rects = [
+        new Rectangle(250 - w_half, 0, 250 + w_half, 250 - gap_half),
+        new Rectangle(250 - w_half, 250 + gap_half, 250 + w_half, 500),
+    ];
+    return rects;
+}
+export function second_law_bodies(n, r, vl, vr, rects) {
     let bodies = [];
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, 1, 10, r, 0, 200));
+        bodies.push(generate_random_body(bodies, rects, 1, vl, r, 0, 240));
         bodies[bodies.length - 1].color = 'blue';
     }
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, 1, 100, r, 300, 500));
+        bodies.push(generate_random_body(bodies, rects, 1, vr, r, 260, 500));
         bodies[bodies.length - 1].color = 'red';
     }
     return bodies;
