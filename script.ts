@@ -114,10 +114,32 @@ function main() {
 
     const clear_btn = document.getElementById('clear-btn')
     clear_btn.addEventListener('click', () => {
+        bodies = []
+        rects = []
         simulation.reset([], [])
         pause_btn.disabled = true
         play_btn.disabled = false
         step_btn.disabled = false
+    })
+
+    let drawing_rect = false
+    let half_rect = [0, 0]
+    canvas.addEventListener('click', (event: MouseEvent) => {
+        const rect = canvas.getBoundingClientRect()
+        const x = event.clientX - rect.left
+        const y = event.clientY - rect.top
+        if(!drawing_rect) {
+            half_rect = [x, y]
+        }
+        else {
+            const x1 = Math.min(half_rect[0], x)
+            const x2 = Math.max(half_rect[0], x)
+            const y1 = Math.min(half_rect[1], y)
+            const y2 = Math.max(half_rect[1], y)
+            rects.push(new Rectangle(x1, y1, x2, y2))
+            simulation.reset([], rects)
+        }
+        drawing_rect = !drawing_rect
     })
 
     draw_loop(simulation)
