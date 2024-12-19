@@ -67,15 +67,35 @@ export function second_law_bodies(n, r, vl, vr, rects) {
     return bodies;
 }
 export class Simulation {
-    constructor(ctx, bodies, rects) {
+    constructor(ctx, step_btn, pause_btn, play_btn, brownian_btn, second_law_btn, clear_btn, bodies, rects) {
         this.ctx = ctx;
+        this.step_btn = step_btn;
+        this.pause_btn = pause_btn;
+        this.play_btn = play_btn;
+        this.brownian_btn = brownian_btn;
+        this.second_law_btn = second_law_btn;
+        this.clear_btn = clear_btn;
         this.reset(bodies, rects);
     }
     reset(bodies, rects) {
-        this.playing = false;
+        this.pause();
         this.bodies = bodies;
         this.tick = 0;
         this.rectangles = rects;
+        this.intermediate_rect = null;
+    }
+    pause() {
+        this.playing = false;
+        this.pause_btn.disabled = true;
+        this.play_btn.disabled = false;
+        this.step_btn.disabled = false;
+    }
+    play() {
+        this.playing = true;
+        this.play_btn.disabled = true;
+        this.pause_btn.disabled = false;
+        this.step_btn.disabled = true;
+        this.step_all();
     }
     step_all() {
         this.tick += 1;
@@ -123,6 +143,9 @@ export class Simulation {
         this.ctx.textAlign = 'left';
         for (const rectangle of this.rectangles) {
             rectangle.draw(this.ctx);
+        }
+        if (this.intermediate_rect != null) {
+            this.intermediate_rect.draw(this.ctx);
         }
     }
     count_bodies(x1 = 0, x2 = 500, y1 = 0, y2 = 500) {

@@ -10,6 +10,10 @@ canvas {
     background-color: white;
 }
 
+nav {
+    margin: .1em 0 .3em;
+}
+
 .dropdown-container {
     position: relative;
 }

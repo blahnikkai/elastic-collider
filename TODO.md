@@ -6,3 +6,4 @@
 - Color circles by vel
 - Draw rects
 - Draw data captures
+- Use timeout id instead of playing boolean
