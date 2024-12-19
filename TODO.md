@@ -1,12 +1,10 @@
 - Collide off multiple rectangles at the same time?
-- brownian() generate random velocities
-- Better color system for generated
+- Generate bodies with Maxwell-Boltzmann velocities
 - Add crazy settings like path trace for all bodies
-- Transform/scale range input to real values
 - Color circles by vel
-- Draw rects
-- Draw data captures
 - Use timeout id instead of playing boolean
 - Right-click to delete rectangles
 - Draw a rectangle to delete bodies inside?
-- Maxwell-Boltzmann distribution
+- Draw rectangles out of canvas, truncate at canvas edge
+- Organize info into more of a grid
+- Move info to right

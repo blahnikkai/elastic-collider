@@ -18,10 +18,13 @@ function check_collides_existing_rects(rects, x, y, r) {
     }
     return false;
 }
+export function random_number(low, high) {
+    return (high - low) * Math.random() + low;
+}
 function generate_random_body(bodies, rects, m, v, r, x1 = 0, x2 = 500, y1 = 0, y2 = 500) {
     while (true) {
-        const x = (x2 - x1 - 2 * r) * Math.random() + r + x1;
-        const y = (y2 - y1 - 2 * r) * Math.random() + r + y1;
+        const x = random_number(x1 + r, x2 - r);
+        const y = random_number(y1 + r, y2 - r);
         const theta = 2 * Math.PI * Math.random();
         const vx = v * Math.cos(theta);
         const vy = v * Math.sin(theta);
@@ -72,7 +75,7 @@ export function second_law_bodies(n, r, vl, vr, rects) {
     return bodies;
 }
 export class Simulation {
-    constructor(ctx, step_btn, pause_btn, play_btn, brownian_btn, second_law_btn, clear_btn, bodies, walls, measures) {
+    constructor(ctx, step_btn, pause_btn, play_btn, brownian_btn, second_law_btn, clear_btn, info_container, bodies, walls, measures) {
         this.ctx = ctx;
         this.step_btn = step_btn;
         this.pause_btn = pause_btn;
@@ -80,6 +83,7 @@ export class Simulation {
         this.brownian_btn = brownian_btn;
         this.second_law_btn = second_law_btn;
         this.clear_btn = clear_btn;
+        this.info_container = info_container;
         this.reset(bodies, walls, measures);
     }
     reset(bodies, walls, measures) {
@@ -150,11 +154,15 @@ export class Simulation {
         for (const wall of this.walls) {
             wall.draw(this.ctx);
         }
-        if (this.intermediate_rect != null) {
-            this.intermediate_rect.draw(this.ctx);
-        }
+        let info_html = '';
         for (const measure of this.measures) {
             measure.draw(this.ctx);
+            const energy = this.calc_energy(measure.x1, measure.x2, measure.y1, measure.y2);
+            info_html += `<p style="color:hsl(${measure.color[0]}, ${measure.color[1]}%, ${measure.color[2]}%">${energy.toString()}</p>`;
+        }
+        this.info_container.innerHTML = info_html;
+        if (this.intermediate_rect != null) {
+            this.intermediate_rect.draw(this.ctx);
         }
     }
     count_bodies(x1 = 0, x2 = 500, y1 = 0, y2 = 500) {

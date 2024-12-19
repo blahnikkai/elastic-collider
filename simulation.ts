@@ -21,10 +21,14 @@ function check_collides_existing_rects(rects: Rectangle[], x: number, y: number,
     return false
 }
 
+export function random_number(low: number, high: number): number {
+    return (high - low) * Math.random() + low
+}
+
 function generate_random_body(bodies: Body[], rects: Rectangle[], m: number, v: number, r: number, x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): Body {
     while(true) {
-        const x = (x2 - x1 - 2 * r) * Math.random() + r + x1;
-        const y = (y2 - y1 - 2 * r) * Math.random() + r + y1;
+        const x = random_number(x1 + r, x2 - r)
+        const y = random_number(y1 + r, y2 - r)
         const theta = 2 * Math.PI * Math.random()
         const vx = v * Math.cos(theta)
         const vy = v * Math.sin(theta)
@@ -93,6 +97,7 @@ export class Simulation {
     brownian_btn: HTMLButtonElement
     second_law_btn: HTMLButtonElement
     clear_btn: HTMLButtonElement
+    info_container: HTMLDivElement
 
     playing: boolean
     bodies: Body[]
@@ -109,6 +114,7 @@ export class Simulation {
         brownian_btn: HTMLButtonElement,
         second_law_btn: HTMLButtonElement,
         clear_btn: HTMLButtonElement,
+        info_container: HTMLDivElement,
         bodies: Body[],
         walls: Rectangle[],
         measures: Rectangle[],
@@ -120,6 +126,7 @@ export class Simulation {
         this.brownian_btn = brownian_btn
         this.second_law_btn = second_law_btn
         this.clear_btn = clear_btn
+        this.info_container = info_container
         this.reset(bodies, walls, measures)
     }
 
@@ -200,14 +207,21 @@ export class Simulation {
         this.ctx.fillText(right_t.toFixed(2), 160, 80)
 
         this.ctx.textAlign = 'left'
+        
         for(const wall of this.walls) {
             wall.draw(this.ctx)
         }
-        if(this.intermediate_rect != null) {
-            this.intermediate_rect.draw(this.ctx)
-        }
+        
+        let info_html = ''
         for(const measure of this.measures) {
             measure.draw(this.ctx)
+            const energy = this.calc_energy(measure.x1, measure.x2, measure.y1, measure.y2)
+            info_html += `<p style="color:hsl(${measure.color[0]}, ${measure.color[1]}%, ${measure.color[2]}%">${energy.toString()}</p>`
+        }
+        this.info_container.innerHTML = info_html
+        
+        if(this.intermediate_rect != null) {
+            this.intermediate_rect.draw(this.ctx)
         }
     }
     

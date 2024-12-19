@@ -9,11 +9,12 @@ function main() {
     const brownian_btn = document.getElementById('brownian-btn');
     const second_law_btn = document.getElementById('second-law-btn');
     const clear_btn = document.getElementById('clear-btn');
+    const info_container = document.getElementById('info-container');
     // let bodies = brownian(300, 10, 150, 3)
     let walls = second_law_rects(20);
     let measures = [];
     let bodies = second_law_bodies(300, 3, 10, 100, walls);
-    let simulation = new Simulation(ctx, step_btn, pause_btn, play_btn, brownian_btn, second_law_btn, clear_btn, bodies, walls, measures);
+    let simulation = new Simulation(ctx, step_btn, pause_btn, play_btn, brownian_btn, second_law_btn, clear_btn, info_container, bodies, walls, measures);
     // const bodies = [
     // new Body(10, new Vector(350, 300), new Vector(-500, -500), 10)
     // ]
@@ -108,21 +109,25 @@ function main() {
         const y = event.clientY - canvas_rect.top;
         if (!drawing_rect) {
             half_rect = [x, y];
+            simulation.intermediate_rect = build_rect(x, y);
         }
         else {
             const rect = build_rect(x, y);
+            rect.color = simulation.intermediate_rect.color;
+            simulation.intermediate_rect = null;
             if (rect.type === RectangleType.Wall) {
                 bodies = [];
                 walls.push(rect);
+                simulation.reset(bodies, walls, measures);
             }
             else if (rect.type === RectangleType.Measurement) {
-                bodies = [];
                 measures.push(rect);
+                simulation.measures = measures;
             }
             else {
                 spawn_bodies(10, 1, 50, 5, rect, bodies);
+                simulation.bodies = bodies;
             }
-            simulation.reset(bodies, walls, measures);
         }
         drawing_rect = !drawing_rect;
     });
@@ -131,7 +136,11 @@ function main() {
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
         if (drawing_rect) {
-            simulation.intermediate_rect = build_rect(x, y);
+            const new_rect = build_rect(x, y);
+            simulation.intermediate_rect.x1 = new_rect.x1;
+            simulation.intermediate_rect.x2 = new_rect.x2;
+            simulation.intermediate_rect.y1 = new_rect.y1;
+            simulation.intermediate_rect.y2 = new_rect.y2;
         }
     });
     draw_loop(simulation);
