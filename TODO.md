@@ -8,3 +8,5 @@
 - Draw rectangles out of canvas, truncate at canvas edge
 - Organize info into more of a grid
 - Move info to right
+- Debug display of Brownian
+- Display velocity vector of Brownian

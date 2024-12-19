@@ -213,10 +213,30 @@ export class Simulation {
         }
         
         let info_html = ''
+        info_html += `<div>`
+        info_html += 'Total Kinetic Energy'
+        info_html += '</div>'
+        info_html += `<div>`
+        info_html += 'Body Count'
+        info_html += '</div>'
+        info_html += `<div>`
+        info_html += 'Mean Kinetic Energy (Temperature)'
+        info_html += '</div>'
         for(const measure of this.measures) {
-            measure.draw(this.ctx)
             const energy = this.calc_energy(measure.x1, measure.x2, measure.y1, measure.y2)
-            info_html += `<p style="color:hsl(${measure.color[0]}, ${measure.color[1]}%, ${measure.color[2]}%">${energy.toString()}</p>`
+            const body_cnt = this.count_bodies(measure.x1, measure.x2, measure.y1, measure.y2)
+            const hsl_color = `style="color:hsl(${measure.color[0]}, ${measure.color[1]}%, ${measure.color[2]}%"`
+            info_html += `<div ${hsl_color}">`
+            info_html += energy.toFixed(2)
+            info_html += '</div>'
+            info_html += `<div ${hsl_color}">`
+            info_html += body_cnt
+            info_html += '</div>'
+            info_html += `<div ${hsl_color}">`
+            info_html += (energy / body_cnt).toFixed(2)
+            info_html += '</div>'
+            
+            measure.draw(this.ctx)
         }
         this.info_container.innerHTML = info_html
         
