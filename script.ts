@@ -1,5 +1,5 @@
 import {Simulation, brownian, second_law_bodies, second_law_rects } from './simulation.js'
-import { Rectangle } from './rectangle.js'
+import { Rectangle, RectangleType } from './rectangle.js'
 import { Body } from './body.js'
 import { Vector } from './vector.js'
 
@@ -13,7 +13,7 @@ function main() {
     const brownian_btn = <HTMLButtonElement>document.getElementById('brownian-btn')
     const second_law_btn = <HTMLButtonElement>document.getElementById('second-law-btn')
     const clear_btn = <HTMLButtonElement>document.getElementById('clear-btn')
-
+    
     // let bodies = brownian(300, 10, 150, 3)
     let rects = second_law_rects(20)
     let bodies = second_law_bodies(300, 3, 10, 100, rects)
@@ -21,22 +21,22 @@ function main() {
 
     // const bodies = [
         // new Body(10, new Vector(350, 300), new Vector(-500, -500), 10)
-    // ]
-
-    // periodic
-    // let bodies = [
-    //     new Body(10, new Vector(70, 250), new Vector(25, 0)),
-    //     new Body(10, new Vector(250, 250), new Vector(0, 0)),
-    //     new Body(10, new Vector(300, 250), new Vector(0, 0)),
-    //     new Body(10, new Vector(400, 250), new Vector(-25, 0))
-    // ]
-
-    // problematic
-    // let bodies = [
-    //     new Body(10, new Vector(70, 250), new Vector(25, 0)),
-    //     new Body(10, new Vector(250, 250), new Vector(0, 0)),
-    //     new Body(10, new Vector(300, 250), new Vector(0, 0)),
-    //     new Body(10, new Vector(400, 250), new Vector(-25, 0))
+        // ]
+        
+        // periodic
+        // let bodies = [
+            //     new Body(10, new Vector(70, 250), new Vector(25, 0)),
+            //     new Body(10, new Vector(250, 250), new Vector(0, 0)),
+            //     new Body(10, new Vector(300, 250), new Vector(0, 0)),
+            //     new Body(10, new Vector(400, 250), new Vector(-25, 0))
+            // ]
+            
+            // problematic
+            // let bodies = [
+                //     new Body(10, new Vector(70, 250), new Vector(25, 0)),
+                //     new Body(10, new Vector(250, 250), new Vector(0, 0)),
+                //     new Body(10, new Vector(300, 250), new Vector(0, 0)),
+                //     new Body(10, new Vector(400, 250), new Vector(-25, 0))
     // ]
     
     step_btn.addEventListener("click", () => simulation.step_all())
@@ -97,14 +97,15 @@ function main() {
     second_law_container.addEventListener('mouseout', () => {
         second_law_form.style.display = 'none'
     })
-
+    
     
     clear_btn.addEventListener('click', () => {
         bodies = []
         rects = []
         simulation.reset(bodies, rects)
     })
-
+    
+    const rect_meaning_form = <HTMLFormElement>document.getElementById('rect-meaning-form')
     let drawing_rect = false
     let half_rect = [0, 0]
     canvas.addEventListener('click', (event: MouseEvent) => {
@@ -133,7 +134,10 @@ function main() {
             const x2 = Math.max(half_rect[0], x)
             const y1 = Math.min(half_rect[1], y)
             const y2 = Math.max(half_rect[1], y)
-            simulation.intermediate_rect = new Rectangle(x1, y1, x2, y2)
+            const rect_type_str: string = rect_meaning_form.elements['rect-meaning'].value
+            const rect_type: RectangleType = rect_type_str as RectangleType
+            console.log(rect_type)
+            simulation.intermediate_rect = new Rectangle(x1, y1, x2, y2, rect_type)
         }
     })
 

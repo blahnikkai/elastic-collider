@@ -16,19 +16,19 @@
             <form id="brownian-form" class="dropdown">
                 <div class="input-container">
                     <label for="number">Number: </label>
-                    <input name="number" type="number" value="300" class="form-input"/>
+                    <input name="number" type="number" value="300"/>
                 </div>
                 <div class="input-container">
                     <label for="mass">Mass Ratio: </label>
-                    <input name="mass" type="number" value="100" class="form-input"/> 
+                    <input name="mass" type="number" value="100"/> 
                 </div>
                 <div class="input-container">
                     <label for="velocity">Velocity: </label>
-                    <input name="velocity" type="number" value="150" class="form-input"/>
+                    <input name="velocity" type="number" value="150"/>
                 </div>
                 <div class="input-container">
                     <label for="radius">Radius: </label>
-                    <input name="radius" type="number" value="3" class="form-input"/>
+                    <input name="radius" type="number" value="3"/>
                 </div>
             </form>
         </span>
@@ -37,28 +37,45 @@
             <form id="second-law-form" class="dropdown">
                 <div class="input-container">
                     <label for="number">Number: </label>
-                    <input name="number" type="number" value="300" class="form-input"/>
+                    <input name="number" type="number" value="300"/>
                 </div>
                 <div class="input-container">
                     <label for="gap_size">Gap Size: </label>
-                    <input name="gap_size" type="number" value="20" class="form-input"/>
+                    <input name="gap_size" type="number" value="20"/>
                 </div>
                 <div class="input-container">
                     <label for="radius">Radius: </label>
-                    <input name="radius" type="number" value="3" class="form-input"/>
+                    <input name="radius" type="number" value="3"/>
                 </div>
                 <div class="input-container">
                     <label for="vl">Left velocity: </label>
-                    <input name="vl" type="number" value="10" class="form-input"/>
+                    <input name="vl" type="number" value="10"/>
                 </div>
                 <div class="input-container">
                     <label for="vr">Right velocity: </label>
-                    <input name="vr" type="number" value="100" class="form-input"/>
+                    <input name="vr" type="number" value="100"/>
                 </div>
             </form>
         </span>
         <button id="clear-btn">Clear</button>
     </nav>
+    <form id="rect-meaning-form">
+        <ul>
+            <li>
+                <input type="radio" name="rect-meaning" value="wall" checked/>
+                <label for="wall">Wall</label>
+            </li>
+            <li>
+                <input type="radio" name="rect-meaning" value="bodies"/>
+                <label for="bodies">Bodies</label>
+            </li>
+            <li>
+                <input type="radio" name="rect-meaning" value="measurement"/>
+                <label for="measurement">Measurement</label>
+            </li>
+            
+        </ul>
+    </form>
     <div>
         <script src="built/script.js" type="module" defer></script>
         <canvas id="canvas" height=500 width=500/>

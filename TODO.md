@@ -7,3 +7,5 @@
 - Draw rects
 - Draw data captures
 - Use timeout id instead of playing boolean
+- Right-click to delete rectangles
+- Draw a rectangle to delete bodies inside?

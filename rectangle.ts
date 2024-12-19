@@ -1,15 +1,23 @@
+export enum RectangleType {
+    Wall = "wall",
+    Spawn = "bodies",
+    Measurement = "measurement",
+}
+
 export class Rectangle {
 
     x1: number
     y1: number
     x2: number
     y2: number
+    type: RectangleType
 
-    constructor(x1: number, y1: number, x2: number, y2: number) {
+    constructor(x1: number, y1: number, x2: number, y2: number, type: RectangleType = RectangleType.Wall) {
         this.x1 = x1
         this.y1 = y1
         this.x2 = x2
         this.y2 = y2
+        this.type = type
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
@@ -19,9 +27,20 @@ export class Rectangle {
         ctx.lineTo(this.x2, this.y2)
         ctx.lineTo(this.x1, this.y2)
         ctx.lineTo(this.x1, this.y1)
-        ctx.closePath()
         ctx.stroke()
-        // this.ctx.fill()
+        switch(this.type) {
+            case RectangleType.Wall:
+                ctx.fillStyle = "rgba(255, 0, 255, 0.5)"
+                break
+            case RectangleType.Spawn:
+                ctx.fillStyle = "rgba(255, 255, 0, 0.5)"
+                break
+            case RectangleType.Measurement:
+                ctx.fillStyle = "rgba(0, 255, 255, 0.5)"
+                break
+        }
+        ctx.fill()
+        ctx.closePath()
     }
 
     intersect(x: number, y: number, r: number): boolean {

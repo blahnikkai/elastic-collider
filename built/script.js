@@ -86,6 +86,7 @@ function main() {
         rects = [];
         simulation.reset(bodies, rects);
     });
+    const rect_meaning_form = document.getElementById('rect-meaning-form');
     let drawing_rect = false;
     let half_rect = [0, 0];
     canvas.addEventListener('click', (event) => {
@@ -114,7 +115,10 @@ function main() {
             const x2 = Math.max(half_rect[0], x);
             const y1 = Math.min(half_rect[1], y);
             const y2 = Math.max(half_rect[1], y);
-            simulation.intermediate_rect = new Rectangle(x1, y1, x2, y2);
+            const rect_type_str = rect_meaning_form.elements['rect-meaning'].value;
+            const rect_type = rect_type_str;
+            console.log(rect_type);
+            simulation.intermediate_rect = new Rectangle(x1, y1, x2, y2, rect_type);
         }
     });
     draw_loop(simulation);
