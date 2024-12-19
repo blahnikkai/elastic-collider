@@ -1,5 +1,5 @@
-import { Simulation, brownian, second_law_bodies, second_law_rects } from './simulation.js';
-import { Rectangle } from './rectangle.js';
+import { Simulation, brownian, second_law_bodies, second_law_rects, spawn_bodies } from './simulation.js';
+import { Rectangle, RectangleType } from './rectangle.js';
 function main() {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
@@ -10,9 +10,10 @@ function main() {
     const second_law_btn = document.getElementById('second-law-btn');
     const clear_btn = document.getElementById('clear-btn');
     // let bodies = brownian(300, 10, 150, 3)
-    let rects = second_law_rects(20);
-    let bodies = second_law_bodies(300, 3, 10, 100, rects);
-    let simulation = new Simulation(ctx, step_btn, pause_btn, play_btn, brownian_btn, second_law_btn, clear_btn, bodies, rects);
+    let walls = second_law_rects(20);
+    let measures = [];
+    let bodies = second_law_bodies(300, 3, 10, 100, walls);
+    let simulation = new Simulation(ctx, step_btn, pause_btn, play_btn, brownian_btn, second_law_btn, clear_btn, bodies, walls, measures);
     // const bodies = [
     // new Body(10, new Vector(350, 300), new Vector(-500, -500), 10)
     // ]
@@ -42,8 +43,9 @@ function main() {
         const v = parseInt(brownian_form.velocity.value);
         const r = parseInt(brownian_form.radius.value);
         bodies = brownian(n, m, v, r);
-        rects = [];
-        simulation.reset(bodies, rects);
+        walls = [];
+        measures = [];
+        simulation.reset(bodies, walls, measures);
     };
     brownian_btn.addEventListener('click', submit_brownian_form);
     brownian_form.number.addEventListener('change', submit_brownian_form);
@@ -65,9 +67,10 @@ function main() {
         const r = parseInt(second_law_form.radius.value);
         const vl = parseInt(second_law_form.vl.value);
         const vr = parseInt(second_law_form.vr.value);
-        rects = second_law_rects(gap_size);
-        bodies = second_law_bodies(n, r, vl, vr, rects);
-        simulation.reset(bodies, rects);
+        walls = second_law_rects(gap_size);
+        bodies = second_law_bodies(n, r, vl, vr, walls);
+        measures = [];
+        simulation.reset(bodies, walls, measures);
     };
     second_law_btn.addEventListener('click', submit_second_law_form);
     second_law_form.number.addEventListener('change', submit_second_law_form);
@@ -83,26 +86,43 @@ function main() {
     });
     clear_btn.addEventListener('click', () => {
         bodies = [];
-        rects = [];
-        simulation.reset(bodies, rects);
+        walls = [];
+        measures = [];
+        simulation.reset(bodies, walls, measures);
     });
     const rect_meaning_form = document.getElementById('rect-meaning-form');
     let drawing_rect = false;
     let half_rect = [0, 0];
+    const build_rect = (x, y) => {
+        const x1 = Math.min(half_rect[0], x);
+        const x2 = Math.max(half_rect[0], x);
+        const y1 = Math.min(half_rect[1], y);
+        const y2 = Math.max(half_rect[1], y);
+        const rect_type_str = rect_meaning_form.elements['rect-meaning'].value;
+        const rect_type = rect_type_str;
+        return new Rectangle(x1, y1, x2, y2, rect_type);
+    };
     canvas.addEventListener('click', (event) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        const canvas_rect = canvas.getBoundingClientRect();
+        const x = event.clientX - canvas_rect.left;
+        const y = event.clientY - canvas_rect.top;
         if (!drawing_rect) {
             half_rect = [x, y];
         }
         else {
-            const x1 = Math.min(half_rect[0], x);
-            const x2 = Math.max(half_rect[0], x);
-            const y1 = Math.min(half_rect[1], y);
-            const y2 = Math.max(half_rect[1], y);
-            rects.push(new Rectangle(x1, y1, x2, y2));
-            simulation.reset([], rects);
+            const rect = build_rect(x, y);
+            if (rect.type === RectangleType.Wall) {
+                bodies = [];
+                walls.push(rect);
+            }
+            else if (rect.type === RectangleType.Measurement) {
+                bodies = [];
+                measures.push(rect);
+            }
+            else {
+                spawn_bodies(10, 1, 50, 5, rect, bodies);
+            }
+            simulation.reset(bodies, walls, measures);
         }
         drawing_rect = !drawing_rect;
     });
@@ -111,14 +131,7 @@ function main() {
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
         if (drawing_rect) {
-            const x1 = Math.min(half_rect[0], x);
-            const x2 = Math.max(half_rect[0], x);
-            const y1 = Math.min(half_rect[1], y);
-            const y2 = Math.max(half_rect[1], y);
-            const rect_type_str = rect_meaning_form.elements['rect-meaning'].value;
-            const rect_type = rect_type_str;
-            console.log(rect_type);
-            simulation.intermediate_rect = new Rectangle(x1, y1, x2, y2, rect_type);
+            simulation.intermediate_rect = build_rect(x, y);
         }
     });
     draw_loop(simulation);

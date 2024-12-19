@@ -30,6 +30,11 @@ function generate_random_body(bodies, rects, m, v, r, x1 = 0, x2 = 500, y1 = 0, 
         }
     }
 }
+export function spawn_bodies(n, m, v, r, spawn_rect, bodies) {
+    for (let i = 0; i < n; i++) {
+        bodies.push(generate_random_body(bodies, [], 1, v, r, spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2));
+    }
+}
 // number
 // size
 // mass
@@ -67,7 +72,7 @@ export function second_law_bodies(n, r, vl, vr, rects) {
     return bodies;
 }
 export class Simulation {
-    constructor(ctx, step_btn, pause_btn, play_btn, brownian_btn, second_law_btn, clear_btn, bodies, rects) {
+    constructor(ctx, step_btn, pause_btn, play_btn, brownian_btn, second_law_btn, clear_btn, bodies, walls, measures) {
         this.ctx = ctx;
         this.step_btn = step_btn;
         this.pause_btn = pause_btn;
@@ -75,13 +80,14 @@ export class Simulation {
         this.brownian_btn = brownian_btn;
         this.second_law_btn = second_law_btn;
         this.clear_btn = clear_btn;
-        this.reset(bodies, rects);
+        this.reset(bodies, walls, measures);
     }
-    reset(bodies, rects) {
+    reset(bodies, walls, measures) {
         this.pause();
         this.bodies = bodies;
         this.tick = 0;
-        this.rectangles = rects;
+        this.walls = walls;
+        this.measures = measures;
         this.intermediate_rect = null;
     }
     pause() {
@@ -109,7 +115,7 @@ export class Simulation {
         }
         for (const body of this.bodies) {
             body.check_wall_collide();
-            for (const rect of this.rectangles) {
+            for (const rect of this.walls) {
                 body.check_rect_collide(rect);
             }
         }
@@ -141,11 +147,14 @@ export class Simulation {
         this.ctx.fillText(left_t.toFixed(2), 160, 60);
         this.ctx.fillText(right_t.toFixed(2), 160, 80);
         this.ctx.textAlign = 'left';
-        for (const rectangle of this.rectangles) {
-            rectangle.draw(this.ctx);
+        for (const wall of this.walls) {
+            wall.draw(this.ctx);
         }
         if (this.intermediate_rect != null) {
             this.intermediate_rect.draw(this.ctx);
+        }
+        for (const measure of this.measures) {
+            measure.draw(this.ctx);
         }
     }
     count_bodies(x1 = 0, x2 = 500, y1 = 0, y2 = 500) {
