@@ -1,15 +1,13 @@
-import {Simulation, brownian, second_law_bodies, second_law_rects, spawn_bodies } from './simulation.js'
-import {Rectangle, RectangleType} from './rectangle.js'
 import {UIHandler} from './ui_handler.js'
 
 function main() {
     const ui_handler = new UIHandler()
-    draw_loop(ui_handler.simulation)
+    draw_loop(ui_handler)
 }
 
-function draw_loop(simulation: Simulation) {
-    simulation.draw_all()
-    window.requestAnimationFrame(() => draw_loop(simulation))
+function draw_loop(ui_handler: UIHandler) {
+    ui_handler.simulation.draw_all(ui_handler.ctx, ui_handler.info_container)
+    window.requestAnimationFrame(() => draw_loop(ui_handler))
 }
 
 main()

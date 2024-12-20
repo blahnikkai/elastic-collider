@@ -23,7 +23,7 @@ export class UIHandler {
         let walls = second_law_rects(20);
         let measures = [];
         let bodies = second_law_bodies(300, 3, 10, 100, walls);
-        this.simulation = new Simulation(this.ctx, this.step_btn, this.pause_btn, this.play_btn, this.brownian_btn, this.second_law_btn, this.clear_btn, this.info_container);
+        this.simulation = new Simulation();
         this.simulation.reset(bodies, walls, measures);
         // const bodies = [
         // new Body(10, new Vector(350, 300), new Vector(-500, -500), 10)
@@ -78,6 +78,18 @@ export class UIHandler {
         window.addEventListener('click', (event) => this.click_window(event));
         window.addEventListener('mousemove', (event) => this.handle_mouse_move(event));
         this.canvas.addEventListener('contextmenu', (event) => this.right_click_canvas(event));
+    }
+    play() {
+        this.simulation.play();
+        this.pause_btn.disabled = false;
+        this.play_btn.disabled = true;
+        this.step_btn.disabled = true;
+    }
+    pause() {
+        this.simulation.pause();
+        this.pause_btn.disabled = true;
+        this.play_btn.disabled = false;
+        this.step_btn.disabled = false;
     }
     get_mouse_coords(event) {
         const rect = this.canvas.getBoundingClientRect();

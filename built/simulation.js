@@ -75,15 +75,7 @@ export function second_law_bodies(n, r, vl, vr, rects) {
     return bodies;
 }
 export class Simulation {
-    constructor(ctx, step_btn, pause_btn, play_btn, brownian_btn, second_law_btn, clear_btn, info_container) {
-        this.ctx = ctx;
-        this.step_btn = step_btn;
-        this.pause_btn = pause_btn;
-        this.play_btn = play_btn;
-        this.brownian_btn = brownian_btn;
-        this.second_law_btn = second_law_btn;
-        this.clear_btn = clear_btn;
-        this.info_container = info_container;
+    constructor() {
         this.bodies = [];
         this.walls = [];
         this.measures = [];
@@ -98,18 +90,12 @@ export class Simulation {
         this.measures = measures;
         this.intermediate_rect = null;
     }
-    pause() {
-        this.playing = false;
-        this.pause_btn.disabled = true;
-        this.play_btn.disabled = false;
-        this.step_btn.disabled = false;
-    }
     play() {
         this.playing = true;
-        this.play_btn.disabled = true;
-        this.pause_btn.disabled = false;
-        this.step_btn.disabled = true;
         this.step_all();
+    }
+    pause() {
+        this.playing = false;
     }
     step_all() {
         this.tick += 1;
@@ -131,32 +117,32 @@ export class Simulation {
             setTimeout(() => this.step_all(), 1000 / TICKRATE);
         }
     }
-    draw_all() {
-        this.ctx.clearRect(0, 0, 500, 500);
+    draw_all(ctx, info_container) {
+        ctx.clearRect(0, 0, 500, 500);
         for (const body of this.bodies) {
-            body.draw(this.ctx);
+            body.draw(ctx);
         }
         const energy = this.calc_energy();
-        this.ctx.fillStyle = 'black';
-        this.ctx.strokeStyle = 'black';
-        this.ctx.fillText(energy.toString(), 20, 20);
-        this.ctx.fillText(this.tick.toString(), 20, 40);
-        this.ctx.textAlign = 'right';
+        ctx.fillStyle = 'black';
+        ctx.strokeStyle = 'black';
+        ctx.fillText(energy.toString(), 20, 20);
+        ctx.fillText(this.tick.toString(), 20, 40);
+        ctx.textAlign = 'right';
         const left_e = this.calc_energy(0, 250);
         const right_e = this.calc_energy(250, 500);
-        this.ctx.fillText(left_e.toFixed(2), 80, 60);
-        this.ctx.fillText(right_e.toFixed(2), 80, 80);
+        ctx.fillText(left_e.toFixed(2), 80, 60);
+        ctx.fillText(right_e.toFixed(2), 80, 80);
         const left_cnt = this.count_bodies(0, 250);
         const right_cnt = this.count_bodies(250, 500);
-        this.ctx.fillText(left_cnt.toString(), 110, 60);
-        this.ctx.fillText(right_cnt.toString(), 110, 80);
+        ctx.fillText(left_cnt.toString(), 110, 60);
+        ctx.fillText(right_cnt.toString(), 110, 80);
         const left_t = left_e / left_cnt;
         const right_t = right_e / right_cnt;
-        this.ctx.fillText(left_t.toFixed(2), 160, 60);
-        this.ctx.fillText(right_t.toFixed(2), 160, 80);
-        this.ctx.textAlign = 'left';
+        ctx.fillText(left_t.toFixed(2), 160, 60);
+        ctx.fillText(right_t.toFixed(2), 160, 80);
+        ctx.textAlign = 'left';
         for (const wall of this.walls) {
-            wall.draw(this.ctx);
+            wall.draw(ctx);
         }
         let info_html = '';
         info_html += `<div>`;
@@ -181,11 +167,11 @@ export class Simulation {
             info_html += `<div ${hsl_color}">`;
             info_html += (energy / body_cnt).toFixed(2);
             info_html += '</div>';
-            measure.draw(this.ctx);
+            measure.draw(ctx);
         }
-        this.info_container.innerHTML = info_html;
+        info_container.innerHTML = info_html;
         if (this.intermediate_rect != null) {
-            this.intermediate_rect.draw(this.ctx);
+            this.intermediate_rect.draw(ctx);
         }
     }
     count_bodies(x1 = 0, x2 = 500, y1 = 0, y2 = 500) {

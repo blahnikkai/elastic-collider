@@ -58,16 +58,7 @@ export class UIHandler {
         let measures = []
         let bodies = second_law_bodies(300, 3, 10, 100, walls)
         
-        this.simulation = new Simulation(
-            this.ctx, 
-            this.step_btn, 
-            this.pause_btn, 
-            this.play_btn, 
-            this.brownian_btn, 
-            this.second_law_btn, 
-            this.clear_btn, 
-            this.info_container,
-        )
+        this.simulation = new Simulation()
         this.simulation.reset(bodies, walls, measures)
         
         // const bodies = [
@@ -76,19 +67,19 @@ export class UIHandler {
         
         // periodic
         // let bodies = [
+        //     new Body(10, new Vector(70, 250), new Vector(25, 0)),
+        //     new Body(10, new Vector(250, 250), new Vector(0, 0)),
+        //     new Body(10, new Vector(300, 250), new Vector(0, 0)),
+        //     new Body(10, new Vector(400, 250), new Vector(-25, 0))
+        // ]
+        
+        // problematic
+        // let bodies = [
             //     new Body(10, new Vector(70, 250), new Vector(25, 0)),
             //     new Body(10, new Vector(250, 250), new Vector(0, 0)),
             //     new Body(10, new Vector(300, 250), new Vector(0, 0)),
             //     new Body(10, new Vector(400, 250), new Vector(-25, 0))
-            // ]
-            
-            // problematic
-            // let bodies = [
-                //     new Body(10, new Vector(70, 250), new Vector(25, 0)),
-                //     new Body(10, new Vector(250, 250), new Vector(0, 0)),
-                //     new Body(10, new Vector(300, 250), new Vector(0, 0)),
-                //     new Body(10, new Vector(400, 250), new Vector(-25, 0))
-    // ]
+        // ]
         this.add_event_listeners()
     }
 
@@ -132,6 +123,20 @@ export class UIHandler {
         window.addEventListener('click', (event: MouseEvent) => this.click_window(event))
         window.addEventListener('mousemove', (event: MouseEvent) => this.handle_mouse_move(event))
         this.canvas.addEventListener('contextmenu', (event: MouseEvent) => this.right_click_canvas(event))
+    }
+
+    play() {
+        this.simulation.play()
+        this.pause_btn.disabled = false
+        this.play_btn.disabled = true
+        this.step_btn.disabled = true
+    }
+
+    pause() {
+        this.simulation.pause()
+        this.pause_btn.disabled = true
+        this.play_btn.disabled = false
+        this.step_btn.disabled = false
     }
 
     get_mouse_coords(event: MouseEvent): number[] {

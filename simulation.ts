@@ -90,15 +90,6 @@ export function second_law_bodies(n: number, r: number, vl: number, vr: number, 
 
 export class Simulation {
 
-    ctx: CanvasRenderingContext2D
-    step_btn: HTMLButtonElement
-    pause_btn: HTMLButtonElement
-    play_btn: HTMLButtonElement
-    brownian_btn: HTMLButtonElement
-    second_law_btn: HTMLButtonElement
-    clear_btn: HTMLButtonElement
-    info_container: HTMLDivElement
-
     playing: boolean
     tick: number
     bodies: Body[]
@@ -106,25 +97,7 @@ export class Simulation {
     measures: Rectangle[]
     intermediate_rect: Rectangle | null
 
-    constructor(
-        ctx: CanvasRenderingContext2D,
-        step_btn: HTMLButtonElement,
-        pause_btn: HTMLButtonElement,
-        play_btn: HTMLButtonElement,
-        brownian_btn: HTMLButtonElement,
-        second_law_btn: HTMLButtonElement,
-        clear_btn: HTMLButtonElement,
-        info_container: HTMLDivElement,
-    ) {
-        this.ctx = ctx
-        this.step_btn = step_btn
-        this.pause_btn = pause_btn
-        this.play_btn = play_btn
-        this.brownian_btn = brownian_btn
-        this.second_law_btn = second_law_btn
-        this.clear_btn = clear_btn
-        this.info_container = info_container
-        
+    constructor() {
         this.bodies = []
         this.walls = []
         this.measures = []
@@ -141,19 +114,13 @@ export class Simulation {
         this.intermediate_rect = null
     }
 
-    pause() {
-        this.playing = false
-        this.pause_btn.disabled = true
-        this.play_btn.disabled = false
-        this.step_btn.disabled = false
-    }
-
     play() {
         this.playing = true
-        this.play_btn.disabled = true
-        this.pause_btn.disabled = false
-        this.step_btn.disabled = true
         this.step_all()
+    }
+
+    pause() {
+        this.playing = false
     }
 
     step_all(): void {
@@ -177,41 +144,41 @@ export class Simulation {
         }
     }
 
-    draw_all(): void {
-        this.ctx.clearRect(0, 0, 500, 500)
+    draw_all(ctx: CanvasRenderingContext2D, info_container: HTMLDivElement): void {
+        ctx.clearRect(0, 0, 500, 500)
         for(const body of this.bodies) {
-            body.draw(this.ctx)
+            body.draw(ctx)
         }
         const energy = this.calc_energy()
-        this.ctx.fillStyle = 'black'
-        this.ctx.strokeStyle = 'black'
-        this.ctx.fillText(energy.toString(), 20, 20)
-        this.ctx.fillText(this.tick.toString(), 20, 40)
+        ctx.fillStyle = 'black'
+        ctx.strokeStyle = 'black'
+        ctx.fillText(energy.toString(), 20, 20)
+        ctx.fillText(this.tick.toString(), 20, 40)
         
-        this.ctx.textAlign = 'right'
+        ctx.textAlign = 'right'
         
         const left_e = this.calc_energy(0, 250)
         const right_e = this.calc_energy(250, 500)
         
-        this.ctx.fillText(left_e.toFixed(2), 80, 60)
-        this.ctx.fillText(right_e.toFixed(2), 80, 80)
+        ctx.fillText(left_e.toFixed(2), 80, 60)
+        ctx.fillText(right_e.toFixed(2), 80, 80)
 
         const left_cnt = this.count_bodies(0, 250)
         const right_cnt = this.count_bodies(250, 500)
 
-        this.ctx.fillText(left_cnt.toString(), 110, 60)
-        this.ctx.fillText(right_cnt.toString(), 110, 80)
+        ctx.fillText(left_cnt.toString(), 110, 60)
+        ctx.fillText(right_cnt.toString(), 110, 80)
 
         const left_t = left_e / left_cnt
         const right_t = right_e / right_cnt
 
-        this.ctx.fillText(left_t.toFixed(2), 160, 60)
-        this.ctx.fillText(right_t.toFixed(2), 160, 80)
+        ctx.fillText(left_t.toFixed(2), 160, 60)
+        ctx.fillText(right_t.toFixed(2), 160, 80)
 
-        this.ctx.textAlign = 'left'
+        ctx.textAlign = 'left'
         
         for(const wall of this.walls) {
-            wall.draw(this.ctx)
+            wall.draw(ctx)
         }
         
         let info_html = ''
@@ -238,12 +205,12 @@ export class Simulation {
             info_html += (energy / body_cnt).toFixed(2)
             info_html += '</div>'
             
-            measure.draw(this.ctx)
+            measure.draw(ctx)
         }
-        this.info_container.innerHTML = info_html
+        info_container.innerHTML = info_html
         
         if(this.intermediate_rect != null) {
-            this.intermediate_rect.draw(this.ctx)
+            this.intermediate_rect.draw(ctx)
         }
     }
     
