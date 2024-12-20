@@ -118,16 +118,41 @@ function main() {
     let half_rect = [0, 0]
 
     const build_rect = (x: number, y: number): Rectangle => {
-        const x1 = Math.min(half_rect[0], x)
-        const x2 = Math.max(half_rect[0], x)
-        const y1 = Math.min(half_rect[1], y)
-        const y2 = Math.max(half_rect[1], y)
+        const clamp = (num: number, lo: number, hi: number) => {
+            return Math.max(lo, Math.min(num, hi))
+        }
+        const x1 = clamp(Math.min(half_rect[0], x), 0, 500)
+        const x2 = clamp(Math.max(half_rect[0], x), 0, 500)
+        const y1 = clamp(Math.min(half_rect[1], y), 0, 500)
+        const y2 = clamp(Math.max(half_rect[1], y), 0, 500)
+        
         const rect_type_str: string = rect_meaning_form.elements['rect-meaning'].value
         const rect_type: RectangleType = rect_type_str as RectangleType
         return new Rectangle(x1, y1, x2, y2, rect_type)
     }
 
-    canvas.addEventListener('click', (event: MouseEvent) => {
+    const finish_rect = (x: number, y: number): void => {
+        const rect: Rectangle = build_rect(x, y)
+        rect.color = simulation.intermediate_rect.color
+        simulation.intermediate_rect = null
+        if(rect.type === RectangleType.Wall) {
+            bodies = []
+            walls.push(rect)
+            simulation.reset(bodies, walls, measures)
+        }
+        else if(rect.type === RectangleType.Measurement) {
+            measures.push(rect)
+            simulation.measures = measures
+        }
+        else {
+            spawn_bodies(10, 1, 50, 5, rect, bodies)
+            simulation.bodies = bodies
+        }
+    }
+
+    const canvas_container = document.getElementById('canvas-container')
+    canvas_container.addEventListener('click', (event: MouseEvent) => {
+        console.log('yeah')
         const canvas_rect = canvas.getBoundingClientRect()
         const x = event.clientX - canvas_rect.left
         const y = event.clientY - canvas_rect.top
@@ -136,26 +161,21 @@ function main() {
             simulation.intermediate_rect = build_rect(x, y)
         }
         else {
-            const rect: Rectangle = build_rect(x, y)
-            rect.color = simulation.intermediate_rect.color
-            simulation.intermediate_rect = null
-            if(rect.type === RectangleType.Wall) {
-                bodies = []
-                walls.push(rect)
-                simulation.reset(bodies, walls, measures)
-            }
-            else if(rect.type === RectangleType.Measurement) {
-                measures.push(rect)
-                simulation.measures = measures
-            }
-            else {
-                spawn_bodies(10, 1, 50, 5, rect, bodies)
-                simulation.bodies = bodies
-            }
+            finish_rect(x, y)
         }
         drawing_rect = !drawing_rect
     })
-    canvas.addEventListener('mousemove', (event: MouseEvent) => {
+    window.addEventListener('click', (event: MouseEvent) => {
+        if(event.target === canvas || event.target === canvas_container || !drawing_rect) {
+            return
+        }
+        const canvas_rect = canvas.getBoundingClientRect()
+        const x = event.clientX - canvas_rect.left
+        const y = event.clientY - canvas_rect.top
+        finish_rect(x, y)
+        drawing_rect = false
+    })
+    window.addEventListener('mousemove', (event: MouseEvent) => {
         const rect = canvas.getBoundingClientRect()
         const x = event.clientX - rect.left
         const y = event.clientY - rect.top

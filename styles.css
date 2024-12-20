@@ -9,6 +9,7 @@ html {
 
 canvas {
     background-color: white;
+    margin: 1em;
 }
 
 nav {
@@ -53,4 +54,10 @@ label {
     color: white;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+}
+
+#canvas-container {
+    display: inline-block;
+    background-color: black;
+    border: 2px solid white;
 }

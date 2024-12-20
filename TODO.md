@@ -10,3 +10,4 @@
 - Move info to right
 - Debug display of Brownian
 - Display velocity vector of Brownian
+- Container around rect for click, mousemove events to give some wiggle room
