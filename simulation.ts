@@ -100,8 +100,8 @@ export class Simulation {
     info_container: HTMLDivElement
 
     playing: boolean
-    bodies: Body[]
     tick: number
+    bodies: Body[]
     walls: Rectangle[]
     measures: Rectangle[]
     intermediate_rect: Rectangle | null
@@ -115,9 +115,6 @@ export class Simulation {
         second_law_btn: HTMLButtonElement,
         clear_btn: HTMLButtonElement,
         info_container: HTMLDivElement,
-        bodies: Body[],
-        walls: Rectangle[],
-        measures: Rectangle[],
     ) {
         this.ctx = ctx
         this.step_btn = step_btn
@@ -127,7 +124,12 @@ export class Simulation {
         this.second_law_btn = second_law_btn
         this.clear_btn = clear_btn
         this.info_container = info_container
-        this.reset(bodies, walls, measures)
+        
+        this.bodies = []
+        this.walls = []
+        this.measures = []
+        this.tick = 0
+        this.intermediate_rect = null
     }
 
     reset(bodies: Body[], walls: Rectangle[], measures: Rectangle[]) {

@@ -75,7 +75,7 @@ export function second_law_bodies(n, r, vl, vr, rects) {
     return bodies;
 }
 export class Simulation {
-    constructor(ctx, step_btn, pause_btn, play_btn, brownian_btn, second_law_btn, clear_btn, info_container, bodies, walls, measures) {
+    constructor(ctx, step_btn, pause_btn, play_btn, brownian_btn, second_law_btn, clear_btn, info_container) {
         this.ctx = ctx;
         this.step_btn = step_btn;
         this.pause_btn = pause_btn;
@@ -84,7 +84,11 @@ export class Simulation {
         this.second_law_btn = second_law_btn;
         this.clear_btn = clear_btn;
         this.info_container = info_container;
-        this.reset(bodies, walls, measures);
+        this.bodies = [];
+        this.walls = [];
+        this.measures = [];
+        this.tick = 0;
+        this.intermediate_rect = null;
     }
     reset(bodies, walls, measures) {
         this.pause();
