@@ -50,9 +50,20 @@ label {
     width: 50%;
 }
 
-#info-container {
+#main-container {
     display: flex;
     flex-direction: row;
+}
+
+#bodies-container {
+    display: inline-block;
+    width: fit-content;
+}
+
+#bodies-subform {
+    top: 0;
+    left: 100%;
+    width: 200%;
 }
 
 #info-grid {

@@ -1,5 +1,6 @@
 import {Simulation, brownian, second_law_bodies, second_law_measures, second_law_rects, spawn_bodies } from './simulation.js'
 import {Rectangle, RectangleType} from './rectangle.js'
+import { Body } from './body.js'
 
 export class UIHandler {
 
@@ -18,6 +19,7 @@ export class UIHandler {
 
     info_grid: HTMLDivElement
     canvas_container: HTMLDivElement
+    bodies_subform: HTMLDivElement
 
     brownian_form: HTMLFormElement
     second_law_form: HTMLFormElement
@@ -25,6 +27,7 @@ export class UIHandler {
 
     brownian_container: HTMLSpanElement
     second_law_container: HTMLSpanElement
+    bodies_container: HTMLSpanElement
 
     drawing_rect: boolean
     half_rect: number[]
@@ -41,6 +44,7 @@ export class UIHandler {
 
         this.info_grid = <HTMLDivElement>document.getElementById('info-grid')
         this.canvas_container = <HTMLDivElement>document.getElementById('canvas-container')
+        this.bodies_subform = <HTMLDivElement>document.getElementById('bodies-subform')
         
         this.brownian_form = <HTMLFormElement>document.getElementById('brownian-form')
         this.second_law_form = <HTMLFormElement>document.getElementById('second-law-form')
@@ -48,6 +52,7 @@ export class UIHandler {
         
         this.brownian_container = <HTMLSpanElement>document.getElementById('brownian-container')
         this.second_law_container = <HTMLSpanElement>document.getElementById('second-law-container')
+        this.bodies_container = <HTMLSpanElement>document.getElementById('bodies-container')
 
         this.drawing_rect = false
         this.half_rect = [0, 0]
@@ -59,7 +64,7 @@ export class UIHandler {
         let bodies = second_law_bodies(300, 3, 10, 100, walls)
         
         this.simulation = new Simulation()
-        this.simulation.reset(bodies, walls, measures)
+        this.reset(bodies, walls, measures)
         
         // const bodies = [
         // new Body(10, new Vector(350, 300), new Vector(-500, -500), 10)
@@ -87,8 +92,7 @@ export class UIHandler {
         this.step_btn.addEventListener("click", () => this.simulation.step_all())
         this.pause_btn.addEventListener("click", () => this.pause())
         this.play_btn.addEventListener("click", () => this.play())
-
-        
+        // brownian motion
         this.brownian_btn.addEventListener('click', (event: MouseEvent) => this.submit_brownian_form(event))
         this.brownian_form.number.addEventListener('change', (event: MouseEvent) => this.submit_brownian_form(event))
         this.brownian_form.mass.addEventListener('change', (event: MouseEvent) => this.submit_brownian_form(event))
@@ -100,9 +104,8 @@ export class UIHandler {
         this.brownian_container.addEventListener('mouseout', () => {
             this.brownian_form.style.display = 'none'
         })
-
+        // second law of thermodynamics
         this.second_law_btn.addEventListener('click', (event: MouseEvent) => this.submit_second_law_form(event))
-    
         this.second_law_form.number.addEventListener('change', (event: MouseEvent) => this.submit_second_law_form(event))
         this.second_law_form.gap_size.addEventListener('change', (event: MouseEvent) => this.submit_second_law_form(event))
         this.second_law_form.radius.addEventListener('change', (event: MouseEvent) => this.submit_second_law_form(event))
@@ -114,11 +117,18 @@ export class UIHandler {
         this.second_law_container.addEventListener('mouseout', () => {
             this.second_law_form.style.display = 'none'
         })
-        
-        this.clear_btn.addEventListener('click', () => {
-            this.simulation.reset([], [], [])
+        // spawn bodies
+        this.bodies_container.addEventListener('mouseover', () => {
+            this.bodies_subform.style.display = 'block'
         })
-
+        this.bodies_container.addEventListener('mouseout', () => {
+            this.bodies_subform.style.display = 'none'
+        })
+        // clear
+        this.clear_btn.addEventListener('click', () => {
+            this.reset([], [], [])
+        })
+        // rectangle drawing
         this.canvas_container.addEventListener('click', (event: MouseEvent) => this.click_canvas_container(event))
         window.addEventListener('click', (event: MouseEvent) => this.click_window(event))
         window.addEventListener('mousemove', (event: MouseEvent) => this.handle_mouse_move(event))
@@ -137,6 +147,11 @@ export class UIHandler {
         this.pause_btn.disabled = true
         this.play_btn.disabled = false
         this.step_btn.disabled = false
+    }
+
+    reset(bodies: Body[], walls: Rectangle[], measures: Rectangle[]) {
+        this.pause()
+        this.simulation.reset(bodies, walls, measures)
     }
 
     get_mouse_coords(event: MouseEvent): number[] {
@@ -211,7 +226,7 @@ export class UIHandler {
         const r = parseInt(this.brownian_form.radius.value)
         
         const bodies = brownian(n, m, v, r)
-        this.simulation.reset(bodies, [], [])
+        this.reset(bodies, [], [])
     }
     
     submit_second_law_form(event: Event): void {
@@ -225,7 +240,7 @@ export class UIHandler {
         const walls = second_law_rects(gap_size)
         const measures = second_law_measures()
         const bodies = second_law_bodies(n, r, vl, vr, walls)
-        this.simulation.reset(bodies, walls, measures)
+        this.reset(bodies, walls, measures)
     }
 
     build_rect(x: number, y: number): Rectangle {
@@ -248,13 +263,18 @@ export class UIHandler {
         this.simulation.intermediate_rect = null
         if(rect.type === RectangleType.Wall) {
             this.simulation.walls.push(rect)
-            this.simulation.reset([], this.simulation.walls, this.simulation.measures)
+            this.reset([], this.simulation.walls, this.simulation.measures)
         }
         else if(rect.type === RectangleType.Measurement) {
             this.simulation.measures.push(rect)
         }
         else {
-            spawn_bodies(10, 1, 50, 5, rect, this.simulation.bodies, this.simulation.walls)
+            const n = parseInt(this.rect_meaning_form.number.value)
+            const m = parseInt(this.rect_meaning_form.mass.value)
+            const v = parseInt(this.rect_meaning_form.velocity.value)
+            const r = parseInt(this.rect_meaning_form.radius.value)
+
+            spawn_bodies(n, m, v, r, rect, this.simulation.bodies, this.simulation.walls)
         }
     }
 

@@ -42,7 +42,7 @@ export function spawn_bodies(n: number, m: number, v: number, r: number, spawn_r
     for(let i = 0; i < n; i++) {
         bodies.push(
             generate_random_body(
-                bodies, walls, 1, v, r, 
+                bodies, walls, m, v, r,
                 spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2
             )
         )

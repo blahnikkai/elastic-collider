@@ -63,21 +63,41 @@
     <form id="rect-meaning-form">
         <ul>
             <li>
-                <input type="radio" name="rect-meaning" value="wall" checked/>
-                <label for="wall">Wall</label>
+                <input id="wall-option" type="radio" name="rect-meaning" value="wall" checked/>
+                <label for="wall-option">Wall</label>
             </li>
             <li>
-                <input type="radio" name="rect-meaning" value="bodies"/>
-                <label for="bodies">Bodies</label>
+                <span class="dropdown-container" id="bodies-container">
+                    <input id="bodies-option" type="radio" name="rect-meaning" value="bodies"/>
+                    <label for="bodies-option">Bodies</label>
+                    <div id="bodies-subform" class="dropdown">
+                        <div class="input-container">
+                            <label for="number">Number: </label>
+                            <input name="number" type="number" value="10"/>
+                        </div>
+                        <div class="input-container">
+                            <label for="mass">Mass: </label>
+                            <input name="mass" type="number" value="1"/>
+                        </div>
+                        <div class="input-container">
+                            <label for="radius">Radius: </label>
+                            <input name="radius" type="number" value="3"/>
+                        </div>
+                        <div class="input-container">
+                            <label for="velocity">Velocity: </label>
+                            <input name="velocity" type="number" value="50"/>
+                        </div>
+                    </div>
+                </span>
             </li>
             <li>
-                <input type="radio" name="rect-meaning" value="measurement"/>
-                <label for="measurement">Measurement</label>
+                <input id="measure-option" type="radio" name="rect-meaning" value="measurement"/>
+                <label for="measure-option">Measurement</label>
             </li>
             
         </ul>
     </form>
-    <div id="info-container">
+    <div id="main-container">
         <div id="canvas-container">
             <canvas id="canvas" height=500 width=500/>
         </div>

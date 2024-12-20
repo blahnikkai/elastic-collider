@@ -13,3 +13,4 @@
 - Make spawn_bodies(), brownian(), second_law() into member functions of simulation
 - Delete based on radio select
 - Line plot of energies
+- Loop over shtuff for form submit event listeners on any change
