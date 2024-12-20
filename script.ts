@@ -145,7 +145,7 @@ function main() {
             simulation.measures = measures
         }
         else {
-            spawn_bodies(10, 1, 50, 5, rect, bodies)
+            spawn_bodies(10, 1, 50, 5, rect, bodies, simulation.walls)
             simulation.bodies = bodies
         }
     }

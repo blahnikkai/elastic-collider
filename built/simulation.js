@@ -33,9 +33,9 @@ function generate_random_body(bodies, rects, m, v, r, x1 = 0, x2 = 500, y1 = 0, 
         }
     }
 }
-export function spawn_bodies(n, m, v, r, spawn_rect, bodies) {
+export function spawn_bodies(n, m, v, r, spawn_rect, bodies, walls) {
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, [], 1, v, r, spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2));
+        bodies.push(generate_random_body(bodies, walls, 1, v, r, spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2));
     }
 }
 // number

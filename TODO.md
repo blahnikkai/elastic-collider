@@ -3,11 +3,8 @@
 - Add crazy settings like path trace for all bodies
 - Color circles by vel
 - Use timeout id instead of playing boolean
-- Right-click to delete rectangles
 - Draw a rectangle to delete bodies inside?
-- Draw rectangles out of canvas, truncate at canvas edge
-- Organize info into more of a grid
 - Move info to right
 - Debug display of Brownian
 - Display velocity vector of Brownian
-- Container around rect for click, mousemove events to give some wiggle room
+- Fix random_number() allowing hi < lo, thin spawn_bodies case

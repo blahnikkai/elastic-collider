@@ -1,4 +1,3 @@
-import { createTextChangeRange } from "./node_modules/typescript/lib/typescript.js"
 import { random_number } from "./simulation.js"
 
 export enum RectangleType {
