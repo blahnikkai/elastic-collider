@@ -16,7 +16,7 @@ export class UIHandler {
     second_law_btn: HTMLButtonElement
     clear_btn: HTMLButtonElement
 
-    info_container: HTMLDivElement
+    info_grid: HTMLDivElement
     canvas_container: HTMLDivElement
 
     brownian_form: HTMLFormElement
@@ -39,7 +39,7 @@ export class UIHandler {
         this.second_law_btn = <HTMLButtonElement>document.getElementById('second-law-btn')
         this.clear_btn = <HTMLButtonElement>document.getElementById('clear-btn')
 
-        this.info_container = <HTMLDivElement>document.getElementById('info-container')
+        this.info_grid = <HTMLDivElement>document.getElementById('info-grid')
         this.canvas_container = <HTMLDivElement>document.getElementById('canvas-container')
         
         this.brownian_form = <HTMLFormElement>document.getElementById('brownian-form')
@@ -85,8 +85,8 @@ export class UIHandler {
 
     add_event_listeners() {
         this.step_btn.addEventListener("click", () => this.simulation.step_all())
-        this.pause_btn.addEventListener("click", () => this.simulation.pause())
-        this.play_btn.addEventListener("click", () => this.simulation.play())
+        this.pause_btn.addEventListener("click", () => this.pause())
+        this.play_btn.addEventListener("click", () => this.play())
 
         
         this.brownian_btn.addEventListener('click', (event: MouseEvent) => this.submit_brownian_form(event))

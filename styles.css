@@ -51,9 +51,19 @@ label {
 }
 
 #info-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#info-grid {
     color: white;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: auto auto auto;
+    grid-auto-rows: max-content;
+}
+
+#info-grid > * {
+    margin: .2em 1.5em;
 }
 
 #canvas-container {

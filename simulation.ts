@@ -152,7 +152,7 @@ export class Simulation {
         }
     }
 
-    draw_all(ctx: CanvasRenderingContext2D, info_container: HTMLDivElement): void {
+    draw_all(ctx: CanvasRenderingContext2D, info_grid: HTMLDivElement): void {
         ctx.clearRect(0, 0, 500, 500)
         for(const body of this.bodies) {
             body.draw(ctx)
@@ -193,7 +193,7 @@ export class Simulation {
             
             measure.draw(ctx)
         }
-        info_container.innerHTML = info_html
+        info_grid.innerHTML = info_html
         
         if(this.intermediate_rect != null) {
             this.intermediate_rect.draw(ctx)

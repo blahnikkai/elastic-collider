@@ -10,7 +10,7 @@ export class UIHandler {
         this.brownian_btn = document.getElementById('brownian-btn');
         this.second_law_btn = document.getElementById('second-law-btn');
         this.clear_btn = document.getElementById('clear-btn');
-        this.info_container = document.getElementById('info-container');
+        this.info_grid = document.getElementById('info-grid');
         this.canvas_container = document.getElementById('canvas-container');
         this.brownian_form = document.getElementById('brownian-form');
         this.second_law_form = document.getElementById('second-law-form');
@@ -46,8 +46,8 @@ export class UIHandler {
     }
     add_event_listeners() {
         this.step_btn.addEventListener("click", () => this.simulation.step_all());
-        this.pause_btn.addEventListener("click", () => this.simulation.pause());
-        this.play_btn.addEventListener("click", () => this.simulation.play());
+        this.pause_btn.addEventListener("click", () => this.pause());
+        this.play_btn.addEventListener("click", () => this.play());
         this.brownian_btn.addEventListener('click', (event) => this.submit_brownian_form(event));
         this.brownian_form.number.addEventListener('change', (event) => this.submit_brownian_form(event));
         this.brownian_form.mass.addEventListener('change', (event) => this.submit_brownian_form(event));

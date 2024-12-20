@@ -124,7 +124,7 @@ export class Simulation {
             setTimeout(() => this.step_all(), 1000 / TICKRATE);
         }
     }
-    draw_all(ctx, info_container) {
+    draw_all(ctx, info_grid) {
         ctx.clearRect(0, 0, 500, 500);
         for (const body of this.bodies) {
             body.draw(ctx);
@@ -161,7 +161,7 @@ export class Simulation {
             info_html += '</div>';
             measure.draw(ctx);
         }
-        info_container.innerHTML = info_html;
+        info_grid.innerHTML = info_html;
         if (this.intermediate_rect != null) {
             this.intermediate_rect.draw(ctx);
         }

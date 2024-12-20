@@ -10,7 +10,7 @@
 <body>
     <nav>
         <button id="step">Step</button>
-        <button id="pause" disabled>Pause</button>
+        <button id="pause">Pause</button>
         <button id="play">Play</button>
         <span class="dropdown-container" id="brownian-container">
             <button id="brownian-btn">Generate Brownian motion</button>
@@ -77,11 +77,13 @@
             
         </ul>
     </form>
-    <div id="canvas-container">
-        <canvas id="canvas" height=500 width=500/>
-    </div>
     <div id="info-container">
-        <p>Hello</p>
+        <div id="canvas-container">
+            <canvas id="canvas" height=500 width=500/>
+        </div>
+        <div id="info-grid">
+            <p>Hello</p>
+        </div>
     </div>
 </body>
 </html>

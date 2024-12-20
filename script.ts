@@ -6,7 +6,7 @@ function main() {
 }
 
 function draw_loop(ui_handler: UIHandler) {
-    ui_handler.simulation.draw_all(ui_handler.ctx, ui_handler.info_container)
+    ui_handler.simulation.draw_all(ui_handler.ctx, ui_handler.info_grid)
     window.requestAnimationFrame(() => draw_loop(ui_handler))
 }
 
