@@ -1,4 +1,4 @@
-import {Simulation, brownian, second_law_bodies, second_law_rects, spawn_bodies } from './simulation.js'
+import {Simulation, brownian, second_law_bodies, second_law_measures, second_law_rects, spawn_bodies } from './simulation.js'
 import {Rectangle, RectangleType} from './rectangle.js'
 
 export class UIHandler {
@@ -55,7 +55,7 @@ export class UIHandler {
         // let bodies = brownian(300, 10, 150, 3)
         
         let walls = second_law_rects(20)
-        let measures = []
+        let measures = second_law_measures()
         let bodies = second_law_bodies(300, 3, 10, 100, walls)
         
         this.simulation = new Simulation()
@@ -223,8 +223,8 @@ export class UIHandler {
         const vr = parseInt(this.second_law_form.vr.value)
         
         const walls = second_law_rects(gap_size)
+        const measures = second_law_measures()
         const bodies = second_law_bodies(n, r, vl, vr, walls)
-        const measures = []
         this.simulation.reset(bodies, walls, measures)
     }
 

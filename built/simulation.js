@@ -1,5 +1,5 @@
 import { Body } from './body.js';
-import { Rectangle } from './rectangle.js';
+import { Rectangle, RectangleType } from './rectangle.js';
 import { Vector, dist, norm } from './vector.js';
 export const TICKRATE = 50;
 function check_collides_existing_bodies(bodies, x, y, r) {
@@ -62,6 +62,13 @@ export function second_law_rects(gap_size) {
     ];
     return rects;
 }
+export function second_law_measures() {
+    let left_measure = new Rectangle(0, 0, 250, 500, RectangleType.Measurement);
+    let right_measure = new Rectangle(250, 0, 500, 500, RectangleType.Measurement);
+    left_measure.color = [240, 75, 50, .2];
+    right_measure.color = [0, 75, 50, .2];
+    return [left_measure, right_measure];
+}
 export function second_law_bodies(n, r, vl, vr, rects) {
     let bodies = [];
     for (let i = 0; i < n; i++) {
@@ -122,25 +129,10 @@ export class Simulation {
         for (const body of this.bodies) {
             body.draw(ctx);
         }
-        const energy = this.calc_energy();
         ctx.fillStyle = 'black';
         ctx.strokeStyle = 'black';
-        ctx.fillText(energy.toString(), 20, 20);
+        ctx.fillText(this.calc_energy().toString(), 20, 20);
         ctx.fillText(this.tick.toString(), 20, 40);
-        ctx.textAlign = 'right';
-        const left_e = this.calc_energy(0, 250);
-        const right_e = this.calc_energy(250, 500);
-        ctx.fillText(left_e.toFixed(2), 80, 60);
-        ctx.fillText(right_e.toFixed(2), 80, 80);
-        const left_cnt = this.count_bodies(0, 250);
-        const right_cnt = this.count_bodies(250, 500);
-        ctx.fillText(left_cnt.toString(), 110, 60);
-        ctx.fillText(right_cnt.toString(), 110, 80);
-        const left_t = left_e / left_cnt;
-        const right_t = right_e / right_cnt;
-        ctx.fillText(left_t.toFixed(2), 160, 60);
-        ctx.fillText(right_t.toFixed(2), 160, 80);
-        ctx.textAlign = 'left';
         for (const wall of this.walls) {
             wall.draw(ctx);
         }

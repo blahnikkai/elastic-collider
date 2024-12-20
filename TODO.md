@@ -8,13 +8,8 @@
 - Debug display of Brownian
 - Display velocity vector of Brownian
 - Fix random_number() allowing hi < lo, thin spawn_bodies case
-- Clean tf out of script.ts
 - Organize .ts files into a scripts directory
-- Stop resetting tick count when drawing walls
 - Add default args to simulation.reset() to not change walls and measures
 - Make spawn_bodies(), brownian(), second_law() into member functions of simulation
-- Turn canvasRect, x, y into function
-- Clean up rectangle drawing event listeners into member functions of UIHandler
-- Remove extra ui from simulation.ts
-- Add default measures to second law
 - Delete based on radio select
+- Line plot of energies
