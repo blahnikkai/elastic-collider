@@ -187,6 +187,31 @@ function main() {
             simulation.intermediate_rect.y2 = new_rect.y2
         }
     })
+    canvas.addEventListener('contextmenu', (event: MouseEvent) => {
+        event.preventDefault()
+        if(drawing_rect) {
+            simulation.intermediate_rect = null
+            drawing_rect = false
+            return
+        }
+        const rect = canvas.getBoundingClientRect()
+        const x = event.clientX - rect.left
+        const y = event.clientY - rect.top
+        for(let i = simulation.measures.length - 1; i >= 0; i--) {
+            const measure = simulation.measures[i]
+            if(measure.intersect(x, y, 0)) {
+                simulation.measures.splice(i, 1)
+                return
+            }
+        }
+        for(let i = simulation.walls.length - 1; i >= 0; i--) {
+            const wall = simulation.walls[i]
+            if(wall.intersect(x, y, 0)) {
+                simulation.walls.splice(i, 1)
+                return
+            }
+        }
+    })
 
     draw_loop(simulation)
 }
