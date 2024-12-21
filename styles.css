@@ -4,12 +4,16 @@
 }
 
 html {
-    background-color: black;
+    background-color: #21451c;
 }
 
 canvas {
     background-color: white;
     margin: 1em;
+}
+
+ul {
+    list-style-type: none;
 }
 
 nav {
@@ -80,5 +84,4 @@ label {
 #canvas-container {
     display: inline-block;
     background-color: black;
-    border: 2px solid white;
 }

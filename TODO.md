@@ -14,3 +14,6 @@
 - Delete based on radio select
 - Line plot of energies
 - Loop over shtuff for form submit event listeners on any change
+- Reset to defaults for forms
+- Random colors for spawn bodies?
+
