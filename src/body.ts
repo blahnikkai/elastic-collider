@@ -9,7 +9,7 @@ export class Body {
     vel: Vector
     r: number
     color: string
-    is_traced: boolean
+    draw_trace: boolean
     trace: Vector[]
 
     constructor(mass: number, pos: Vector, vel: Vector, r: number, hue: number | null = null) {
@@ -21,13 +21,13 @@ export class Body {
         if(hue !== null) {
             this.color = `hsl(${hue}, 100%, 40%)`
         }
-        this.is_traced = false
+        this.draw_trace = false
         this.trace = []
     }
 
     step(): void {
         this.pos = add(this.pos, scale(1 / TICKRATE, this.vel))
-        if(this.is_traced) {
+        if(this.draw_trace) {
             this.trace.push(this.pos)
         }
     }
@@ -136,11 +136,11 @@ export class Body {
         ctx.fill()
         ctx.closePath()
         
-        ctx.strokeStyle = 'blue'
-        ctx.beginPath()
-        if(!this.is_traced || this.trace.length == 0) {
+        if(!this.draw_trace || this.trace.length == 0) {
             return;
         }
+        ctx.strokeStyle = 'blue'
+        ctx.beginPath()
         ctx.moveTo(this.trace[0].x, this.trace[0].y)
         for(const pos of this.trace) {
             ctx.lineTo(pos.x, pos.y)

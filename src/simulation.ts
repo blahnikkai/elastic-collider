@@ -67,7 +67,7 @@ export function brownian(n: number, m: number, v: number, r: number): Body[] {
         bodies.push(generate_random_body(bodies, [], 1, v, r))
     }
     bodies[0].color = 'red'
-    bodies[0].is_traced = true
+    bodies[0].draw_trace = true
     bodies[1].color = 'red'
     return bodies
 }

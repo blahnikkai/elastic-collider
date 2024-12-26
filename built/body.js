@@ -10,12 +10,12 @@ export class Body {
         if (hue !== null) {
             this.color = `hsl(${hue}, 100%, 40%)`;
         }
-        this.is_traced = false;
+        this.draw_trace = false;
         this.trace = [];
     }
     step() {
         this.pos = add(this.pos, scale(1 / TICKRATE, this.vel));
-        if (this.is_traced) {
+        if (this.draw_trace) {
             this.trace.push(this.pos);
         }
     }
@@ -113,11 +113,11 @@ export class Body {
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
-        ctx.strokeStyle = 'blue';
-        ctx.beginPath();
-        if (!this.is_traced || this.trace.length == 0) {
+        if (!this.draw_trace || this.trace.length == 0) {
             return;
         }
+        ctx.strokeStyle = 'blue';
+        ctx.beginPath();
         ctx.moveTo(this.trace[0].x, this.trace[0].y);
         for (const pos of this.trace) {
             ctx.lineTo(pos.x, pos.y);
