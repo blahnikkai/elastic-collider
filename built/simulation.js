@@ -18,13 +18,19 @@ function check_collides_existing_rects(rects, x, y, r) {
     }
     return false;
 }
+function random_spawn(low, high, r) {
+    if (high - low > 2 * r) {
+        return random_number(low + r, high - r);
+    }
+    return random_number(low, high);
+}
 export function random_number(low, high) {
     return (high - low) * Math.random() + low;
 }
 function generate_random_body(bodies, rects, m, v, r, x1 = 0, x2 = 500, y1 = 0, y2 = 500) {
     while (true) {
-        const x = random_number(x1 + r, x2 - r);
-        const y = random_number(y1 + r, y2 - r);
+        const x = random_spawn(x1, x2, r);
+        const y = random_spawn(y1, y2, r);
         const theta = 2 * Math.PI * Math.random();
         const vx = v * Math.cos(theta);
         const vy = v * Math.sin(theta);

@@ -1,14 +1,10 @@
 - Collide off multiple rectangles at the same time?
 - Generate bodies with Maxwell-Boltzmann velocities
 - Add crazy settings like path trace for all bodies
-- Color circles by vel
 - Use timeout id instead of playing boolean
 - Draw a rectangle to delete bodies inside?
-- Move info to right
-- Debug display of Brownian
 - Display velocity vector of Brownian
 - Fix random_number() allowing hi < lo, thin spawn_bodies case
-- Organize .ts files into a scripts directory
 - Add default args to simulation.reset() to not change walls and measures
 - Make spawn_bodies(), brownian(), second_law() into member functions of simulation
 - Delete based on radio select
@@ -16,4 +12,4 @@
 - Loop over shtuff for form submit event listeners on any change
 - Reset to defaults for forms
 - Random colors for spawn bodies?
-
+- Reject random bodies if too many

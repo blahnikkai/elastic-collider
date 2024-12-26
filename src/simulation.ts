@@ -21,14 +21,21 @@ function check_collides_existing_rects(rects: Rectangle[], x: number, y: number,
     return false
 }
 
+function random_spawn(low: number, high: number, r: number): number {
+    if(high - low > 2 * r) {
+        return random_number(low + r, high - r)
+    }
+    return random_number(low, high)
+}
+
 export function random_number(low: number, high: number): number {
     return (high - low) * Math.random() + low
 }
 
 function generate_random_body(bodies: Body[], rects: Rectangle[], m: number, v: number, r: number, x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): Body {
     while(true) {
-        const x = random_number(x1 + r, x2 - r)
-        const y = random_number(y1 + r, y2 - r)
+        const x = random_spawn(x1, x2, r)
+        const y = random_spawn(y1, y2, r)
         const theta = 2 * Math.PI * Math.random()
         const vx = v * Math.cos(theta)
         const vy = v * Math.sin(theta)
