@@ -6,7 +6,6 @@
 - Add default args to simulation.reset() to not change walls and measures
 - Display velocity vector of Brownian
 - Draw a rectangle to delete bodies inside
-- Use timeout id instead of playing boolean
 - Line plot of energies
 - Reset to defaults for forms
 - Reject random bodies if too many 

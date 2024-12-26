@@ -136,6 +136,9 @@ export class Simulation {
         for (const wall of this.walls) {
             wall.draw(ctx);
         }
+        if (this.intermediate_rect != null && this.intermediate_rect.type === RectangleType.Wall) {
+            this.intermediate_rect.draw(ctx);
+        }
         let info_html = '';
         info_html += `<div>`;
         info_html += 'Total Kinetic Energy';
@@ -162,7 +165,7 @@ export class Simulation {
             measure.draw(ctx);
         }
         info_grid.innerHTML = info_html;
-        if (this.intermediate_rect != null) {
+        if (this.intermediate_rect != null && this.intermediate_rect.type !== RectangleType.Wall) {
             this.intermediate_rect.draw(ctx);
         }
     }
