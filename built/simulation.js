@@ -100,11 +100,11 @@ export class Simulation {
         this.intermediate_rect = null;
     }
     play() {
-        this.playing = true;
         this.step_all();
     }
     pause() {
-        this.playing = false;
+        clearTimeout(this.timeout_id);
+        this.timeout_id = null;
     }
     step_all() {
         this.tick += 1;
@@ -122,9 +122,7 @@ export class Simulation {
                 body.check_rect_collide(rect);
             }
         }
-        if (this.playing) {
-            setTimeout(() => this.step_all(), 1000 / TICKRATE);
-        }
+        this.timeout_id = setTimeout(() => this.step_all(), 1000 / TICKRATE);
     }
     draw_all(ctx, info_grid) {
         ctx.clearRect(0, 0, 500, 500);

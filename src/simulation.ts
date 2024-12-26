@@ -101,7 +101,7 @@ export function second_law_bodies(n: number, r: number, vl: number, vr: number, 
 
 export class Simulation {
 
-    playing: boolean
+    timeout_id: number
     tick: number
     bodies: Body[]
     walls: Rectangle[]
@@ -126,12 +126,12 @@ export class Simulation {
     }
 
     play() {
-        this.playing = true
         this.step_all()
     }
 
     pause() {
-        this.playing = false
+        clearTimeout(this.timeout_id)
+        this.timeout_id = null
     }
 
     step_all(): void {
@@ -150,9 +150,7 @@ export class Simulation {
                 body.check_rect_collide(rect)
             }
         }
-        if(this.playing) {
-            setTimeout(() => this.step_all(), 1000 / TICKRATE)
-        }
+        this.timeout_id = setTimeout(() => this.step_all(), 1000 / TICKRATE)
     }
 
     draw_all(ctx: CanvasRenderingContext2D, info_grid: HTMLDivElement): void {

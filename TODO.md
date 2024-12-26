@@ -1,10 +1,9 @@
 - Add crazy settings like 
     - path trace for all bodies.
     - color all black, except red for the body that hasn't touched another body in the longest
-- Add default args to simulation.reset() to not change walls and measures
 - Make spawn_bodies(), brownian(), second_law() into member functions of simulation
 - Loop over shtuff for form submit event listeners on any change
-- Delete based on radio select
+- Add default args to simulation.reset() to not change walls and measures
 - Display velocity vector of Brownian
 - Draw a rectangle to delete bodies inside
 - Use timeout id instead of playing boolean
