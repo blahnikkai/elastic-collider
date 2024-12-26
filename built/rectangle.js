@@ -1,4 +1,3 @@
-import { random_number } from "./simulation.js";
 export var RectangleType;
 (function (RectangleType) {
     RectangleType["Wall"] = "wall";
@@ -17,14 +16,16 @@ export class Rectangle {
                 this.color = [0, 0, 0, 1];
                 break;
             case RectangleType.Spawn:
-                if (hue === null) {
-                    hue = random_number(0, 360);
+                if (hue == null) {
+                    this.color = [0, 0, 0, 0.25];
                 }
-                this.color = [hue, 100, 40, 0.25];
+                else {
+                    this.color = [hue, 100, 40, 0.25];
+                }
                 break;
             case RectangleType.Measurement:
-                if (hue === null) {
-                    hue = random_number(0, 360);
+                if (hue == null) {
+                    throw new Error('hue should be specified for measurement');
                 }
                 this.color = [hue, 80, 80, 0.25];
                 break;

@@ -257,7 +257,13 @@ export class UIHandler {
         
         const rect_type_str: string = this.rect_meaning_form.elements['rect-meaning'].value
         const rect_type: RectangleType = rect_type_str as RectangleType
-        return new Rectangle(x1, y1, x2, y2, rect_type)
+        
+        let hue = null
+        if(rect_type == RectangleType.Measurement 
+            || rect_type == RectangleType.Spawn && this.rect_meaning_form['random-color'].checked) {
+            hue = random_number(0, 360)
+        }
+        return new Rectangle(x1, y1, x2, y2, rect_type, hue)
     }
 
     finish_rect(x: number, y: number): void {
@@ -277,7 +283,11 @@ export class UIHandler {
             const v = parseInt(this.rect_meaning_form.velocity.value)
             const r = parseInt(this.rect_meaning_form.radius.value)
             
-            spawn_bodies(n, m, v, r, rect, this.simulation.bodies, this.simulation.walls, rect.color[0])
+            let hue = null
+            if(this.rect_meaning_form['random-color'].checked) {
+                hue = rect.color[0]
+            }
+            spawn_bodies(n, m, v, r, rect, this.simulation.bodies, this.simulation.walls, hue)
         }
     }
 

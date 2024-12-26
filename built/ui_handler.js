@@ -1,4 +1,4 @@
-import { Simulation, brownian, second_law_bodies, second_law_measures, second_law_rects, spawn_bodies } from './simulation.js';
+import { Simulation, brownian, random_number, second_law_bodies, second_law_measures, second_law_rects, spawn_bodies } from './simulation.js';
 import { Rectangle, RectangleType } from './rectangle.js';
 export class UIHandler {
     constructor() {
@@ -200,7 +200,12 @@ export class UIHandler {
         const y2 = clamp(Math.max(this.half_rect[1], y), 0, 500);
         const rect_type_str = this.rect_meaning_form.elements['rect-meaning'].value;
         const rect_type = rect_type_str;
-        return new Rectangle(x1, y1, x2, y2, rect_type);
+        let hue = null;
+        if (rect_type == RectangleType.Measurement
+            || rect_type == RectangleType.Spawn && this.rect_meaning_form['random-color'].checked) {
+            hue = random_number(0, 360);
+        }
+        return new Rectangle(x1, y1, x2, y2, rect_type, hue);
     }
     finish_rect(x, y) {
         const rect = this.build_rect(x, y);
@@ -218,7 +223,11 @@ export class UIHandler {
             const m = parseInt(this.rect_meaning_form.mass.value);
             const v = parseInt(this.rect_meaning_form.velocity.value);
             const r = parseInt(this.rect_meaning_form.radius.value);
-            spawn_bodies(n, m, v, r, rect, this.simulation.bodies, this.simulation.walls, rect.color[0]);
+            let hue = null;
+            if (this.rect_meaning_form['random-color'].checked) {
+                hue = rect.color[0];
+            }
+            spawn_bodies(n, m, v, r, rect, this.simulation.bodies, this.simulation.walls, hue);
         }
     }
 }
