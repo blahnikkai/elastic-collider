@@ -33,7 +33,11 @@ export function random_number(low: number, high: number): number {
 }
 
 function generate_random_body(bodies: Body[], rects: Rectangle[], m: number, v: number, r: number, hue: number | null = null, x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): Body {
+    let i = 0
     while(true) {
+        if(i >= 100_000) {
+            return null
+        }
         const x = random_spawn(x1, x2, r)
         const y = random_spawn(y1, y2, r)
         const theta = 2 * Math.PI * Math.random()
@@ -42,18 +46,23 @@ function generate_random_body(bodies: Body[], rects: Rectangle[], m: number, v: 
         if(!check_collides_existing_bodies(bodies, x, y, r) && !check_collides_existing_rects(rects, x, y, r)) {
             return new Body(m, new Vector(x, y), new Vector(vx, vy), r, hue)
         }
+        i++
     }
 }
 
-export function spawn_bodies(n: number, m: number, v: number, r: number, spawn_rect: Rectangle, bodies: Body[], walls: Rectangle[], hue: number) {
+export function spawn_bodies(n: number, m: number, v: number, r: number, spawn_rect: Rectangle, bodies: Body[], walls: Rectangle[], hue: number): Body[] {
+    let new_bodies = [...bodies]
     for(let i = 0; i < n; i++) {
-        bodies.push(
-            generate_random_body(
-                bodies, walls, m, v, r, hue,
-                spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2
-            )
+        const body = generate_random_body(
+            new_bodies, walls, m, v, r, hue,
+            spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2
         )
+        if(body == null) {
+            return bodies
+        }
+        new_bodies.push(body)
     }
+    return new_bodies
 }
 
 // number

@@ -5,4 +5,3 @@
 - Add default args to simulation.reset() to not change walls and measures
 - Draw a rectangle to delete bodies inside
 - Line plot of energies
-- Reject random bodies if too many

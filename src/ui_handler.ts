@@ -321,7 +321,8 @@ export class UIHandler {
             if(this.rect_meaning_form['random-color'].checked) {
                 hue = rect.color[0]
             }
-            spawn_bodies(n, m, v, r, rect, this.simulation.bodies, this.simulation.walls, hue)
+            this.simulation.bodies = spawn_bodies(n, m, v, r, rect, this.simulation.bodies, this.simulation.walls, hue)
+
         }
     }
 

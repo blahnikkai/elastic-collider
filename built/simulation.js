@@ -28,7 +28,11 @@ export function random_number(low, high) {
     return (high - low) * Math.random() + low;
 }
 function generate_random_body(bodies, rects, m, v, r, hue = null, x1 = 0, x2 = 500, y1 = 0, y2 = 500) {
+    let i = 0;
     while (true) {
+        if (i >= 100000) {
+            return null;
+        }
         const x = random_spawn(x1, x2, r);
         const y = random_spawn(y1, y2, r);
         const theta = 2 * Math.PI * Math.random();
@@ -37,12 +41,19 @@ function generate_random_body(bodies, rects, m, v, r, hue = null, x1 = 0, x2 = 5
         if (!check_collides_existing_bodies(bodies, x, y, r) && !check_collides_existing_rects(rects, x, y, r)) {
             return new Body(m, new Vector(x, y), new Vector(vx, vy), r, hue);
         }
+        i++;
     }
 }
 export function spawn_bodies(n, m, v, r, spawn_rect, bodies, walls, hue) {
+    let new_bodies = [...bodies];
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, walls, m, v, r, hue, spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2));
+        const body = generate_random_body(new_bodies, walls, m, v, r, hue, spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2);
+        if (body == null) {
+            return bodies;
+        }
+        new_bodies.push(body);
     }
+    return new_bodies;
 }
 // number
 // size
