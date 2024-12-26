@@ -202,17 +202,20 @@ export class UIHandler {
             return
         }
         const [x, y] = this.get_mouse_coords(event)
-        for(let i = this.simulation.measures.length - 1; i >= 0; i--) {
-            const measure = this.simulation.measures[i]
-            if(measure.intersect(x, y, 0)) {
-                this.simulation.measures.splice(i, 1)
-                return
-            }
+
+        let rects = []
+        const rect_type_strng = this.rect_meaning_form.elements['rect-meaning'].value
+        const rect_type: RectangleType = rect_type_strng as RectangleType
+        if(rect_type === RectangleType.Measurement) {
+            rects = this.simulation.measures
         }
-        for(let i = this.simulation.walls.length - 1; i >= 0; i--) {
-            const wall = this.simulation.walls[i]
-            if(wall.intersect(x, y, 0)) {
-                this.simulation.walls.splice(i, 1)
+        else if(rect_type === RectangleType.Wall) {
+            rects = this.simulation.walls
+        }
+        for(let i = rects.length - 1; i >= 0; i--) {
+            const rect = rects[i]
+            if(rect.intersect(x, y, 0)) {
+                rects.splice(i, 1)
                 return
             }
         }
