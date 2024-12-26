@@ -277,7 +277,7 @@ export class UIHandler {
             const v = parseInt(this.rect_meaning_form.velocity.value)
             const r = parseInt(this.rect_meaning_form.radius.value)
             
-            spawn_bodies(n, m, v, r, rect, this.simulation.bodies, this.simulation.walls)
+            spawn_bodies(n, m, v, r, rect, this.simulation.bodies, this.simulation.walls, rect.color[0])
         }
     }
 

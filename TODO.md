@@ -1,15 +1,14 @@
-- Collide off multiple rectangles at the same time?
-- Generate bodies with Maxwell-Boltzmann velocities
-- Add crazy settings like path trace for all bodies, color all black, except red for the body that hasn't touched another body in the longest
-- Use timeout id instead of playing boolean
-- Draw a rectangle to delete bodies inside?
-- Display velocity vector of Brownian
-- Fix random_number() allowing hi < lo, thin spawn_bodies case
+- Add crazy settings like 
+    - path trace for all bodies.
+    - color all black, except red for the body that hasn't touched another body in the longest
 - Add default args to simulation.reset() to not change walls and measures
 - Make spawn_bodies(), brownian(), second_law() into member functions of simulation
-- Delete based on radio select
-- Line plot of energies
 - Loop over shtuff for form submit event listeners on any change
+- Delete based on radio select
+- Display velocity vector of Brownian
+- Draw a rectangle to delete bodies inside
+- Use timeout id instead of playing boolean
+- Line plot of energies
 - Reset to defaults for forms
-- Random colors for spawn bodies?
 - Reject random bodies if too many 
+- Random color checkbox for spawn bodies

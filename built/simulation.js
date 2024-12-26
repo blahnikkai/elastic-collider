@@ -39,8 +39,7 @@ function generate_random_body(bodies, rects, m, v, r, hue = null, x1 = 0, x2 = 5
         }
     }
 }
-export function spawn_bodies(n, m, v, r, spawn_rect, bodies, walls) {
-    const hue = random_number(0, 360);
+export function spawn_bodies(n, m, v, r, spawn_rect, bodies, walls, hue) {
     for (let i = 0; i < n; i++) {
         bodies.push(generate_random_body(bodies, walls, m, v, r, hue, spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2));
     }

@@ -45,8 +45,7 @@ function generate_random_body(bodies: Body[], rects: Rectangle[], m: number, v: 
     }
 }
 
-export function spawn_bodies(n: number, m: number, v: number, r: number, spawn_rect: Rectangle, bodies: Body[], walls: Rectangle[]) {
-    const hue = random_number(0, 360)
+export function spawn_bodies(n: number, m: number, v: number, r: number, spawn_rect: Rectangle, bodies: Body[], walls: Rectangle[], hue: number) {
     for(let i = 0; i < n; i++) {
         bodies.push(
             generate_random_body(

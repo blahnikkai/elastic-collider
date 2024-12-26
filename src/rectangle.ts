@@ -27,13 +27,16 @@ export class Rectangle {
                 this.color = [0, 0, 0, 1]
                 break
             case RectangleType.Spawn:
-                this.color = [0, 0, 0, 0.5]
+                if(hue === null) {
+                    hue = random_number(0, 360)
+                }
+                this.color = [hue, 100, 40, 0.25]
                 break
             case RectangleType.Measurement:
                 if(hue === null) {
                     hue = random_number(0, 360)
                 }
-                this.color = [hue, 100, 80, 0.25]
+                this.color = [hue, 80, 80, 0.25]
                 break
         }
     }
