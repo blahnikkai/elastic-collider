@@ -1,13 +1,16 @@
 import { dist, add, scale, sub, dot, norm } from './vector.js';
 import { TICKRATE } from './simulation.js';
 export class Body {
-    constructor(mass, pos, vel, r, color = 'black', is_traced = false) {
+    constructor(mass, pos, vel, r, hue = null) {
         this.mass = mass;
         this.pos = pos;
         this.vel = vel;
         this.r = r;
-        this.color = color;
-        this.is_traced = is_traced;
+        this.color = 'black';
+        if (hue !== null) {
+            this.color = `hsl(${hue}, 100%, 40%)`;
+        }
+        this.is_traced = false;
         this.trace = [];
     }
     step() {
@@ -104,7 +107,7 @@ export class Body {
     }
     draw(ctx) {
         ctx.fillStyle = this.color;
-        ctx.strokeStyle = this.color;
+        ctx.strokeStyle = 'black';
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.r, 0, 2 * Math.PI);
         ctx.stroke();

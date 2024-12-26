@@ -1,6 +1,6 @@
 - Collide off multiple rectangles at the same time?
 - Generate bodies with Maxwell-Boltzmann velocities
-- Add crazy settings like path trace for all bodies
+- Add crazy settings like path trace for all bodies, color all black, except red for the body that hasn't touched another body in the longest
 - Use timeout id instead of playing boolean
 - Draw a rectangle to delete bodies inside?
 - Display velocity vector of Brownian
@@ -12,4 +12,4 @@
 - Loop over shtuff for form submit event listeners on any change
 - Reset to defaults for forms
 - Random colors for spawn bodies?
-- Reject random bodies if too many
+- Reject random bodies if too many 

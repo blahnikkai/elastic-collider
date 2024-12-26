@@ -27,7 +27,7 @@ function random_spawn(low, high, r) {
 export function random_number(low, high) {
     return (high - low) * Math.random() + low;
 }
-function generate_random_body(bodies, rects, m, v, r, x1 = 0, x2 = 500, y1 = 0, y2 = 500) {
+function generate_random_body(bodies, rects, m, v, r, hue = null, x1 = 0, x2 = 500, y1 = 0, y2 = 500) {
     while (true) {
         const x = random_spawn(x1, x2, r);
         const y = random_spawn(y1, y2, r);
@@ -35,13 +35,14 @@ function generate_random_body(bodies, rects, m, v, r, x1 = 0, x2 = 500, y1 = 0, 
         const vx = v * Math.cos(theta);
         const vy = v * Math.sin(theta);
         if (!check_collides_existing_bodies(bodies, x, y, r) && !check_collides_existing_rects(rects, x, y, r)) {
-            return new Body(m, new Vector(x, y), new Vector(vx, vy), r);
+            return new Body(m, new Vector(x, y), new Vector(vx, vy), r, hue);
         }
     }
 }
 export function spawn_bodies(n, m, v, r, spawn_rect, bodies, walls) {
+    const hue = random_number(0, 360);
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, walls, m, v, r, spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2));
+        bodies.push(generate_random_body(bodies, walls, m, v, r, hue, spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2));
     }
 }
 // number
@@ -69,21 +70,17 @@ export function second_law_rects(gap_size) {
     return rects;
 }
 export function second_law_measures() {
-    let left_measure = new Rectangle(0, 0, 250, 500, RectangleType.Measurement);
-    let right_measure = new Rectangle(250, 0, 500, 500, RectangleType.Measurement);
-    left_measure.color = [240, 75, 50, .2];
-    right_measure.color = [0, 75, 50, .2];
+    const left_measure = new Rectangle(0, 0, 250, 500, RectangleType.Measurement, 240);
+    const right_measure = new Rectangle(250, 0, 500, 500, RectangleType.Measurement, 0);
     return [left_measure, right_measure];
 }
 export function second_law_bodies(n, r, vl, vr, rects) {
     let bodies = [];
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, 1, vl, r, 0, 240));
-        bodies[bodies.length - 1].color = 'blue';
+        bodies.push(generate_random_body(bodies, rects, 1, vl, r, 240, 0, 240));
     }
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, 1, vr, r, 260, 500));
-        bodies[bodies.length - 1].color = 'red';
+        bodies.push(generate_random_body(bodies, rects, 1, vr, r, 0, 260, 500));
     }
     return bodies;
 }

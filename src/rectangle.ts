@@ -16,7 +16,7 @@ export class Rectangle {
     // hsla
     color: number[]
 
-    constructor(x1: number, y1: number, x2: number, y2: number, type: RectangleType = RectangleType.Wall) {
+    constructor(x1: number, y1: number, x2: number, y2: number, type: RectangleType = RectangleType.Wall, hue: number | null = null) {
         this.x1 = x1
         this.y1 = y1
         this.x2 = x2
@@ -30,8 +30,10 @@ export class Rectangle {
                 this.color = [0, 0, 0, 0.5]
                 break
             case RectangleType.Measurement:
-                const h = random_number(0, 360)
-                this.color = [h, 75, 50, 0.3]
+                if(hue === null) {
+                    hue = random_number(0, 360)
+                }
+                this.color = [hue, 100, 80, 0.25]
                 break
         }
     }

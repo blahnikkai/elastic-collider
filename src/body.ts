@@ -12,13 +12,16 @@ export class Body {
     is_traced: boolean
     trace: Vector[]
 
-    constructor(mass: number, pos: Vector, vel: Vector, r: number, color: string = 'black', is_traced: boolean = false) {
+    constructor(mass: number, pos: Vector, vel: Vector, r: number, hue: number | null = null) {
         this.mass = mass
         this.pos = pos
         this.vel = vel
         this.r = r
-        this.color = color
-        this.is_traced = is_traced
+        this.color = 'black'
+        if(hue !== null) {
+            this.color = `hsl(${hue}, 100%, 40%)`
+        }
+        this.is_traced = false
         this.trace = []
     }
 
@@ -126,7 +129,7 @@ export class Body {
 
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.fillStyle = this.color
-        ctx.strokeStyle = this.color
+        ctx.strokeStyle = 'black'
         ctx.beginPath()
         ctx.arc(this.pos.x, this.pos.y, this.r, 0, 2 * Math.PI)
         ctx.stroke()

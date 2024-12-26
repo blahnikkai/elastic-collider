@@ -1,4 +1,4 @@
-import {Simulation, brownian, second_law_bodies, second_law_measures, second_law_rects, spawn_bodies } from './simulation.js'
+import {Simulation, brownian, random_number, second_law_bodies, second_law_measures, second_law_rects, spawn_bodies } from './simulation.js'
 import {Rectangle, RectangleType} from './rectangle.js'
 import { Body } from './body.js'
 
@@ -273,7 +273,7 @@ export class UIHandler {
             const m = parseInt(this.rect_meaning_form.mass.value)
             const v = parseInt(this.rect_meaning_form.velocity.value)
             const r = parseInt(this.rect_meaning_form.radius.value)
-
+            
             spawn_bodies(n, m, v, r, rect, this.simulation.bodies, this.simulation.walls)
         }
     }

@@ -4,7 +4,7 @@
 }
 
 html {
-    background-color: #21451c;
+    background-color: black;
 }
 
 canvas {
@@ -57,6 +57,9 @@ label {
 #main-container {
     display: flex;
     flex-direction: row;
+    border: .5em solid #21451c;
+    border-radius: .5em;
+    width: fit-content;
 }
 
 #bodies-container {
@@ -71,6 +74,8 @@ label {
 }
 
 #info-grid {
+    border-left: .5em solid #21451c;
+    padding: 1em 0;
     color: white;
     display: grid;
     grid-template-columns: auto auto auto;

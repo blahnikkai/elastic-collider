@@ -6,7 +6,7 @@ export var RectangleType;
     RectangleType["Measurement"] = "measurement";
 })(RectangleType || (RectangleType = {}));
 export class Rectangle {
-    constructor(x1, y1, x2, y2, type = RectangleType.Wall) {
+    constructor(x1, y1, x2, y2, type = RectangleType.Wall, hue = null) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -20,8 +20,10 @@ export class Rectangle {
                 this.color = [0, 0, 0, 0.5];
                 break;
             case RectangleType.Measurement:
-                const h = random_number(0, 360);
-                this.color = [h, 75, 50, 0.3];
+                if (hue === null) {
+                    hue = random_number(0, 360);
+                }
+                this.color = [hue, 100, 80, 0.25];
                 break;
         }
     }

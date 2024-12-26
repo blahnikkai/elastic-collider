@@ -32,7 +32,7 @@ export function random_number(low: number, high: number): number {
     return (high - low) * Math.random() + low
 }
 
-function generate_random_body(bodies: Body[], rects: Rectangle[], m: number, v: number, r: number, x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): Body {
+function generate_random_body(bodies: Body[], rects: Rectangle[], m: number, v: number, r: number, hue: number | null = null, x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): Body {
     while(true) {
         const x = random_spawn(x1, x2, r)
         const y = random_spawn(y1, y2, r)
@@ -40,16 +40,17 @@ function generate_random_body(bodies: Body[], rects: Rectangle[], m: number, v: 
         const vx = v * Math.cos(theta)
         const vy = v * Math.sin(theta)
         if(!check_collides_existing_bodies(bodies, x, y, r) && !check_collides_existing_rects(rects, x, y, r)) {
-            return new Body(m, new Vector(x, y), new Vector(vx, vy), r)
+            return new Body(m, new Vector(x, y), new Vector(vx, vy), r, hue)
         }
     }
 }
 
 export function spawn_bodies(n: number, m: number, v: number, r: number, spawn_rect: Rectangle, bodies: Body[], walls: Rectangle[]) {
+    const hue = random_number(0, 360)
     for(let i = 0; i < n; i++) {
         bodies.push(
             generate_random_body(
-                bodies, walls, m, v, r,
+                bodies, walls, m, v, r, hue,
                 spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2
             )
         )
@@ -83,22 +84,18 @@ export function second_law_rects(gap_size: number): Rectangle[] {
 }
 
 export function second_law_measures(): Rectangle[] {
-    let left_measure = new Rectangle(0, 0, 250, 500, RectangleType.Measurement)
-    let right_measure = new Rectangle(250, 0, 500, 500, RectangleType.Measurement)
-    left_measure.color = [240, 75, 50, .2]
-    right_measure.color = [0, 75, 50, .2]
+    const left_measure = new Rectangle(0, 0, 250, 500, RectangleType.Measurement, 240)
+    const right_measure = new Rectangle(250, 0, 500, 500, RectangleType.Measurement, 0)
     return [left_measure, right_measure]
 }
 
 export function second_law_bodies(n: number, r: number, vl: number, vr: number, rects: Rectangle[]): Body[] {
     let bodies = []
     for(let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, 1, vl, r, 0, 240))
-        bodies[bodies.length - 1].color = 'blue'
+        bodies.push(generate_random_body(bodies, rects, 1, vl, r, 240, 0, 240))
     }
     for(let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, 1, vr, r, 260, 500))
-        bodies[bodies.length - 1].color = 'red'
+        bodies.push(generate_random_body(bodies, rects, 1, vr, r, 0, 260, 500))
     }
     return bodies
 }
