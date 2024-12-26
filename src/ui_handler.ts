@@ -88,16 +88,19 @@ export class UIHandler {
         this.add_event_listeners()
     }
 
+    add_submit_event_listeners(form: HTMLFormElement, callback: CallableFunction): void {
+        for(const element of form.elements) {
+            element.addEventListener('change', (event: MouseEvent) => callback(event))
+        }
+    }
+
     add_event_listeners() {
         this.step_btn.addEventListener("click", () => this.simulation.step_all())
         this.pause_btn.addEventListener("click", () => this.pause())
         this.play_btn.addEventListener("click", () => this.play())
         // brownian motion
         this.brownian_btn.addEventListener('click', (event: MouseEvent) => this.submit_brownian_form(event))
-        this.brownian_form.number.addEventListener('change', (event: MouseEvent) => this.submit_brownian_form(event))
-        this.brownian_form.mass.addEventListener('change', (event: MouseEvent) => this.submit_brownian_form(event))
-        this.brownian_form.velocity.addEventListener('change', (event: MouseEvent) => this.submit_brownian_form(event))
-        this.brownian_form.radius.addEventListener('change', (event: MouseEvent) => this.submit_brownian_form(event))
+        this.add_submit_event_listeners(this.brownian_form, (event: MouseEvent) => this.submit_brownian_form(event))
         this.brownian_container.addEventListener('mouseover', () => {
             this.brownian_form.style.display = 'block'
         })
@@ -105,12 +108,7 @@ export class UIHandler {
             this.brownian_form.style.display = 'none'
         })
         // second law of thermodynamics
-        this.second_law_btn.addEventListener('click', (event: MouseEvent) => this.submit_second_law_form(event))
-        this.second_law_form.number.addEventListener('change', (event: MouseEvent) => this.submit_second_law_form(event))
-        this.second_law_form.gap_size.addEventListener('change', (event: MouseEvent) => this.submit_second_law_form(event))
-        this.second_law_form.radius.addEventListener('change', (event: MouseEvent) => this.submit_second_law_form(event))
-        this.second_law_form.vl.addEventListener('change', (event: MouseEvent) => this.submit_second_law_form(event))
-        this.second_law_form.vr.addEventListener('change', (event: MouseEvent) => this.submit_second_law_form(event))
+        this.add_submit_event_listeners(this.second_law_form, (event: MouseEvent) => this.submit_second_law_form(event))
         this.second_law_container.addEventListener('mouseover', () => {
             this.second_law_form.style.display = 'block'
         })

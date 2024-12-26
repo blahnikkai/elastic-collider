@@ -8,5 +8,4 @@
 - Draw a rectangle to delete bodies inside
 - Line plot of energies
 - Reset to defaults for forms
-- Reject random bodies if too many 
-- Random color checkbox for spawn bodies
+- Reject random bodies if too many
