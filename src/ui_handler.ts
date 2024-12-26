@@ -94,20 +94,50 @@ export class UIHandler {
         }
     }
 
+    reset_brownian_form(event: MouseEvent) {
+        event.preventDefault()
+        this.brownian_form.number.value = 300
+        this.brownian_form.mass.value = 100
+        this.brownian_form.velocity.value = 150
+        this.brownian_form.radius.value = 3
+    }
+
+    reset_second_law_form(event: MouseEvent) {
+        event.preventDefault()
+        this.second_law_form.number.value = 300
+        this.second_law_form.gap_size.value = 20
+        this.second_law_form.radius.value = 3
+        this.second_law_form.vl.value = 10
+        this.second_law_form.vr.value = 100
+    }
+
+    reset_spawn_bodies_form(event: MouseEvent) {
+        event.preventDefault()
+        this.rect_meaning_form.number.value = 10
+        this.rect_meaning_form.mass.value = 1
+        this.rect_meaning_form.velocity.value = 50
+        this.rect_meaning_form.radius.value = 3
+    }
+
     add_event_listeners() {
         this.step_btn.addEventListener("click", () => this.simulation.step_all())
         this.pause_btn.addEventListener("click", () => this.pause())
         this.play_btn.addEventListener("click", () => this.play())
+        
         // brownian motion
         this.brownian_btn.addEventListener('click', (event: MouseEvent) => this.submit_brownian_form(event))
         this.add_submit_event_listeners(this.brownian_form, (event: MouseEvent) => this.submit_brownian_form(event))
+        this.brownian_form['reset-to-defaults'].addEventListener('click', (event: MouseEvent) => this.reset_brownian_form(event))
         this.brownian_container.addEventListener('mouseover', () => {
             this.brownian_form.style.display = 'block'
         })
         this.brownian_container.addEventListener('mouseout', () => {
             this.brownian_form.style.display = 'none'
         })
+        
         // second law of thermodynamics
+        this.second_law_btn.addEventListener('click', (event: MouseEvent) => this.submit_second_law_form(event))
+        this.second_law_form['reset-to-defaults'].addEventListener('click', (event: MouseEvent) => this.reset_second_law_form(event))
         this.add_submit_event_listeners(this.second_law_form, (event: MouseEvent) => this.submit_second_law_form(event))
         this.second_law_container.addEventListener('mouseover', () => {
             this.second_law_form.style.display = 'block'
@@ -115,6 +145,7 @@ export class UIHandler {
         this.second_law_container.addEventListener('mouseout', () => {
             this.second_law_form.style.display = 'none'
         })
+        
         // spawn bodies
         this.bodies_container.addEventListener('mouseover', () => {
             this.bodies_subform.style.display = 'block'
@@ -122,10 +153,15 @@ export class UIHandler {
         this.bodies_container.addEventListener('mouseout', () => {
             this.bodies_subform.style.display = 'none'
         })
+        
         // clear
         this.clear_btn.addEventListener('click', () => {
             this.reset([], [], [])
         })
+
+        // 
+        this.rect_meaning_form['reset-to-defaults'].addEventListener('click', (event: MouseEvent) => this.reset_spawn_bodies_form(event))
+        
         // rectangle drawing
         this.canvas_container.addEventListener('click', (event: MouseEvent) => this.click_canvas_container(event))
         window.addEventListener('click', (event: MouseEvent) => this.click_window(event))
