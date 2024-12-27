@@ -1,4 +1,4 @@
-import { Simulation, brownian, random_number, second_law_bodies, second_law_measures, second_law_rects, spawn_bodies } from './simulation.js';
+import { Simulation, random_number, second_law_bodies, second_law_measures, second_law_rects } from './simulation.js';
 import { Rectangle, RectangleType } from './rectangle.js';
 export class UIHandler {
     constructor() {
@@ -74,7 +74,7 @@ export class UIHandler {
         this.rect_meaning_form.radius.value = 3;
     }
     add_event_listeners() {
-        this.step_btn.addEventListener("click", () => this.simulation.step_all());
+        this.step_btn.addEventListener("click", () => this.simulation.step_all(false));
         this.pause_btn.addEventListener("click", () => this.pause());
         this.play_btn.addEventListener("click", () => this.play());
         // brownian motion
@@ -127,6 +127,14 @@ export class UIHandler {
         this.pause_btn.disabled = true;
         this.play_btn.disabled = false;
         this.step_btn.disabled = false;
+    }
+    brownian(n, m, v, r) {
+        this.simulation.brownian(n, m, v, r);
+        this.pause();
+    }
+    second_law(n, gap_size, r, vl, vr) {
+        this.simulation.second_law(n, gap_size, r, vl, vr);
+        this.pause();
     }
     reset(bodies, walls, measures) {
         this.pause();
@@ -199,8 +207,7 @@ export class UIHandler {
         const m = parseInt(this.brownian_form.mass.value);
         const v = parseInt(this.brownian_form.velocity.value);
         const r = parseInt(this.brownian_form.radius.value);
-        const bodies = brownian(n, m, v, r);
-        this.reset(bodies, [], []);
+        this.brownian(n, m, v, r);
     }
     submit_second_law_form(event) {
         event.preventDefault();
@@ -209,10 +216,7 @@ export class UIHandler {
         const r = parseInt(this.second_law_form.radius.value);
         const vl = parseInt(this.second_law_form.vl.value);
         const vr = parseInt(this.second_law_form.vr.value);
-        const walls = second_law_rects(gap_size);
-        const measures = second_law_measures();
-        const bodies = second_law_bodies(n, r, vl, vr, walls);
-        this.reset(bodies, walls, measures);
+        this.second_law(n, gap_size, r, vl, vr);
     }
     build_rect(x, y) {
         const clamp = (num, lo, hi) => {
@@ -251,7 +255,7 @@ export class UIHandler {
             if (this.rect_meaning_form['random-color'].checked) {
                 hue = rect.color[0];
             }
-            this.simulation.bodies = spawn_bodies(n, m, v, r, rect, this.simulation.bodies, this.simulation.walls, hue);
+            this.simulation.spawn_bodies(n, m, v, r, rect, hue);
         }
     }
 }
