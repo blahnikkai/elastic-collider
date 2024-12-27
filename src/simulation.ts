@@ -1,6 +1,8 @@
 import {Body} from './body.js'
 import {Rectangle, RectangleType} from './rectangle.js'
 import {Vector, dist, norm} from './vector.js'
+import Plotly from 'plotly.js-dist'
+
 export const TICKRATE = 50
 
 function check_collides_existing_bodies(bodies: Body[], x: number, y: number, r: number): boolean {
@@ -133,7 +135,7 @@ export class Simulation {
         }
     }
 
-    draw_all(ctx: CanvasRenderingContext2D, info_grid: HTMLDivElement): void {
+    draw_all(ctx: CanvasRenderingContext2D, info_grid: HTMLDivElement, plot: HTMLDivElement): void {
         ctx.clearRect(0, 0, 500, 500)
         for(const body of this.bodies) {
             body.draw(ctx)
@@ -141,14 +143,14 @@ export class Simulation {
         
         ctx.fillStyle = 'black'
         ctx.strokeStyle = 'black'
-        ctx.fillText(this.calc_energy().toString(), 20, 20)
+        ctx.fillText(this.calc_total_energy().toString(), 20, 20)
         ctx.fillText(this.tick.toString(), 20, 40)
         
         for(const wall of this.walls) {
             wall.draw(ctx)
         }
 
-        if(this.intermediate_rect != null && this.intermediate_rect.type === RectangleType.Wall) {
+        if(this.intermediate_rect != null && this.intermediate_rect.type == RectangleType.Wall) {
             this.intermediate_rect.draw(ctx)
         }
         
@@ -163,8 +165,7 @@ export class Simulation {
         info_html += 'Mean Kinetic Energy (Temperature)'
         info_html += '</div>'
         for(const measure of this.measures) {
-            const energy = this.calc_energy(measure.x1, measure.x2, measure.y1, measure.y2)
-            const body_cnt = this.count_bodies(measure.x1, measure.x2, measure.y1, measure.y2)
+            const [energy, body_cnt] = measure.calc_energy(this.bodies, this.tick)
             const hsl_color = `style="color:hsl(${measure.color[0]}, ${measure.color[1]}%, ${measure.color[2]}%"`
             info_html += `<div ${hsl_color}">`
             info_html += energy.toFixed(2)
@@ -183,24 +184,16 @@ export class Simulation {
         if(this.intermediate_rect != null && this.intermediate_rect.type !== RectangleType.Wall) {
             this.intermediate_rect.draw(ctx)
         }
-    }
-    
-    count_bodies(x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): number {
-        let cnt = 0
-        for(const body of this.bodies) {
-            if(x1 < body.pos.x && body.pos.x < x2 && y1 < body.pos.y && body.pos.y < y2) {
-                cnt += 1
-            }
+        
+        if(this.tick % 100 == 0) {
+            Plotly.redraw(plot)
         }
-        return cnt
     }
 
-    calc_energy(x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): number {
+    calc_total_energy(): number {
         let energy = 0
         for(const body of this.bodies) {
-            if(x1 < body.pos.x && body.pos.x < x2 && y1 < body.pos.y && body.pos.y < y2) {
-                energy += .5 * body.mass * Math.pow(norm(body.vel), 2)
-            }
+            energy += .5 * body.mass * Math.pow(norm(body.vel), 2)
         }
         return energy
     }

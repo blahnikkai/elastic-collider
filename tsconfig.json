@@ -3,6 +3,8 @@
         "outDir": "./built",
         "allowJs": true,
         "target": "ES2015",
+        "module": "ES2015",
+        "moduleResolution": "node",
     },
     "include": ["./src/**/*.ts"]
 }

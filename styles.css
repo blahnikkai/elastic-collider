@@ -90,3 +90,8 @@ label {
     display: inline-block;
     background-color: black;
 }
+
+#plot {
+    color: white;
+    height: 500px;
+}

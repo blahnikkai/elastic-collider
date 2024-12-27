@@ -1,6 +1,7 @@
 import {Simulation, random_number, second_law_bodies, second_law_measures, second_law_rects } from './simulation.js'
 import {Rectangle, RectangleType} from './rectangle.js'
 import { Body } from './body.js'
+import Plotly from 'plotly.js-dist'
 
 export class UIHandler {
 
@@ -9,6 +10,8 @@ export class UIHandler {
     canvas: HTMLCanvasElement
 
     ctx: CanvasRenderingContext2D
+
+    plot: HTMLDivElement
 
     step_btn: HTMLButtonElement
     pause_btn: HTMLButtonElement
@@ -35,6 +38,8 @@ export class UIHandler {
     constructor() {
         this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
         this.ctx = this.canvas.getContext("2d")
+        this.plot = <HTMLDivElement>document.getElementById("plot")
+
         this.step_btn = <HTMLButtonElement>document.getElementById("step")
         this.pause_btn = <HTMLButtonElement>document.getElementById("pause")
         this.play_btn = <HTMLButtonElement>document.getElementById("play")
@@ -194,6 +199,15 @@ export class UIHandler {
     }
 
     reset(bodies: Body[], walls: Rectangle[], measures: Rectangle[]) {
+        Plotly.newPlot(
+            this.plot, 
+            [], 
+            {
+                height: 600,
+                width: 800,
+                margin: {t: 0} 
+            },
+        )
         this.pause()
         this.simulation.reset(bodies, walls, measures)
     }
@@ -319,6 +333,17 @@ export class UIHandler {
             this.reset([], this.simulation.walls, this.simulation.measures)
         }
         else if(rect.type == RectangleType.Measurement) {
+            Plotly.addTraces(
+                this.plot, 
+                {
+                    x: rect.energy_data[0], 
+                    y: rect.energy_data[1],
+                    mode: 'lines',
+                    line: {
+                        color: `hsl(${rect.color[0]}, ${rect.color[1]}%, 70%)`
+                    }
+                }
+            )
             this.simulation.measures.push(rect)
         }
         else if(rect.type == RectangleType.Spawn) {
