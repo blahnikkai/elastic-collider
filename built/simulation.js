@@ -45,6 +45,32 @@ function generate_random_body(bodies, rects, m, v, r, hue = null, x1 = 0, x2 = 5
         i++;
     }
 }
+export function spawn_bodies(n, m, v, r, spawn_rect, bodies, walls, hue) {
+    let new_bodies = [...bodies];
+    for (let i = 0; i < n; i++) {
+        const body = generate_random_body(new_bodies, walls, m, v, r, hue, spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2);
+        if (body == null) {
+            return bodies;
+        }
+        new_bodies.push(body);
+    }
+    return new_bodies;
+}
+// number
+// size
+// mass
+// energy
+export function brownian(n, m, v, r) {
+    let bodies = [];
+    bodies.push(generate_random_body(bodies, [], m, 0, 30));
+    for (let i = 0; i < n; i++) {
+        bodies.push(generate_random_body(bodies, [], 1, v, r));
+    }
+    bodies[0].color = 'red';
+    bodies[0].draw_trace = true;
+    bodies[1].color = 'red';
+    return bodies;
+}
 export function second_law_rects(gap_size) {
     const w_half = 10;
     const gap_half = gap_size / 2;
@@ -174,37 +200,5 @@ export class Simulation {
             }
         }
         this.bodies = new_bodies;
-    }
-    // number
-    // size
-    // mass
-    // energy
-    brownian(n, m, v, r) {
-        let bodies = [];
-        bodies.push(generate_random_body(bodies, [], m, 0, 30));
-        for (let i = 0; i < n; i++) {
-            bodies.push(generate_random_body(bodies, [], 1, v, r));
-        }
-        bodies[0].color = 'red';
-        bodies[0].draw_trace = true;
-        bodies[1].color = 'red';
-        this.reset(bodies, [], []);
-    }
-    spawn_bodies(n, m, v, r, spawn_rect, hue) {
-        let new_bodies = [...this.bodies];
-        for (let i = 0; i < n; i++) {
-            const body = generate_random_body(new_bodies, this.walls, m, v, r, hue, spawn_rect.x1, spawn_rect.x2, spawn_rect.y1, spawn_rect.y2);
-            if (body == null) {
-                return;
-            }
-            new_bodies.push(body);
-        }
-        this.bodies = new_bodies;
-    }
-    second_law(n, gap_size, r, vl, vr) {
-        const walls = second_law_rects(gap_size);
-        const measures = second_law_measures();
-        const bodies = second_law_bodies(n, r, vl, vr, walls);
-        this.reset(bodies, walls, measures);
     }
 }
