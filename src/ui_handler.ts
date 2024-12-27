@@ -250,10 +250,10 @@ export class UIHandler {
         let rects = []
         const rect_type_strng = this.rect_meaning_form.elements['rect-meaning'].value
         const rect_type: RectangleType = rect_type_strng as RectangleType
-        if(rect_type === RectangleType.Measurement) {
+        if(rect_type == RectangleType.Measurement) {
             rects = this.simulation.measures
         }
-        else if(rect_type === RectangleType.Wall) {
+        else if(rect_type == RectangleType.Wall) {
             rects = this.simulation.walls
         }
         for(let i = rects.length - 1; i >= 0; i--) {
@@ -262,6 +262,10 @@ export class UIHandler {
                 rects.splice(i, 1)
                 return
             }
+        }
+
+        if(rect_type == RectangleType.Delete) {
+            this.build_rect(x, y)
         }
     }
 
@@ -310,14 +314,14 @@ export class UIHandler {
         const rect: Rectangle = this.build_rect(x, y)
         rect.color = this.simulation.intermediate_rect.color
         this.simulation.intermediate_rect = null
-        if(rect.type === RectangleType.Wall) {
+        if(rect.type == RectangleType.Wall) {
             this.simulation.walls.push(rect)
             this.reset([], this.simulation.walls, this.simulation.measures)
         }
-        else if(rect.type === RectangleType.Measurement) {
+        else if(rect.type == RectangleType.Measurement) {
             this.simulation.measures.push(rect)
         }
-        else {
+        else if(rect.type == RectangleType.Spawn) {
             const n = parseInt(this.rect_meaning_form.number.value)
             const m = parseInt(this.rect_meaning_form.mass.value)
             const v = parseInt(this.rect_meaning_form.velocity.value)
@@ -328,6 +332,10 @@ export class UIHandler {
                 hue = rect.color[0]
             }
             this.simulation.spawn_bodies(n, m, v, r, rect, hue)
+        }
+        else {
+
+            this.simulation.delete_bodies(rect)
         }
     }
 

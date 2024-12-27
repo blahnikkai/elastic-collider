@@ -3,6 +3,7 @@ export var RectangleType;
     RectangleType["Wall"] = "wall";
     RectangleType["Spawn"] = "bodies";
     RectangleType["Measurement"] = "measurement";
+    RectangleType["Delete"] = "delete";
 })(RectangleType || (RectangleType = {}));
 export class Rectangle {
     constructor(x1, y1, x2, y2, type = RectangleType.Wall, hue = null) {
@@ -17,10 +18,10 @@ export class Rectangle {
                 break;
             case RectangleType.Spawn:
                 if (hue == null) {
-                    this.color = [0, 0, 0, 0.25];
+                    this.color = [0, 0, 0, 0.4];
                 }
                 else {
-                    this.color = [hue, 100, 40, 0.25];
+                    this.color = [hue, 100, 40, 0.4];
                 }
                 break;
             case RectangleType.Measurement:
@@ -28,6 +29,9 @@ export class Rectangle {
                     throw new Error('hue should be specified for measurement');
                 }
                 this.color = [hue, 80, 80, 0.25];
+                break;
+            case RectangleType.Delete:
+                this.color = [0, 100, 40, 0.7];
                 break;
         }
     }

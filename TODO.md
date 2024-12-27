@@ -1,6 +1,5 @@
 - Add crazy settings like 
     - path trace for all bodies.
     - color all black, except red for the body that hasn't touched another body in the longest
-- Add default args to simulation.reset() to not change walls and measures
-- Draw a rectangle to delete bodies inside
 - Line plot of energies
+- Allow drawing body if no bodies there? Or even if bodies are there

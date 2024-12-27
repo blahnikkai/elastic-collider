@@ -205,6 +205,16 @@ export class Simulation {
         return energy
     }
 
+    delete_bodies(delete_rect: Rectangle): void {
+        let new_bodies = []
+        for(const body of this.bodies) {
+            if(!check_collides_existing_rects([delete_rect], body.pos.x, body.pos.y, 0)) {
+                new_bodies.push(body)
+            }
+        }
+        this.bodies = new_bodies
+    }
+
     // number
     // size
     // mass

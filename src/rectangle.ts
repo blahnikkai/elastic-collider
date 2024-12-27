@@ -4,6 +4,7 @@ export enum RectangleType {
     Wall = "wall",
     Spawn = "bodies",
     Measurement = "measurement",
+    Delete = "delete",
 }
 
 export class Rectangle {
@@ -28,10 +29,10 @@ export class Rectangle {
                 break
             case RectangleType.Spawn:
                 if(hue == null) {
-                    this.color = [0, 0, 0, 0.25]
+                    this.color = [0, 0, 0, 0.4]
                 }
                 else {
-                    this.color = [hue, 100, 40, 0.25]
+                    this.color = [hue, 100, 40, 0.4]
                 }
                 break
             case RectangleType.Measurement:
@@ -39,6 +40,9 @@ export class Rectangle {
                     throw new Error('hue should be specified for measurement')
                 }
                 this.color = [hue, 80, 80, 0.25]
+                break
+            case RectangleType.Delete:
+                this.color = [0, 100, 40, 0.7]
                 break
         }
     }
