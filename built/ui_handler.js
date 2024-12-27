@@ -196,6 +196,9 @@ export class UIHandler {
             const rect = rects[i];
             if (rect.intersect(x, y, 0)) {
                 rects.splice(i, 1);
+                if (rect_type == RectangleType.Measurement) {
+                    Plotly.deleteTraces(this.plot, i);
+                }
                 return;
             }
         }

@@ -250,7 +250,6 @@ export class UIHandler {
             return
         }
         const [x, y] = this.get_mouse_coords(event)
-
         let rects = []
         const rect_type_strng = this.rect_meaning_form.elements['rect-meaning'].value
         const rect_type: RectangleType = rect_type_strng as RectangleType
@@ -264,6 +263,9 @@ export class UIHandler {
             const rect = rects[i]
             if(rect.intersect(x, y, 0)) {
                 rects.splice(i, 1)
+                if(rect_type == RectangleType.Measurement) {
+                    Plotly.deleteTraces(this.plot, i)
+                }
                 return
             }
         }
