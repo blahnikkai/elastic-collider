@@ -7,7 +7,3 @@
 - Improve performance of plot
 - Initial measures should be added to plot
 - Responsiveness?
-- Plot send to bottom, center
-- Scroll info-grid if too large for container
-
-- Single pause/play button

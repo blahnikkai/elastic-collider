@@ -18,7 +18,8 @@ export class Rectangle {
     // hsla
     color: number[]
     // tick, mean energy
-    energy_data: number[][]
+    tick_lst: number[]
+    mean_energy_lst: number[]
 
     constructor(x1: number, y1: number, x2: number, y2: number, type: RectangleType = RectangleType.Wall, hue: number | null = null) {
         this.x1 = x1
@@ -26,7 +27,8 @@ export class Rectangle {
         this.x2 = x2
         this.y2 = y2
         this.type = type
-        this.energy_data = [[], []]
+        this.tick_lst = []
+        this.mean_energy_lst = []
         switch(type) {
             case RectangleType.Wall:
                 this.color = [0, 0, 0, 1]
@@ -77,9 +79,9 @@ export class Rectangle {
                 cnt += 1
             }
         }
-        if(tick % 10 == 0 && tick != this.energy_data[0][this.energy_data[0].length - 1]) {
-            this.energy_data[0].push(tick)
-            this.energy_data[1].push(energy / cnt)
+        if(tick % 10 == 0 && tick != this.tick_lst[this.tick_lst.length - 1]) {
+            this.tick_lst.push(tick)
+            this.mean_energy_lst.push(energy / cnt)
         }
         return [energy, cnt]
     }

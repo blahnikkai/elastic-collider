@@ -343,8 +343,8 @@ export class UIHandler {
             Plotly.addTraces(
                 this.plot, 
                 {
-                    x: rect.energy_data[0], 
-                    y: rect.energy_data[1],
+                    x: rect.tick_lst,
+                    y: rect.mean_energy_lst,
                     mode: 'lines',
                     line: {
                         color: `hsl(${rect.color[0]}, ${rect.color[1]}%, 70%)`
