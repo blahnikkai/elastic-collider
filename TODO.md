@@ -7,7 +7,8 @@
 - Improve performance of plot
 - Fix plot margins
 - Initial measures should be added to plot
-- Plot title, axis titles, units
 - Responsiveness?
 - Plot send to bottom, center
 - Scroll info-grid if too large for container
+
+- Single pause/play button

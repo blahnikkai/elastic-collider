@@ -205,7 +205,7 @@ export class UIHandler {
                     title: 'Tick'
                 },
                 yaxis: {
-                    title: 'Mean Kinetic Energy (Temperature)',
+                    title: 'Mean Kinetic Energy (Joules)',
                 },
             },
         )
