@@ -1,4 +1,3 @@
-import { random_number } from "./simulation.js"
 import { Body } from "./body.js"
 import { norm } from './vector.js'
 
@@ -18,7 +17,7 @@ export class Rectangle {
     type: RectangleType
     // hsla
     color: number[]
-    // tick, total energy, body count, mean energy
+    // tick, mean energy
     energy_data: number[][]
 
     constructor(x1: number, y1: number, x2: number, y2: number, type: RectangleType = RectangleType.Wall, hue: number | null = null) {
@@ -27,7 +26,7 @@ export class Rectangle {
         this.x2 = x2
         this.y2 = y2
         this.type = type
-        this.energy_data = [[], [], [], []]
+        this.energy_data = [[], []]
         switch(type) {
             case RectangleType.Wall:
                 this.color = [0, 0, 0, 1]
@@ -80,9 +79,7 @@ export class Rectangle {
         }
         if(tick % 10 == 0 && tick != this.energy_data[0][this.energy_data[0].length - 1]) {
             this.energy_data[0].push(tick)
-            this.energy_data[1].push(energy)
-            this.energy_data[2].push(cnt)
-            this.energy_data[3].push(energy / cnt)
+            this.energy_data[1].push(energy / cnt)
         }
         return [energy, cnt]
     }

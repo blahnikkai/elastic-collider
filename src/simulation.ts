@@ -166,7 +166,7 @@ export class Simulation {
         }
     }
 
-    draw_all(ctx: CanvasRenderingContext2D, info_grid: HTMLDivElement, plot: HTMLDivElement): void {
+    draw_all(ctx: CanvasRenderingContext2D, measure_grid: HTMLDivElement, plot: HTMLDivElement): void {
         ctx.clearRect(0, 0, 500, 500)
         for(const body of this.bodies) {
             body.draw(ctx)
@@ -185,32 +185,32 @@ export class Simulation {
             this.intermediate_rect.draw(ctx)
         }
         
-        let info_html = ''
-        info_html += `<div>`
-        info_html += 'Total Kinetic Energy'
-        info_html += '</div>'
-        info_html += `<div>`
-        info_html += 'Body Count'
-        info_html += '</div>'
-        info_html += `<div>`
-        info_html += 'Mean Kinetic Energy (Temperature)'
-        info_html += '</div>'
+        let measure_html = ''
+        measure_html += `<div>`
+        measure_html += 'Total Kinetic Energy'
+        measure_html += '</div>'
+        measure_html += `<div>`
+        measure_html += 'Body Count'
+        measure_html += '</div>'
+        measure_html += `<div>`
+        measure_html += 'Mean Kinetic Energy (Temperature)'
+        measure_html += '</div>'
         for(const measure of this.measures) {
             const [energy, body_cnt] = measure.calc_energy(this.bodies, this.tick)
             const hsl_color = `style="color:hsl(${measure.color[0]}, ${measure.color[1]}%, ${measure.color[2]}%"`
-            info_html += `<div ${hsl_color}">`
-            info_html += energy.toFixed(2)
-            info_html += '</div>'
-            info_html += `<div ${hsl_color}">`
-            info_html += body_cnt
-            info_html += '</div>'
-            info_html += `<div ${hsl_color}">`
-            info_html += (energy / body_cnt).toFixed(2)
-            info_html += '</div>'
+            measure_html += `<div ${hsl_color}">`
+            measure_html += energy.toFixed(2)
+            measure_html += '</div>'
+            measure_html += `<div ${hsl_color}">`
+            measure_html += body_cnt
+            measure_html += '</div>'
+            measure_html += `<div ${hsl_color}">`
+            measure_html += (energy / body_cnt).toFixed(2)
+            measure_html += '</div>'
             
             measure.draw(ctx)
         }
-        info_grid.innerHTML = info_html
+        measure_grid.innerHTML = measure_html
         
         if(this.intermediate_rect != null && this.intermediate_rect.type !== RectangleType.Wall) {
             this.intermediate_rect.draw(ctx)

@@ -73,16 +73,13 @@ label {
     width: 200%;
 }
 
-#info-grid {
-    border-left: .5em solid #21451c;
-    padding: 1em 0;
-    color: white;
+#measure-grid {
     display: grid;
     grid-template-columns: auto auto auto;
     grid-auto-rows: max-content;
 }
 
-#info-grid > * {
+#measure-grid > * {
     margin: .2em 1.5em;
 }
 
@@ -91,7 +88,14 @@ label {
     background-color: black;
 }
 
+#info {
+    border-left: .5em solid #21451c;
+    padding: 1em 0;
+    color: white;
+}
+
 #plot {
     color: white;
-    height: 500px;
+    margin: 1em;
+    
 }

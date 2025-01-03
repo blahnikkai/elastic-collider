@@ -12,7 +12,7 @@ export class UIHandler {
         this.brownian_btn = document.getElementById('brownian-btn');
         this.second_law_btn = document.getElementById('second-law-btn');
         this.clear_btn = document.getElementById('clear-btn');
-        this.info_grid = document.getElementById('info-grid');
+        this.measure_grid = document.getElementById('measure-grid');
         this.canvas_container = document.getElementById('canvas-container');
         this.bodies_subform = document.getElementById('bodies-subform');
         this.brownian_form = document.getElementById('brownian-form');
@@ -132,9 +132,20 @@ export class UIHandler {
     }
     reset(bodies, walls, measures) {
         Plotly.newPlot(this.plot, [], {
-            height: 600,
-            width: 800,
-            margin: { t: 0 }
+            height: 300,
+            width: 400,
+            margin: {
+                t: 10,
+                b: 40,
+                l: 40,
+                r: 10,
+            },
+            xaxis: {
+                title: 'Tick'
+            },
+            yaxis: {
+                title: 'Mean Kinetic Energy (Temperature)',
+            },
         });
         this.pause();
         this.simulation.reset(bodies, walls, measures);

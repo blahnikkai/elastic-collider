@@ -20,7 +20,7 @@ export class UIHandler {
     second_law_btn: HTMLButtonElement
     clear_btn: HTMLButtonElement
 
-    info_grid: HTMLDivElement
+    measure_grid: HTMLDivElement
     canvas_container: HTMLDivElement
     bodies_subform: HTMLDivElement
 
@@ -47,7 +47,7 @@ export class UIHandler {
         this.second_law_btn = <HTMLButtonElement>document.getElementById('second-law-btn')
         this.clear_btn = <HTMLButtonElement>document.getElementById('clear-btn')
 
-        this.info_grid = <HTMLDivElement>document.getElementById('info-grid')
+        this.measure_grid = <HTMLDivElement>document.getElementById('measure-grid')
         this.canvas_container = <HTMLDivElement>document.getElementById('canvas-container')
         this.bodies_subform = <HTMLDivElement>document.getElementById('bodies-subform')
         
@@ -193,9 +193,20 @@ export class UIHandler {
             this.plot, 
             [], 
             {
-                height: 600,
-                width: 800,
-                margin: {t: 0} 
+                height: 300,
+                width: 400,
+                margin: {
+                    t: 10,
+                    b: 40,
+                    l: 40, 
+                    r: 10,
+                },
+                xaxis: {
+                    title: 'Tick'
+                },
+                yaxis: {
+                    title: 'Mean Kinetic Energy (Temperature)',
+                },
             },
         )
         this.pause()

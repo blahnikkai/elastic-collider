@@ -4,7 +4,7 @@ function main() {
     draw_loop(ui_handler);
 }
 function draw_loop(ui_handler) {
-    ui_handler.simulation.draw_all(ui_handler.ctx, ui_handler.info_grid, ui_handler.plot);
+    ui_handler.simulation.draw_all(ui_handler.ctx, ui_handler.measure_grid, ui_handler.plot);
     window.requestAnimationFrame(() => draw_loop(ui_handler));
 }
 main();
