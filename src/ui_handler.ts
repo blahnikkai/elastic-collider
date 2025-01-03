@@ -193,13 +193,13 @@ export class UIHandler {
             this.plot, 
             [], 
             {
-                height: 300,
-                width: 400,
+                height: 350,
+                width: 500,
                 margin: {
-                    t: 10,
+                    t: 20,
                     b: 40,
-                    l: 40, 
-                    r: 10,
+                    l: 50,
+                    r: 20,
                 },
                 xaxis: {
                     title: 'Tick'

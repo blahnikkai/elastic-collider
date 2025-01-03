@@ -5,7 +5,6 @@
 - Swap x1, x2, y1, y2 order
 
 - Improve performance of plot
-- Fix plot margins
 - Initial measures should be added to plot
 - Responsiveness?
 - Plot send to bottom, center
