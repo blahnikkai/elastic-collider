@@ -43,6 +43,7 @@ label {
     left: 0;
     background-color: black;
     padding: .5em .75em;
+    z-index: 100;
 }
 
 .dropdown * {
@@ -97,5 +98,5 @@ label {
 #plot {
     color: white;
     margin: 1em;
-    
+
 }

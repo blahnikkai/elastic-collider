@@ -12,4 +12,3 @@
 - Scroll info-grid if too large for container
 
 - Single pause/play button
-- Text overlap with dropdown menus, use zorder

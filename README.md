@@ -12,7 +12,7 @@ Use the 4 radio buttons to select what type of rectangle will be drawn.
 
 You can click the 'Generate Brownian Motion' or 'Generate 2nd law of thermodynamics' buttons to generate a pre-built scenario, or add your own walls and bodies to create your own experiments!
 
-## Scientific explanation of the two scenarios
+## Scientific explanation of the two pre-built scenarios
 
 Brownian Motion is the motion of a particle suspended in a liquid or gas. The atoms or molecules of the gas move freely only changing velocity in collisions with other particles. The larger particle, for example a grain of pollen, will undergo seemingly random movement and vibration as the atoms of the gas - too small to see - collide with the pollen. A higher mean velocity of the gas particles, which is proportional to a higher temperature, will result in more rapid vibration. Experiments with Brownian motion allowed physicists to confirm the atomic model without directly observing them.
 
