@@ -29,12 +29,12 @@ export class Rectangle {
         this.type = type
         this.tick_lst = []
         this.mean_energy_lst = []
-        switch(type) {
+        switch (type) {
             case RectangleType.Wall:
                 this.color = [0, 0, 0, 1]
                 break
             case RectangleType.Spawn:
-                if(hue == null) {
+                if (hue == null) {
                     this.color = [0, 0, 0, 0.4]
                 }
                 else {
@@ -42,7 +42,7 @@ export class Rectangle {
                 }
                 break
             case RectangleType.Measurement:
-                if(hue == null) {
+                if (hue == null) {
                     throw new Error('hue should be specified for measurement')
                 }
                 this.color = [hue, 80, 80, 0.25]
@@ -73,13 +73,13 @@ export class Rectangle {
     calc_energy(bodies: Body[], tick: number): number[] {
         let energy = 0
         let cnt = 0
-        for(const body of bodies) {
-            if(this.x1 < body.pos.x && body.pos.x < this.x2 && this.y1 < body.pos.y && body.pos.y < this.y2) {
+        for (const body of bodies) {
+            if (this.x1 < body.pos.x && body.pos.x < this.x2 && this.y1 < body.pos.y && body.pos.y < this.y2) {
                 energy += .5 * body.mass * Math.pow(norm(body.vel), 2)
                 cnt += 1
             }
         }
-        if(tick % 10 == 0 && tick != this.tick_lst[this.tick_lst.length - 1]) {
+        if (tick % 10 == 0 && tick != this.tick_lst[this.tick_lst.length - 1]) {
             this.tick_lst.push(tick)
             this.mean_energy_lst.push(energy / cnt)
         }

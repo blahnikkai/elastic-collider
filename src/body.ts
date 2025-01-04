@@ -1,6 +1,6 @@
-import {dist, add, scale, sub, dot, norm, Vector} from './vector.js'
+import { dist, add, scale, sub, dot, norm, Vector } from './vector.js'
 import { Rectangle } from './rectangle.js'
-import {TICKRATE} from './simulation.js'
+import { TICKRATE } from './simulation.js'
 
 export class Body {
 
@@ -18,7 +18,7 @@ export class Body {
         this.vel = vel
         this.r = r
         this.color = 'black'
-        if(hue !== null) {
+        if (hue !== null) {
             this.color = `hsl(${hue}, 100%, 40%)`
         }
         this.draw_trace = false
@@ -27,25 +27,25 @@ export class Body {
 
     step(): void {
         this.pos = add(this.pos, scale(1 / TICKRATE, this.vel))
-        if(this.draw_trace) {
+        if (this.draw_trace) {
             this.trace.push(this.pos)
         }
     }
 
     check_wall_collide(): void {
-        if(this.pos.x - this.r < 0 && this.vel.x < 0) {
+        if (this.pos.x - this.r < 0 && this.vel.x < 0) {
             this.pos.x = this.r
             this.vel.x *= -1
         }
-        if(this.pos.x + this.r > 500 && this.vel.x > 0) {
+        if (this.pos.x + this.r > 500 && this.vel.x > 0) {
             this.pos.x = 500 - this.r
             this.vel.x *= -1
         }
-        if(this.pos.y - this.r < 0 && this.vel.y < 0) {
+        if (this.pos.y - this.r < 0 && this.vel.y < 0) {
             this.pos.y = this.r
             this.vel.y *= -1
         }
-        if(this.pos.y + this.r > 500 && this.vel.y > 0) {
+        if (this.pos.y + this.r > 500 && this.vel.y > 0) {
             this.pos.y = 500 - this.r
             this.vel.y *= -1
         }
@@ -56,7 +56,7 @@ export class Body {
         const y1 = rect.y1
         const x2 = rect.x2
         const y2 = rect.y2
-        
+
         const h = y2 - y1
         const w = x2 - x1
 
@@ -65,36 +65,36 @@ export class Body {
 
         const above_down_right = y0 < (h / w) * x0
         const above_down_left = y0 < - (h / w) * x0 + h
-        
+
         // console.log('above down left', above_down_left)
         // console.log('above down right', above_down_right)
 
-        if(x1 < this.pos.x + this.r && this.pos.x - this.r < x2) {
+        if (x1 < this.pos.x + this.r && this.pos.x - this.r < x2) {
             // top
-            if(this.pos.y + this.r > y1 && this.vel.y > 0 && above_down_left && above_down_right) {
+            if (this.pos.y + this.r > y1 && this.vel.y > 0 && above_down_left && above_down_right) {
                 // console.log('reflecting top')
                 this.vel.y *= -1
                 this.pos.y = y1 - this.r
                 return
             }
             // bottom
-            if(this.pos.y - this.r < y2 && this.vel.y < 0 && !above_down_left && !above_down_right) {
+            if (this.pos.y - this.r < y2 && this.vel.y < 0 && !above_down_left && !above_down_right) {
                 // console.log('reflecting bottom')
                 this.vel.y *= -1
                 this.pos.y = y2 + this.r
                 return
             }
         }
-        if(y1 < this.pos.y + this.r && this.pos.y - this.r < y2) {
+        if (y1 < this.pos.y + this.r && this.pos.y - this.r < y2) {
             // left
-            if(this.pos.x + this.r > x1 && this.vel.x > 0 && above_down_left && !above_down_right) {
+            if (this.pos.x + this.r > x1 && this.vel.x > 0 && above_down_left && !above_down_right) {
                 // console.log('reflecting left')
                 this.vel.x *= -1
                 this.pos.x = x1 - this.r
                 return
             }
             // right
-            if(this.pos.x - this.r < x2 && this.vel.x < 0 && !above_down_left && above_down_right) {
+            if (this.pos.x - this.r < x2 && this.vel.x < 0 && !above_down_left && above_down_right) {
                 // console.log('reflecting right')
                 this.vel.x *= -1
                 this.pos.x = x2 + this.r
@@ -113,12 +113,12 @@ export class Body {
     }
 
     check_other_collide(other: Body): void {
-        if(dist(this.pos, other.pos) >= this.r + other.r) {
+        if (dist(this.pos, other.pos) >= this.r + other.r) {
             return;
         }
         const pos_diff = sub(this.pos, other.pos)
         const vel_diff = sub(this.vel, other.vel)
-        if(dot(vel_diff, pos_diff) >= 0) {
+        if (dot(vel_diff, pos_diff) >= 0) {
             return;
         }
         const vel1 = this.calc_post_collision_vel(other)
@@ -135,14 +135,14 @@ export class Body {
         ctx.stroke()
         ctx.fill()
         ctx.closePath()
-        
-        if(!this.draw_trace || this.trace.length == 0) {
+
+        if (!this.draw_trace || this.trace.length == 0) {
             return;
         }
         ctx.strokeStyle = 'blue'
         ctx.beginPath()
         ctx.moveTo(this.trace[0].x, this.trace[0].y)
-        for(const pos of this.trace) {
+        for (const pos of this.trace) {
             ctx.lineTo(pos.x, pos.y)
         }
         ctx.stroke()

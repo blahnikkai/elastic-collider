@@ -1,4 +1,4 @@
-import {UIHandler} from './ui_handler.js'
+import { UIHandler } from './ui_handler.js'
 
 function main() {
     const ui_handler = new UIHandler()
