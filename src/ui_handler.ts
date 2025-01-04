@@ -210,6 +210,9 @@ export class UIHandler {
             },
         )
         this.pause()
+        for(const measure of measures) {
+            this.add_measure_to_plot(measure)
+        }
         this.simulation.reset(bodies, walls, measures)
     }
 
@@ -310,7 +313,21 @@ export class UIHandler {
         const bodies = second_law_bodies(n, r, vl, vr, walls)
         this.reset(bodies, walls, measures)
     }
-
+    
+    add_measure_to_plot(rect: Rectangle): void {
+        Plotly.addTraces(
+            this.plot, 
+            {
+                x: rect.tick_lst,
+                y: rect.mean_energy_lst,
+                mode: 'lines',
+                line: {
+                    color: `hsl(${rect.color[0]}, ${rect.color[1]}%, 70%)`
+                }
+            }
+        )
+    }
+    
     build_rect(x: number, y: number): Rectangle {
         const clamp = (num: number, lo: number, hi: number) => {
             return Math.max(lo, Math.min(num, hi))
@@ -340,17 +357,7 @@ export class UIHandler {
             this.reset([], this.simulation.walls, this.simulation.measures)
         }
         else if(rect.type == RectangleType.Measurement) {
-            Plotly.addTraces(
-                this.plot, 
-                {
-                    x: rect.tick_lst,
-                    y: rect.mean_energy_lst,
-                    mode: 'lines',
-                    line: {
-                        color: `hsl(${rect.color[0]}, ${rect.color[1]}%, 70%)`
-                    }
-                }
-            )
+            this.add_measure_to_plot(rect)
             this.simulation.measures.push(rect)
         }
         else if(rect.type == RectangleType.Spawn) {
