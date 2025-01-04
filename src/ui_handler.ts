@@ -125,7 +125,7 @@ export class UIHandler {
     }
 
     add_event_listeners() {
-        this.step_btn.addEventListener("click", () => this.simulation.step_all())
+        this.step_btn.addEventListener("click", () => this.simulation.step_all(false))
         this.pause_btn.addEventListener("click", () => this.pause())
         this.play_btn.addEventListener("click", () => this.play())
         
