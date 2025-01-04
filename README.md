@@ -21,3 +21,7 @@ The Second Law of Thermodynamics states that the entropy of a closed system will
 ## To run the source code on your own machine
 
 `npm run dev`
+
+## To update the gh-pages
+
+`npm run deploy`
