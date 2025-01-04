@@ -1,4 +1,5 @@
 {
+  "homepage": "https://blahnikkai.github.io/elastic-collider/",
   "dependencies": {
     "plotly.js-dist": "^2.35.3",
     "tsc": "^2.0.4",
@@ -6,11 +7,14 @@
     "vite": "^6.0.6"
   },
   "devDependencies": {
-    "@types/plotly.js": "^2.35.1"
+    "@types/plotly.js": "^2.35.1",
+    "gh-pages": "^6.3.0"
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d dist"
   }
 }
