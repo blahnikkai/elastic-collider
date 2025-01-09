@@ -27,10 +27,6 @@ ul {
     list-style-type: none;
 }
 
-nav {
-    margin: .1em 0 .3em;
-}
-
 label {
     display: inline-block;
 }
@@ -52,8 +48,13 @@ button:hover, a:hover {
     color: var(--clr-accent);
 }
 
-.nav-container {
+.btn-container {
     margin: .3em 0;
+}
+
+.rect-meaning-title {
+    margin: 0;
+    margin-bottom: .2em;
 }
 
 .input-container {

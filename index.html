@@ -56,15 +56,15 @@
         <p><code>npm run deploy</code></p>
 
     </div>
-    <nav>
-        <div class="nav-container">
+    <div>
+        <div class="btn-container">
             <button id="step">Step</button>
             <button id="pause">Pause</button>
             <button id="play">Play</button>
         </div>
-        <div class="nav-container">
+        <div class="btn-container">
             <span class="dropdown-container" id="brownian-container">
-                <button id="brownian-btn">Generate Brownian motion</button>
+                <button id="brownian-btn">Generate Brownian Motion</button>
                 <form id="brownian-form" class="dropdown">
                     <div class="input-container">
                         <label for="number">Number: </label>
@@ -86,7 +86,7 @@
                 </form>
             </span>
             <span class="dropdown-container" id="second-law-container">
-                <button id="second-law-btn">Generate 2nd law of thermodynamics</button>
+                <button id="second-law-btn">Generate 2nd Law of Thermodynamics</button>
                 <form id="second-law-form" class="dropdown">
                     <div class="input-container">
                         <label for="number">Number: </label>
@@ -113,9 +113,10 @@
             </span>
             <button id="clear-btn">Clear</button>
         </div>
-    </nav>
+    </div>
     <form id="rect-meaning-form">
-        <ul>
+        <ul class="rect-meaning-list">
+            <h2 class="rect-meaning-title">Rectangle Type</h2>
             <li class="rect-meaning-option">
                 <input id="wall-option" type="radio" name="rect-meaning" value="wall" checked />
                 <label for="wall-option">Wall</label>
