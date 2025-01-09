@@ -1,7 +1,8 @@
 :root {
     --clr-dark: #171618;
-    --clr-accent: #613D70;
+    --clr-dark2: #2E2637;
     --clr-light: #EBE6F0;
+    --clr-accent: #613D70;
 }
 
 * {
@@ -12,7 +13,6 @@
 
 html {
     background-color: var(--clr-dark);
-    padding: .5em;
 }
 
 canvas {
@@ -52,7 +52,7 @@ a {
     margin-right: .5em;
 }
 
-button:hover, a:hover {
+button:hover, a:hover, a:hover * {
     border-color: var(--clr-accent);
     color: var(--clr-accent);
 }
@@ -64,6 +64,12 @@ button:hover, a:hover {
 .rect-meaning-title {
     margin: 0;
     margin-bottom: .2em;
+}
+
+.readme {
+    padding: 1em;
+    margin: 1em 0;
+    background-color: var(--clr-dark2);
 }
 
 .input-container {

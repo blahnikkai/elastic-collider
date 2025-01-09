@@ -7,3 +7,6 @@
 - Responsiveness?
 - Add README.md text to top of page, add a link to GitHub (also do this for other web projects)
 - Rearrange buttons to not be above radio buttons 
+- Disabled button styling
+- Links to wikipedia or other sources in readme
+- Fix margin of black around readme html
