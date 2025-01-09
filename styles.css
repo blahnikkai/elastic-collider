@@ -14,6 +14,7 @@
 
 body {
     background-color: var(--clr-dark);
+    margin: 0;
 }
 
 canvas {
@@ -37,8 +38,15 @@ label:hover, .rect-meaning-option:hover {
     cursor: pointer;
 }
 
+nav {
+    display: flex;
+    flex-direction: row;
+    padding: .5em;
+}
+
 .page-link {
-    margin: .2em;
+    margin: 0 .2em;
+    display: inline;
 }
 
 .fa-github {
@@ -77,8 +85,11 @@ button:hover:not(button:disabled), a:hover, a:hover * {
 
 .readme {
     padding: 1em;
-    margin: 1em 0;
     background-color: var(--clr-dark2);
+}
+
+.readme-title {
+    margin: 0;
 }
 
 .input-container {
@@ -122,6 +133,10 @@ button:hover:not(button:disabled), a:hover, a:hover * {
     color: var(--clr-accent);
 }
 
+.main-container {
+    margin: 1em;
+}
+
 #bodies-container {
     display: inline-block;
     width: fit-content;
@@ -133,7 +148,7 @@ button:hover:not(button:disabled), a:hover, a:hover * {
     width: 200%;
 }
 
-#main-container {
+#simulation-container {
     display: flex;
     flex-direction: row;
     border: .5em solid var(--clr-accent);

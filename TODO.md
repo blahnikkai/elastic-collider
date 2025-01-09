@@ -4,6 +4,5 @@
 
 - Improve performance of plot
 
-- Disabled button styling
 - Fix margin of black around readme html
 - Does the system tend toward the Maxwell-Distribution?

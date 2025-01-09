@@ -15,12 +15,14 @@
 </head>
 
 <body>
-    <a href="https://github.com/blahnikkai/elastic-collider" class="page-link">
-        <div class="fa fa-github"></div>Source code
-    </a>
-    <a href="https://blahnikkai.github.io/" class="page-link">My Website</a>
+    <nav>
+        <a href="https://github.com/blahnikkai/elastic-collider" class="page-link">
+            <div class="fa fa-github"></div>Source code
+        </a>
+        <a href="https://blahnikkai.github.io/" class="page-link">My Website</a>
+    </nav>
     <div class="readme">
-        <h1 id="elastic-collider">Elastic Collider</h1>
+        <h1 class="readme-title">Elastic Collider</h1>
         <p>Click <strong>Play</strong> to start the simulation<br>Click <strong>Pause</strong> to pause the
             simulation<br>When the simulation is paused, you can click <strong>Step</strong> to simulate a single tick
         </p>
@@ -61,117 +63,119 @@
             ideal gas, with the molecules of the gas freely moving. It may sometimes show the entropy to decrease, since
             it is only an approximation. </p>
     </div>
-    <div>
-        <div class="btn-container">
-            <button id="step">Step</button>
-            <button id="pause">Pause</button>
-            <button id="play">Play</button>
-        </div>
-        <div class="btn-container">
-            <span class="dropdown-container" id="brownian-container">
-                <button id="brownian-btn">Generate Brownian Motion</button>
-                <form id="brownian-form" class="dropdown">
-                    <div class="input-container">
-                        <label for="number">Number: </label>
-                        <input name="number" type="number" value="300" class="dropdown-input" />
-                    </div>
-                    <div class="input-container">
-                        <label for="mass">Mass Ratio: </label>
-                        <input name="mass" type="number" value="100" class="dropdown-input" />
-                    </div>
-                    <div class="input-container">
-                        <label for="velocity">Velocity: </label>
-                        <input name="velocity" type="number" value="150" class="dropdown-input" />
-                    </div>
-                    <div class="input-container">
-                        <label for="radius">Radius: </label>
-                        <input name="radius" type="number" value="3" class="dropdown-input" />
-                    </div>
-                    <input name="reset-to-defaults" type="button" value="Reset to Defaults"></input>
-                </form>
-            </span>
-            <span class="dropdown-container" id="second-law-container">
-                <button id="second-law-btn">Generate 2nd Law of Thermodynamics</button>
-                <form id="second-law-form" class="dropdown">
-                    <div class="input-container">
-                        <label for="number">Number: </label>
-                        <input name="number" type="number" value="300" class="dropdown-input" />
-                    </div>
-                    <div class="input-container">
-                        <label for="gap_size">Gap Size: </label>
-                        <input name="gap_size" type="number" value="20" class="dropdown-input" />
-                    </div>
-                    <div class="input-container">
-                        <label for="radius">Radius: </label>
-                        <input name="radius" type="number" value="3" class="dropdown-input" />
-                    </div>
-                    <div class="input-container">
-                        <label for="vl">Left velocity: </label>
-                        <input name="vl" type="number" value="10" class="dropdown-input" />
-                    </div>
-                    <div class="input-container">
-                        <label for="vr">Right velocity: </label>
-                        <input name="vr" type="number" value="100" class="dropdown-input" />
-                    </div>
-                    <input name="reset-to-defaults" type="button" value="Reset to Defaults"></input>
-                </form>
-            </span>
-            <button id="clear-btn">Clear</button>
-        </div>
-    </div>
-    <form id="rect-meaning-form">
-        <ul class="rect-meaning-list">
-            <h2 class="rect-meaning-title">Rectangle Type</h2>
-            <li class="rect-meaning-option">
-                <input id="wall-option" type="radio" name="rect-meaning" value="wall" checked />
-                <label for="wall-option">Wall</label>
-            </li>
-            <li>
-                <span class="dropdown-container rect-meaning-option" id="bodies-container">
-                    <input id="bodies-option" type="radio" name="rect-meaning" value="bodies" />
-                    <label for="bodies-option">Spawn Bodies</label>
-                    <div id="bodies-subform" class="dropdown">
+    <div class="main-container">
+        <div class="btns">
+            <div class="btn-container">
+                <button id="step">Step</button>
+                <button id="pause">Pause</button>
+                <button id="play">Play</button>
+            </div>
+            <div class="btn-container">
+                <span class="dropdown-container" id="brownian-container">
+                    <button id="brownian-btn">Generate Brownian Motion</button>
+                    <form id="brownian-form" class="dropdown">
                         <div class="input-container">
                             <label for="number">Number: </label>
-                            <input name="number" type="number" value="10" class="dropdown-input" />
+                            <input name="number" type="number" value="300" class="dropdown-input" />
                         </div>
                         <div class="input-container">
-                            <label for="mass">Mass: </label>
-                            <input name="mass" type="number" value="1" class="dropdown-input" />
+                            <label for="mass">Mass Ratio: </label>
+                            <input name="mass" type="number" value="100" class="dropdown-input" />
                         </div>
                         <div class="input-container">
                             <label for="velocity">Velocity: </label>
-                            <input name="velocity" type="number" value="50" class="dropdown-input" />
+                            <input name="velocity" type="number" value="150" class="dropdown-input" />
+                        </div>
+                        <div class="input-container">
+                            <label for="radius">Radius: </label>
+                            <input name="radius" type="number" value="3" class="dropdown-input" />
+                        </div>
+                        <input name="reset-to-defaults" type="button" value="Reset to Defaults"></input>
+                    </form>
+                </span>
+                <span class="dropdown-container" id="second-law-container">
+                    <button id="second-law-btn">Generate 2nd Law of Thermodynamics</button>
+                    <form id="second-law-form" class="dropdown">
+                        <div class="input-container">
+                            <label for="number">Number: </label>
+                            <input name="number" type="number" value="300" class="dropdown-input" />
+                        </div>
+                        <div class="input-container">
+                            <label for="gap_size">Gap Size: </label>
+                            <input name="gap_size" type="number" value="20" class="dropdown-input" />
                         </div>
                         <div class="input-container">
                             <label for="radius">Radius: </label>
                             <input name="radius" type="number" value="3" class="dropdown-input" />
                         </div>
                         <div class="input-container">
-                            <label for="random-color">Random color: </label>
-                            <input name="random-color" type="checkbox" checked class="dropdown-input" />
+                            <label for="vl">Left velocity: </label>
+                            <input name="vl" type="number" value="10" class="dropdown-input" />
+                        </div>
+                        <div class="input-container">
+                            <label for="vr">Right velocity: </label>
+                            <input name="vr" type="number" value="100" class="dropdown-input" />
                         </div>
                         <input name="reset-to-defaults" type="button" value="Reset to Defaults"></input>
-                    </div>
+                    </form>
                 </span>
-            </li>
-            <li class="rect-meaning-option">
-                <input id="delete-option" type="radio" name="rect-meaning" value="delete" />
-                <label for="delete-option">Delete Bodies</label>
-            </li>
-            <li class="rect-meaning-option">
-                <input id="measure-option" type="radio" name="rect-meaning" value="measurement" />
-                <label for="measure-option">Measure Statistics</label>
-            </li>
-        </ul>
-    </form>
-    <div id="main-container">
-        <div id="canvas-container">
-            <canvas id="canvas" height=500 width=500 />
+                <button id="clear-btn">Clear</button>
+            </div>
         </div>
-        <div id="info">
-            <div id="measure-grid"></div>
-            <div id="plot"></div>
+        <form id="rect-meaning-form">
+            <ul class="rect-meaning-list">
+                <h2 class="rect-meaning-title">Rectangle Type</h2>
+                <li class="rect-meaning-option">
+                    <input id="wall-option" type="radio" name="rect-meaning" value="wall" checked />
+                    <label for="wall-option">Wall</label>
+                </li>
+                <li>
+                    <span class="dropdown-container rect-meaning-option" id="bodies-container">
+                        <input id="bodies-option" type="radio" name="rect-meaning" value="bodies" />
+                        <label for="bodies-option">Spawn Bodies</label>
+                        <div id="bodies-subform" class="dropdown">
+                            <div class="input-container">
+                                <label for="number">Number: </label>
+                                <input name="number" type="number" value="10" class="dropdown-input" />
+                            </div>
+                            <div class="input-container">
+                                <label for="mass">Mass: </label>
+                                <input name="mass" type="number" value="1" class="dropdown-input" />
+                            </div>
+                            <div class="input-container">
+                                <label for="velocity">Velocity: </label>
+                                <input name="velocity" type="number" value="50" class="dropdown-input" />
+                            </div>
+                            <div class="input-container">
+                                <label for="radius">Radius: </label>
+                                <input name="radius" type="number" value="3" class="dropdown-input" />
+                            </div>
+                            <div class="input-container">
+                                <label for="random-color">Random color: </label>
+                                <input name="random-color" type="checkbox" checked class="dropdown-input" />
+                            </div>
+                            <input name="reset-to-defaults" type="button" value="Reset to Defaults"></input>
+                        </div>
+                    </span>
+                </li>
+                <li class="rect-meaning-option">
+                    <input id="delete-option" type="radio" name="rect-meaning" value="delete" />
+                    <label for="delete-option">Delete Bodies</label>
+                </li>
+                <li class="rect-meaning-option">
+                    <input id="measure-option" type="radio" name="rect-meaning" value="measurement" />
+                    <label for="measure-option">Measure Statistics</label>
+                </li>
+            </ul>
+        </form>
+        <div id="simulation-container">
+            <div id="canvas-container">
+                <canvas id="canvas" height=500 width=500 />
+            </div>
+            <div id="info">
+                <div id="measure-grid"></div>
+                <div id="plot"></div>
+            </div>
         </div>
     </div>
 </body>
