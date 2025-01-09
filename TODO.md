@@ -6,3 +6,4 @@
 - Improve performance of plot
 - Responsiveness?
 - Add README.md text to top of page, add a link to GitHub (also do this for other web projects)
+- Rearrange buttons to not be above radio buttons 
