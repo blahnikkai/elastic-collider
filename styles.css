@@ -2,6 +2,7 @@
     --clr-dark: #171618;
     --clr-dark2: #2E2637;
     --clr-light: #EBE6F0;
+    --clr-light2: #CCACDA;
     --clr-accent: #613D70;
 }
 
@@ -11,7 +12,7 @@
     color: var(--clr-light);
 }
 
-html {
+body {
     background-color: var(--clr-dark);
 }
 
@@ -36,14 +37,6 @@ label:hover, .rect-meaning-option:hover {
     cursor: pointer;
 }
 
-button, .page-link {
-    background-color: transparent;
-    border: 2px solid var(--clr-light);
-    border-radius: 3px;
-    padding: .2em .5em;
-    cursor: pointer;
-}
-
 .page-link {
     margin: .2em;
 }
@@ -52,7 +45,23 @@ button, .page-link {
     margin-right: .5em;
 }
 
-button:hover, a:hover, a:hover * {
+button, .page-link {
+    background-color: var(--clr-dark);
+    border: 2px solid var(--clr-light);
+    border-radius: 3px;
+    padding: .2em .5em;
+    cursor: pointer;
+}
+
+
+button:disabled {
+    cursor: auto;
+    background-color: var(--clr-light);
+    color: var(--clr-light2);
+}
+
+button:hover:not(button:disabled), a:hover, a:hover * {
+    background-color: var(--clr-dark);
     border-color: var(--clr-accent);
     color: var(--clr-accent);
 }
