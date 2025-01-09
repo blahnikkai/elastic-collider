@@ -53,7 +53,7 @@ nav {
     margin-right: .5em;
 }
 
-button, .page-link {
+button, input[type="button"], .page-link {
     background-color: var(--clr-dark);
     border: 2px solid var(--clr-light);
     border-radius: 3px;
@@ -61,14 +61,13 @@ button, .page-link {
     cursor: pointer;
 }
 
-
 button:disabled {
     cursor: auto;
     background-color: var(--clr-light);
     color: var(--clr-light2);
 }
 
-button:hover:not(button:disabled), a:hover, a:hover * {
+button:hover:not(button:disabled), a:hover, a:hover *, input[type="button"]:hover {
     border-color: var(--clr-accent);
     color: var(--clr-accent);
 }
@@ -106,7 +105,7 @@ button:hover:not(button:disabled), a:hover, a:hover * {
 }
 
 .dropdown {
-    width: 90%;
+    width: 100%;
     display: none;
     position: absolute;
     top: 100%;
@@ -124,8 +123,15 @@ button:hover:not(button:disabled), a:hover, a:hover * {
 }
 
 .dropdown-input {
+    background-color: var(--clr-light);
     color: var(--clr-dark);
+    border: 3px solid var(--clr-light);
+    border-radius: 3px;
     width: 50%;
+}
+
+.input-container:hover .dropdown-input {
+    border-color: var(--clr-accent);
 }
 
 .rect-meaning-option:hover > label {
