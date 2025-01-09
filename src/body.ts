@@ -71,33 +71,41 @@ export class Body {
 
         if (x1 < this.pos.x + this.r && this.pos.x - this.r < x2) {
             // top
-            if (this.pos.y + this.r > y1 && this.vel.y > 0 && above_down_left && above_down_right) {
+            if (this.pos.y + this.r > y1 && above_down_left && above_down_right) {
                 // console.log('reflecting top')
-                this.vel.y *= -1
                 this.pos.y = y1 - this.r
+                if(this.vel.y > 0) {
+                    this.vel.y *= -1
+                }
                 return
             }
             // bottom
-            if (this.pos.y - this.r < y2 && this.vel.y < 0 && !above_down_left && !above_down_right) {
+            if (this.pos.y - this.r < y2 && !above_down_left && !above_down_right) {
                 // console.log('reflecting bottom')
-                this.vel.y *= -1
                 this.pos.y = y2 + this.r
+                if(this.vel.y < 0) {
+                    this.vel.y *= -1
+                }
                 return
             }
         }
         if (y1 < this.pos.y + this.r && this.pos.y - this.r < y2) {
             // left
-            if (this.pos.x + this.r > x1 && this.vel.x > 0 && above_down_left && !above_down_right) {
+            if (this.pos.x + this.r > x1 && above_down_left && !above_down_right) {
                 // console.log('reflecting left')
-                this.vel.x *= -1
                 this.pos.x = x1 - this.r
+                if(this.vel.x > 0) {
+                    this.vel.x *= -1
+                }
                 return
             }
             // right
-            if (this.pos.x - this.r < x2 && this.vel.x < 0 && !above_down_left && above_down_right) {
+            if (this.pos.x - this.r < x2 && !above_down_left && above_down_right) {
                 // console.log('reflecting right')
-                this.vel.x *= -1
                 this.pos.x = x2 + this.r
+                if(this.vel.x < 0) {
+                    this.vel.x *= -1
+                }
                 return
             }
         }

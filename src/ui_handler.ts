@@ -354,7 +354,6 @@ export class UIHandler {
         this.simulation.intermediate_rect = null
         if (rect.type == RectangleType.Wall) {
             this.simulation.walls.push(rect)
-            this.reset([], this.simulation.walls, this.simulation.measures)
         }
         else if (rect.type == RectangleType.Measurement) {
             this.add_measure_to_plot(rect)
