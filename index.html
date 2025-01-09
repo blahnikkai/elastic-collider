@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elastic Collider</title>
-    <link rel="stylesheet" href="public/styles.css">
-    <script src="/src/script.ts" type="module" defer></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="src/script.ts" type="module" defer></script>
     <link rel="apple-touch-icon" sizes="180x180" href="public/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="public/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="public/favicon-16x16.png">
@@ -14,68 +15,113 @@
 </head>
 
 <body>
+    <a href="https://github.com/blahnikkai/elastic-collider" class="page-link">Source code</a>
+    <a href="https://blahnikkai.github.io/" class="page-link">My Website</a>
+    <div class="readme">
+        <h1 id="elastic-collider">Elastic Collider</h1>
+        <p>Click play to start the simulation<br>Click pause to pause the simulation<br>When the simulation is paused,
+            you can click step to simulate a single tick </p>
+        <p>To draw a rectangle, left-click, move your mouse, and left-click again to finish drawing the
+            rectangle.<br>Right-click to cancel the drawing action<br>Right-clicking an existing rectangle will delete
+            it </p>
+        <p>Use the 4 radio buttons to select what type of rectangle will be drawn. </p>
+        <ol>
+            <li>Wall will draw a solid wall that bodies will bounce off of. </li>
+            <li>Spawn bodies will spawn a set of bodies within the bounds of the rectangle you draw. A dropdown will
+                allow you to select the parameters of the bodies. </li>
+            <li>Delete bodies will delete any bodies within the bounds of the rectangle you draw. </li>
+            <li>Measure statistics will draw a persistent measurement zone. The number of bodies within the measurement
+                zone, and the total and mean kinetic energies of those bodies, will be displayed on the right panel.
+            </li>
+        </ol>
+        <p>You can click the &#39;Generate Brownian Motion&#39; or &#39;Generate 2nd law of thermodynamics&#39; buttons
+            to generate a pre-built scenario, or add your own walls and bodies to create your own experiments!</p>
+        <h2 id="scientific-explanation-of-the-two-pre-built-scenarios">Scientific explanation of the two pre-built
+            scenarios</h2>
+        <p>Brownian Motion is the motion of a particle suspended in a liquid or gas. The atoms or molecules of the gas
+            move freely only changing velocity in collisions with other particles. The larger particle, for example a
+            grain of pollen, will undergo seemingly random movement and vibration as the atoms of the gas - too small to
+            see - collide with the pollen. A higher mean velocity of the gas particles, which is proportional to a
+            higher temperature, will result in more rapid vibration. Experiments with Brownian motion allowed physicists
+            to confirm the atomic model without directly observing them.</p>
+        <p>The Second Law of Thermodynamics states that the entropy of a closed system will never spontaneously decrease
+            over time. Put simply, this means states will tend toward thermodynamic equilibrium, so thermal energy will
+            flow from hot regions to cool regions, and never the other way around. In our simulation, we can observe
+            that the right chamber, with high velocity particles (high temperature), and the left chamber, with low
+            velocity particles (low temperature), will slowly tend toward an equilibrium with equal mean kinetic energy
+            in both chambers (equal temperatures).</p>
+        <h2 id="to-run-the-source-code-on-your-own-machine">To run the source code on your own machine</h2>
+        <p><code>npm run dev</code></p>
+        <h2 id="to-update-the-gh-pages">To update the gh-pages</h2>
+        <p><code>npm run deploy</code></p>
+
+    </div>
     <nav>
-        <button id="step">Step</button>
-        <button id="pause">Pause</button>
-        <button id="play">Play</button>
-        <span class="dropdown-container" id="brownian-container">
-            <button id="brownian-btn">Generate Brownian motion</button>
-            <form id="brownian-form" class="dropdown">
-                <div class="input-container">
-                    <label for="number">Number: </label>
-                    <input name="number" type="number" value="300" class="dropdown-input" />
-                </div>
-                <div class="input-container">
-                    <label for="mass">Mass Ratio: </label>
-                    <input name="mass" type="number" value="100" class="dropdown-input" />
-                </div>
-                <div class="input-container">
-                    <label for="velocity">Velocity: </label>
-                    <input name="velocity" type="number" value="150" class="dropdown-input" />
-                </div>
-                <div class="input-container">
-                    <label for="radius">Radius: </label>
-                    <input name="radius" type="number" value="3" class="dropdown-input" />
-                </div>
-                <input name="reset-to-defaults" type="button" value="Reset to Defaults"></input>
-            </form>
-        </span>
-        <span class="dropdown-container" id="second-law-container">
-            <button id="second-law-btn">Generate 2nd law of thermodynamics</button>
-            <form id="second-law-form" class="dropdown">
-                <div class="input-container">
-                    <label for="number">Number: </label>
-                    <input name="number" type="number" value="300" class="dropdown-input" />
-                </div>
-                <div class="input-container">
-                    <label for="gap_size">Gap Size: </label>
-                    <input name="gap_size" type="number" value="20" class="dropdown-input" />
-                </div>
-                <div class="input-container">
-                    <label for="radius">Radius: </label>
-                    <input name="radius" type="number" value="3" class="dropdown-input" />
-                </div>
-                <div class="input-container">
-                    <label for="vl">Left velocity: </label>
-                    <input name="vl" type="number" value="10" class="dropdown-input" />
-                </div>
-                <div class="input-container">
-                    <label for="vr">Right velocity: </label>
-                    <input name="vr" type="number" value="100" class="dropdown-input" />
-                </div>
-                <input name="reset-to-defaults" type="button" value="Reset to Defaults"></input>
-            </form>
-        </span>
-        <button id="clear-btn">Clear</button>
+        <div class="nav-container">
+            <button id="step">Step</button>
+            <button id="pause">Pause</button>
+            <button id="play">Play</button>
+        </div>
+        <div class="nav-container">
+            <span class="dropdown-container" id="brownian-container">
+                <button id="brownian-btn">Generate Brownian motion</button>
+                <form id="brownian-form" class="dropdown">
+                    <div class="input-container">
+                        <label for="number">Number: </label>
+                        <input name="number" type="number" value="300" class="dropdown-input" />
+                    </div>
+                    <div class="input-container">
+                        <label for="mass">Mass Ratio: </label>
+                        <input name="mass" type="number" value="100" class="dropdown-input" />
+                    </div>
+                    <div class="input-container">
+                        <label for="velocity">Velocity: </label>
+                        <input name="velocity" type="number" value="150" class="dropdown-input" />
+                    </div>
+                    <div class="input-container">
+                        <label for="radius">Radius: </label>
+                        <input name="radius" type="number" value="3" class="dropdown-input" />
+                    </div>
+                    <input name="reset-to-defaults" type="button" value="Reset to Defaults"></input>
+                </form>
+            </span>
+            <span class="dropdown-container" id="second-law-container">
+                <button id="second-law-btn">Generate 2nd law of thermodynamics</button>
+                <form id="second-law-form" class="dropdown">
+                    <div class="input-container">
+                        <label for="number">Number: </label>
+                        <input name="number" type="number" value="300" class="dropdown-input" />
+                    </div>
+                    <div class="input-container">
+                        <label for="gap_size">Gap Size: </label>
+                        <input name="gap_size" type="number" value="20" class="dropdown-input" />
+                    </div>
+                    <div class="input-container">
+                        <label for="radius">Radius: </label>
+                        <input name="radius" type="number" value="3" class="dropdown-input" />
+                    </div>
+                    <div class="input-container">
+                        <label for="vl">Left velocity: </label>
+                        <input name="vl" type="number" value="10" class="dropdown-input" />
+                    </div>
+                    <div class="input-container">
+                        <label for="vr">Right velocity: </label>
+                        <input name="vr" type="number" value="100" class="dropdown-input" />
+                    </div>
+                    <input name="reset-to-defaults" type="button" value="Reset to Defaults"></input>
+                </form>
+            </span>
+            <button id="clear-btn">Clear</button>
+        </div>
     </nav>
     <form id="rect-meaning-form">
         <ul>
-            <li>
+            <li class="rect-meaning-option">
                 <input id="wall-option" type="radio" name="rect-meaning" value="wall" checked />
                 <label for="wall-option">Wall</label>
             </li>
             <li>
-                <span class="dropdown-container" id="bodies-container">
+                <span class="dropdown-container rect-meaning-option" id="bodies-container">
                     <input id="bodies-option" type="radio" name="rect-meaning" value="bodies" />
                     <label for="bodies-option">Spawn Bodies</label>
                     <div id="bodies-subform" class="dropdown">
@@ -103,11 +149,11 @@
                     </div>
                 </span>
             </li>
-            <li>
+            <li class="rect-meaning-option">
                 <input id="delete-option" type="radio" name="rect-meaning" value="delete" />
                 <label for="delete-option">Delete Bodies</label>
             </li>
-            <li>
+            <li class="rect-meaning-option">
                 <input id="measure-option" type="radio" name="rect-meaning" value="measurement" />
                 <label for="measure-option">Measure Statistics</label>
             </li>

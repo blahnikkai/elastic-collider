@@ -1,14 +1,18 @@
 # Elastic Collider
 
-To draw a rectangle, left-click, move your mouse, and left-click again to finish drawing the rectangle.
-Right-click to cancel the drawing action
-Right-clicking an existing rectangle will delete it
+Click play to start the simulation  
+Click pause to pause the simulation  
+When the simulation is paused, you can click step to simulate a single tick  
 
-Use the 4 radio buttons to select what type of rectangle will be drawn.
-1. Wall will draw a solid wall that bodies will bounce off of.
-2. Spawn bodies will spawn a set of bodies within the bounds of the rectangle you draw. A dropdown will allow you to select the parameters of the bodies.
-3. Delete bodies will delete any bodies within the bounds of the rectangle you draw.
-4. Measure statistics will draw a persistent measurement zone. The number of bodies within the measurement zone, and the total and mean kinetic energies of those bodies, will be displayed on the right panel.
+To draw a rectangle, left-click, move your mouse, and left-click again to finish drawing the rectangle.  
+Right-click to cancel the drawing action  
+Right-clicking an existing rectangle will delete it  
+
+Use the 4 radio buttons to select what type of rectangle will be drawn.  
+1. Wall will draw a solid wall that bodies will bounce off of.  
+2. Spawn bodies will spawn a set of bodies within the bounds of the rectangle you draw. A dropdown will allow you to select the parameters of the bodies.  
+3. Delete bodies will delete any bodies within the bounds of the rectangle you draw.  
+4. Measure statistics will draw a persistent measurement zone. The number of bodies within the measurement zone, and the total and mean kinetic energies of those bodies, will be displayed on the right panel.  
 
 You can click the 'Generate Brownian Motion' or 'Generate 2nd law of thermodynamics' buttons to generate a pre-built scenario, or add your own walls and bodies to create your own experiments!
 

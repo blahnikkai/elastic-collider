@@ -1,15 +1,26 @@
+:root {
+    --clr-dark: #171618;
+    --clr-accent: #613D70;
+    --clr-light: #EBE6F0;
+}
+
 * {
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
+    color: var(--clr-light);
 }
 
 html {
-    background-color: black;
+    background-color: var(--clr-dark);
 }
 
 canvas {
-    background-color: white;
+    background-color: var(--clr-light);
     margin: 1em;
+}
+
+li {
+    width: fit-content;
 }
 
 ul {
@@ -21,14 +32,36 @@ nav {
 }
 
 label {
-    color: white;
     display: inline-block;
+}
+
+button {
+    background-color: transparent;
+    border: 2px solid var(--clr-light);
+    border-radius: 3px;
+    padding: .2em .5em;
+}
+
+button:hover {
+    border-color: var(--clr-accent);
+}
+
+.nav-container {
+    margin: .3em 0;
+}
+
+.page-link {
+    display: block;
 }
 
 .input-container {
     display: flex;
     flex-direction: row;
     font-size: 15px;
+}
+
+.input-container:hover label {
+    color: var(--clr-accent);
 }
 
 .dropdown-container {
@@ -41,9 +74,11 @@ label {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: black;
+    background-color: var(--clr-dark);
     padding: .5em .75em;
     z-index: 100;
+    border: 2px solid var(--clr-accent);
+    border-radius: 5px;
 }
 
 .dropdown * {
@@ -52,7 +87,12 @@ label {
 }
 
 .dropdown-input {
+    color: var(--clr-dark);
     width: 50%;
+}
+
+.rect-meaning-option:hover > label {
+    color: var(--clr-accent);
 }
 
 #bodies-container {
@@ -69,7 +109,7 @@ label {
 #main-container {
     display: flex;
     flex-direction: row;
-    border: .5em solid #21451c;
+    border: .5em solid var(--clr-accent);
     border-radius: .5em;
     width: fit-content;
     max-height: 552px;
@@ -77,14 +117,14 @@ label {
 
 #canvas-container {
     display: inline-block;
-    background-color: black;
+    background-color: var(--clr-dark);
 }
 
 #info {
-    border-left: .5em solid #21451c;
+    border-left: .5em solid var(--clr-accent);
     padding: 1em 0;
     
-    color: white;
+    color: var(--clr-light);
     
     display: flex;
     flex-direction: column;
@@ -99,7 +139,7 @@ label {
     max-height: 100%;
     
     overflow-y: scroll;
-    border-bottom: .5em solid #21451c;
+    border-bottom: .5em solid var(--clr-accent);
     margin-bottom: 1em;
 }
 
