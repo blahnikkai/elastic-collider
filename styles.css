@@ -12,6 +12,7 @@
 
 html {
     background-color: var(--clr-dark);
+    padding: .5em;
 }
 
 canvas {
@@ -41,6 +42,14 @@ button, a {
     border-radius: 3px;
     padding: .2em .5em;
     cursor: pointer;
+}
+
+a {
+    margin: .2em;
+}
+
+.fa-github {
+    margin-right: .5em;
 }
 
 button:hover, a:hover {
