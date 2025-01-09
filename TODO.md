@@ -2,11 +2,8 @@
     - path trace for all bodies.
     - color all black, except red for the body that hasn't touched another body in the longest
 
-- Allow drawing body if no bodies there? Or even if bodies are there
 - Improve performance of plot
-- Responsiveness?
-- Add README.md text to top of page, add a link to GitHub (also do this for other web projects)
-- Rearrange buttons to not be above radio buttons 
+
 - Disabled button styling
-- Links to wikipedia or other sources in readme
 - Fix margin of black around readme html
+- Does the system tend toward the Maxwell-Distribution?

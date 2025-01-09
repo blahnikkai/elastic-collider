@@ -36,7 +36,7 @@ label:hover, .rect-meaning-option:hover {
     cursor: pointer;
 }
 
-button, a {
+button, .page-link {
     background-color: transparent;
     border: 2px solid var(--clr-light);
     border-radius: 3px;
@@ -44,7 +44,7 @@ button, a {
     cursor: pointer;
 }
 
-a {
+.page-link {
     margin: .2em;
 }
 
