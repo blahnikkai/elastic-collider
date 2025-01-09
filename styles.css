@@ -69,7 +69,6 @@ button:disabled {
 }
 
 button:hover:not(button:disabled), a:hover, a:hover * {
-    background-color: var(--clr-dark);
     border-color: var(--clr-accent);
     color: var(--clr-accent);
 }
