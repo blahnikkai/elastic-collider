@@ -174,8 +174,8 @@ export class Simulation {
 
         ctx.fillStyle = 'black'
         ctx.strokeStyle = 'black'
-        ctx.fillText(this.calc_total_energy().toFixed(2), 20, 20)
-        ctx.fillText(this.tick.toString(), 20, 40)
+        ctx.fillText(this.calc_total_energy().toFixed(2), 5, 15)
+        ctx.fillText(this.tick.toString(), 5, 30)
 
         for (const wall of this.walls) {
             wall.draw(ctx)
