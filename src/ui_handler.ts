@@ -1,4 +1,4 @@
-import { Simulation, brownian, random_number, second_law_bodies, second_law_measures, second_law_rects, spawn_bodies } from './simulation.js'
+import { Simulation, brownian, random_number, second_law_bodies, second_law_measures, second_law_rects, spawn_bodies, CANVAS_SIZE } from './simulation.js'
 import { Rectangle, RectangleType } from './rectangle.js'
 import { Body } from './body.js'
 import Plotly from 'plotly.js-dist'
@@ -332,10 +332,10 @@ export class UIHandler {
         const clamp = (num: number, lo: number, hi: number) => {
             return Math.max(lo, Math.min(num, hi))
         }
-        const x1 = clamp(Math.min(this.half_rect[0], x), 0, 500)
-        const x2 = clamp(Math.max(this.half_rect[0], x), 0, 500)
-        const y1 = clamp(Math.min(this.half_rect[1], y), 0, 500)
-        const y2 = clamp(Math.max(this.half_rect[1], y), 0, 500)
+        const x1 = clamp(Math.min(this.half_rect[0], x), 0, CANVAS_SIZE)
+        const x2 = clamp(Math.max(this.half_rect[0], x), 0, CANVAS_SIZE)
+        const y1 = clamp(Math.min(this.half_rect[1], y), 0, CANVAS_SIZE)
+        const y2 = clamp(Math.max(this.half_rect[1], y), 0, CANVAS_SIZE)
 
         const rect_type_str: string = this.rect_meaning_form.elements['rect-meaning'].value
         const rect_type: RectangleType = rect_type_str as RectangleType

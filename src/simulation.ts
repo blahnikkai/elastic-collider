@@ -4,6 +4,7 @@ import { Vector, dist, norm } from './vector.js'
 import Plotly from 'plotly.js-dist'
 
 export const TICKRATE = 50
+export const CANVAS_SIZE = 500
 
 function check_collides_existing_bodies(bodies: Body[], x: number, y: number, r: number): boolean {
     for (const body of bodies) {
@@ -34,7 +35,7 @@ export function random_number(low: number, high: number): number {
     return (high - low) * Math.random() + low
 }
 
-function generate_random_body(bodies: Body[], rects: Rectangle[], m: number, v: number, r: number, hue: number | null = null, x1: number = 0, x2: number = 500, y1: number = 0, y2: number = 500): Body {
+function generate_random_body(bodies: Body[], rects: Rectangle[], m: number, v: number, r: number, hue: number | null = null, x1: number = 0, x2: number = CANVAS_SIZE, y1: number = 0, y2: number = CANVAS_SIZE): Body {
     let i = 0
     while (true) {
         if (i >= 100_000) {
@@ -87,25 +88,25 @@ export function second_law_rects(gap_size: number): Rectangle[] {
     const w_half = 10
     const gap_half = gap_size / 2
     let rects = [
-        new Rectangle(250 - w_half, 0, 250 + w_half, 250 - gap_half),
-        new Rectangle(250 - w_half, 250 + gap_half, 250 + w_half, 500),
+        new Rectangle(CANVAS_SIZE / 2 - w_half, 0, CANVAS_SIZE / 2 + w_half, CANVAS_SIZE / 2 - gap_half),
+        new Rectangle(CANVAS_SIZE / 2 - w_half, CANVAS_SIZE / 2 + gap_half, CANVAS_SIZE / 2 + w_half, CANVAS_SIZE),
     ]
     return rects
 }
 
 export function second_law_measures(): Rectangle[] {
-    const left_measure = new Rectangle(0, 0, 250, 500, RectangleType.Measurement, 240)
-    const right_measure = new Rectangle(250, 0, 500, 500, RectangleType.Measurement, 0)
+    const left_measure = new Rectangle(0, 0, CANVAS_SIZE / 2, CANVAS_SIZE, RectangleType.Measurement, 240)
+    const right_measure = new Rectangle(CANVAS_SIZE / 2, 0, CANVAS_SIZE, CANVAS_SIZE, RectangleType.Measurement, 0)
     return [left_measure, right_measure]
 }
 
 export function second_law_bodies(n: number, r: number, vl: number, vr: number, rects: Rectangle[]): Body[] {
     let bodies = []
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, 1, vl, r, 240, 0, 240))
+        bodies.push(generate_random_body(bodies, rects, 1, vl, r, 240, 0, CANVAS_SIZE * (24 / 50)))
     }
     for (let i = 0; i < n; i++) {
-        bodies.push(generate_random_body(bodies, rects, 1, vr, r, 0, 260, 500))
+        bodies.push(generate_random_body(bodies, rects, 1, vr, r, 0, CANVAS_SIZE * (26 / 50), CANVAS_SIZE))
     }
     return bodies
 }
@@ -167,7 +168,7 @@ export class Simulation {
     }
 
     draw_all(ctx: CanvasRenderingContext2D, measure_grid: HTMLDivElement, plot: HTMLDivElement): void {
-        ctx.clearRect(0, 0, 500, 500)
+        ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
         for (const body of this.bodies) {
             body.draw(ctx)
         }

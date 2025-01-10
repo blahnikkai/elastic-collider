@@ -4,7 +4,6 @@
 
 - Improve performance of plot
 
-- Fix margin of black around readme html
 - Does the system tend toward the Maxwell-Distribution?
 
-- Fix 'Reset to Defaults' styling
+- Constant for wall thickness

@@ -1,6 +1,6 @@
 import { dist, add, scale, sub, dot, norm, Vector } from './vector.js'
 import { Rectangle } from './rectangle.js'
-import { TICKRATE } from './simulation.js'
+import { TICKRATE, CANVAS_SIZE } from './simulation.js'
 
 export class Body {
 
@@ -37,16 +37,16 @@ export class Body {
             this.pos.x = this.r
             this.vel.x *= -1
         }
-        if (this.pos.x + this.r > 500 && this.vel.x > 0) {
-            this.pos.x = 500 - this.r
+        if (this.pos.x + this.r > CANVAS_SIZE && this.vel.x > 0) {
+            this.pos.x = CANVAS_SIZE - this.r
             this.vel.x *= -1
         }
         if (this.pos.y - this.r < 0 && this.vel.y < 0) {
             this.pos.y = this.r
             this.vel.y *= -1
         }
-        if (this.pos.y + this.r > 500 && this.vel.y > 0) {
-            this.pos.y = 500 - this.r
+        if (this.pos.y + this.r > CANVAS_SIZE && this.vel.y > 0) {
+            this.pos.y = CANVAS_SIZE - this.r
             this.vel.y *= -1
         }
     }
@@ -148,6 +148,7 @@ export class Body {
             return;
         }
         ctx.strokeStyle = 'blue'
+        ctx.lineWidth = CANVAS_SIZE / 500
         ctx.beginPath()
         ctx.moveTo(this.trace[0].x, this.trace[0].y)
         for (const pos of this.trace) {
