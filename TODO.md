@@ -7,3 +7,5 @@
 - Does the system tend toward the Maxwell-Distribution?
 
 - Constant for wall thickness
+
+- Should reset to defaults regenerate the scenario?

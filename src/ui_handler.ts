@@ -105,6 +105,7 @@ export class UIHandler {
         this.brownian_form.mass.value = 100
         this.brownian_form.velocity.value = 150
         this.brownian_form.radius.value = 3
+        this.submit_brownian_form(event)
     }
 
     reset_second_law_form(event: MouseEvent) {
@@ -114,6 +115,7 @@ export class UIHandler {
         this.second_law_form.radius.value = 3
         this.second_law_form.vl.value = 10
         this.second_law_form.vr.value = 100
+        this.submit_second_law_form(event)
     }
 
     reset_spawn_bodies_form(event: MouseEvent) {
