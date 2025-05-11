@@ -2,6 +2,7 @@
 .vscode/
 dist/
 node_modules/
+video_materials/
 
 TODO.md
 kai_notes.md
